@@ -9,27 +9,27 @@ namespace Targets.Infrastructure
     public class UserService : IUserService
     {
 
-        IEnumerable<IUser> Users;
+        List<IUser> Users;
 
         public UserService()
         {
-            Users = new List<IUser>() { new User { Email = "test1@t.pl", NickName = "test1" }, new User { Email= "test2@t.pl", NickName= "test2" }  };
+            Users = new List<IUser>() { new User() { NickName = "lukasz", Email = "luki@p.pl", Id = Guid.NewGuid(), Password = "testowe haslo" } };
         }
 
-
-        public void Create(string Email)
+        public void Create(string Email, string NickName, string Password)
         {
-            throw new NotImplementedException();
+            User usr = new User() { Id = Guid.NewGuid(), Email = Email, NickName = NickName, Password = Password };
+            Users.Add(usr);
         }
 
         public void Delete(string Email)
         {
-            throw new NotImplementedException();
+            Users.RemoveAll(x => x.Email == Email);  
         }
 
         public IUser Get(string Email)
         {
-            return (from x in Users where Email == x.Email select x).FirstOrDefault();
+           return (from x in Users where x.Email == Email select x).FirstOrDefault();
         }
 
         public IEnumerable<IUser> GetAll()

@@ -4,11 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Targets.Domain;
 using Targets.Infrastructure;
 
 namespace Targets.Controllers
 {
-    //[Produces("application/json")]
+    [Produces("application/json")]
     [Route("api/Users")]
     public class UsersController : Controller
     {
@@ -21,16 +22,36 @@ namespace Targets.Controllers
         }
 
         [HttpGet("{Email}")]
-        public string Get(string Email)
+        public IUser Get(string Email)
         {
-            return service.Get(Email).NickName;
+            return service.Get(Email);
         }
         [HttpGet("")]
-        public string GetAll()
+        public IEnumerable<IUser> GetAll()
         {
-            return service.GetAll().Count().ToString();
+            return service.GetAll();
         }
 
+        [HttpPost("Create")]
+        public void Post([FromBody] User user)
+        {
+            try
+            {
+                service.Create(user.Email, user.NickName, user.Password);
+            }
+            catch { }
+        }
+
+
+        [HttpDelete("Delete")]
+        public void Post([FromBody] string email)
+        {
+            try
+            {
+                service.Delete(email);
+            }
+            catch { }
+        }
 
     }
 }

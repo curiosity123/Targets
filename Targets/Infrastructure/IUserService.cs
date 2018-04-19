@@ -10,7 +10,7 @@ namespace Targets.Infrastructure
     {
         IUser Get(string Email);
         IEnumerable<IUser> GetAll();
-        void Create(string Email);
+        void Create(string Email, string NickName, string Password);
         void Delete(string Email);
 
     }
