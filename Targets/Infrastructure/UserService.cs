@@ -16,25 +16,24 @@ namespace Targets.Infrastructure
             Users = new List<IUser>() { new User() { NickName = "lukasz", Email = "luki@p.pl", Id = Guid.NewGuid(), Password = "testowe haslo" } };
         }
 
-        public void Create(string Email, string NickName, string Password)
+        public void RegisterAccount(string Email, string NickName, string Password)
         {
-            User usr = new User() { Id = Guid.NewGuid(), Email = Email, NickName = NickName, Password = Password };
-            Users.Add(usr);
+            if (Users.Where(x => x.Email == Email).Count() == 0)
+            {
+                User usr = new User() { Id = Guid.NewGuid(), Email = Email, NickName = NickName, Password = Password };
+                Users.Add(usr);
+            }
         }
 
-        public void Delete(string Email)
+        public void DeleteAccount(string Email, string Password)
         {
-            Users.RemoveAll(x => x.Email == Email);  
+            Users.RemoveAll(x => x.Email == Email && x.Password == Password);  
         }
 
-        public IUser Get(string Email)
+        public IUser Get(string Email, string Password)
         {
            return (from x in Users where x.Email == Email select x).FirstOrDefault();
         }
 
-        public IEnumerable<IUser> GetAll()
-        {
-            return Users;
-        }
     }
 }

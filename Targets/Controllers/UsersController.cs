@@ -21,36 +21,25 @@ namespace Targets.Controllers
             service = userService;
         }
 
-        [HttpGet("{Email}")]
-        public IUser Get(string Email)
+
+
+        [HttpGet("{Email}, {Password}")]
+        public IUser Get(string Email, string Password)
         {
-            return service.Get(Email);
-        }
-        [HttpGet("")]
-        public IEnumerable<IUser> GetAll()
-        {
-            return service.GetAll();
+            return service.Get(Email, Password);
         }
 
-        [HttpPost("Create")]
-        public void Post([FromBody] User user)
+        [HttpPost("RegisterAccount")]
+        public void Post([FromBody] string Email, string NickName, string Password)
         {
-            try
-            {
-                service.Create(user.Email, user.NickName, user.Password);
-            }
-            catch { }
+                service.RegisterAccount(Email, NickName, Password);
         }
 
 
-        [HttpDelete("Delete")]
-        public void Post([FromBody] string email)
+        [HttpDelete("DeleteAccount")]
+        public void Post([FromBody] string Email, string Password)
         {
-            try
-            {
-                service.Delete(email);
-            }
-            catch { }
+                service.DeleteAccount(Email,Password);
         }
 
     }

@@ -8,10 +8,10 @@ namespace Targets.Infrastructure
 {
     public interface IUserService
     {
-        IUser Get(string Email);
-        IEnumerable<IUser> GetAll();
-        void Create(string Email, string NickName, string Password);
-        void Delete(string Email);
+        IUser Get(string Email, string Password);
+        void RegisterAccount(string Email, string NickName, string Password);
+        void DeleteAccount(string Email, string Password);
+
 
     }
 }
