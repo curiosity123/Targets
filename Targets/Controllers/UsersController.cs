@@ -30,16 +30,16 @@ namespace Targets.Controllers
         }
 
         [HttpPost("RegisterAccount")]
-        public void Post([FromBody] string Email, string NickName, string Password)
+        public void Post([FromBody] string [] data)
         {
-                service.RegisterAccount(Email, NickName, Password);
+                service.RegisterAccount(data[0], data[1], data[2]);
         }
 
 
         [HttpDelete("DeleteAccount")]
-        public void Post([FromBody] string Email, string Password)
+        public void Delete([FromBody] string [] data)
         {
-                service.DeleteAccount(Email,Password);
+                service.DeleteAccount(data[0],data[1]);
         }
 
     }

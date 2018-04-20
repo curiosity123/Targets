@@ -13,7 +13,7 @@ namespace Targets.Infrastructure
 
         public UserService()
         {
-            Users = new List<IUser>() { new User() { NickName = "lukasz", Email = "luki@p.pl", Id = Guid.NewGuid(), Password = "testowe haslo" } };
+            Users = new List<IUser>();// { new User() { NickName = "lukasz", Email = "luki@p.pl", Id = Guid.NewGuid(), Password = "testowe haslo" } };
         }
 
         public void RegisterAccount(string Email, string NickName, string Password)
