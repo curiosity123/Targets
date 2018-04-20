@@ -12,7 +12,7 @@ namespace Targets.Domain
         string Email { get; set; }
         string NickName { get; set; }
         string Password { get; set; }
-        IEnumerable<ITarget> Targets { get; set; }
+        List<IProject> Projects { get; set; }
 
     }
 }

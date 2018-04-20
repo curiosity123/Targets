@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace Targets.Domain
 {
-    public interface ITarget
+    public interface IStep
     {
         string Title { get; set; }
         string Description { get; set; }
-        bool Completed { get; set; }
-
     }
 }
