@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Targets.Domain;
+using Targets.Domain.Interfaces;
 
 namespace Targets.Infrastructure
 {

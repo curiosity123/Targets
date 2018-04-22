@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Targets.Domain
+namespace Targets.Domain.Interfaces
 {
     public interface IUser
     {

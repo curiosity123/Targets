@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Targets.Domain;
+using Targets.Domain.Interfaces;
 using Targets.Infrastructure;
 
 namespace Targets.Controllers
