@@ -18,5 +18,7 @@ namespace Targets.Domain
         public string NickName { get; set; }
         public string Password { get; set ; }
         public List<IProject> Projects { get; set; }
+        public byte[] Photo { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }
