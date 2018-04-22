@@ -9,17 +9,25 @@ namespace Targets.Infrastructure
 {
     public interface IUserService
     {
-        IUser Get(string Email, string Password);
-        void RegisterAccount(string Email, string NickName, string Password);
+        IUser GetId(string Email, string Password);
+        void RegisterAccount(string Email, string Password);
         void DeleteAccount(string Email, string Password);
+        void SetPhoto(Guid UserId, byte[] Photo);
+        void SetNickName(Guid UserId, string Nick);
 
-        void AddNewProject(string Email, string Password,string Title, string Description);
-        void EditProject(string Email, string Password, string Title, string UpdatedTitle, string UpdatedDescription);
-        void RemoveProject(string Email, string Password, string Title);
+        void SetPrize(int StepLevel, string Description);
 
-        void AddStep(string Email, string Password, string ProjectTitle, string StepTitle, string StepDescription);
-        void RemoveStep(string Email, string Password, string ProjecttTitle, string StepTitle);
-        void EditStep(string Email, string Password, string ProjectTitle, string StepTitle, string UpdatedStepTitle, string UpdatedStepDescription);
+
+        List<IProject> GetProjects(Guid UserId);
+
+        void AddNewProject(Guid UserId, string Title, string Description);
+        void EditProject(Guid UserId, string Title, string UpdatedTitle, string UpdatedDescription);
+        void RemoveProject(Guid UserId, string Title);
+
+        void AddStep(Guid UserId, string ProjectTitle, string StepTitle, string StepDescription);
+        void RemoveStep(Guid UserId, string ProjecttTitle, string StepTitle);
+        void EditStep(Guid UserId, string ProjectTitle, string StepTitle, string UpdatedStepTitle, string UpdatedStepDescription);
+        void SetStepStatus(Guid UserId, bool IsDone);
 
     }
 }

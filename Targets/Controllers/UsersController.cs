@@ -27,13 +27,13 @@ namespace Targets.Controllers
         [HttpGet("{Email}, {Password}")]
         public IUser Get(string Email, string Password)
         {
-            return service.Get(Email, Password);
+            return service.GetId(Email, Password);
         }
 
         [HttpPost("RegisterAccount")]
         public void Post([FromBody] string [] data)
         {
-                service.RegisterAccount(data[0], data[1], data[2]);
+              //  service.RegisterAccount(data[0], data[1], data[2]);
         }
 
 
