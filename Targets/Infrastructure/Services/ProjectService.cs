@@ -10,31 +10,28 @@ namespace Targets.Infrastructure.Services
     public class ProjectService : IProjectService
     {
 
-        IUserRepository repo;
-        public ProjectService(IUserRepository UsersRepository)
+        IRepository repo;
+        public ProjectService(IRepository _repo)
         {
-            repo = UsersRepository;
+            repo = _repo;
         }
 
 
         public void AddNewProject(Guid UserId, string Title, string Description)
         {
-            throw new NotImplementedException();
+            repo.AddNewProject(UserId, Title,  Description);
+
         }
 
         public void EditProject(Guid UserId, string Title, string UpdatedTitle, string UpdatedDescription)
         {
-            throw new NotImplementedException();
+            repo.EditProject(UserId, Title, UpdatedTitle, UpdatedDescription);
         }
 
-        public List<IProject> GetProjects(Guid UserId)
-        {
-            throw new NotImplementedException();
-        }
 
         public void RemoveProject(Guid UserId, string Title)
         {
-            throw new NotImplementedException();
+            repo.RemoveProject(UserId, Title);
         }
     }
 }

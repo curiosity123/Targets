@@ -26,7 +26,7 @@ namespace Targets
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IUserService, UserService>();
-            services.AddSingleton<IUserRepository, InMemoryUserRepository>();
+            services.AddSingleton<IRepository, InMemoryRepository>();
             services.AddMvc();
         }
 

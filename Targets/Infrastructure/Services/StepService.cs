@@ -2,29 +2,37 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Targets.Infrastructure.Repositories;
 
 namespace Targets.Infrastructure.Services
 {
     public class StepService : IStepService
     {
+
+        IRepository repo;
+        public StepService(IRepository _repo)
+        {
+            repo = _repo;
+        }
+
         public void AddStep(Guid UserId, string ProjectTitle, string StepTitle, string StepDescription)
         {
-            throw new NotImplementedException();
+            repo.AddStep(UserId, ProjectTitle, StepTitle, StepDescription);
         }
 
         public void EditStep(Guid UserId, string ProjectTitle, string StepTitle, string UpdatedStepTitle, string UpdatedStepDescription)
         {
-            throw new NotImplementedException();
+            repo.EditStep(UserId, ProjectTitle, StepTitle, UpdatedStepTitle, UpdatedStepDescription);
         }
 
         public void RemoveStep(Guid UserId, string ProjecttTitle, string StepTitle)
         {
-            throw new NotImplementedException();
+            repo.RemoveStep(UserId, ProjecttTitle, StepTitle);
         }
 
-        public void SetStepStatus(Guid UserId, bool IsDone)
+        public void SetStepStatus(Guid UserId, string ProjecttTitle, string StepTitle, bool IsDone)
         {
-            throw new NotImplementedException();
+            repo.SetStepStatus(UserId, ProjecttTitle, StepTitle, IsDone);
         }
     }
 }

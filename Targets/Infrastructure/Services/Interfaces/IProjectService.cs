@@ -12,7 +12,6 @@ namespace Targets.Infrastructure.Services
         void AddNewProject(Guid UserId, string Title, string Description);
         void EditProject(Guid UserId, string Title, string UpdatedTitle, string UpdatedDescription);
         void RemoveProject(Guid UserId, string Title);
-        List<IProject> GetProjects(Guid UserId);
 
     }
 }

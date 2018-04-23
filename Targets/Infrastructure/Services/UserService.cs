@@ -12,9 +12,9 @@ namespace Targets.Infrastructure
     public class UserService : IUserService
     {
 
-        IUserRepository repo;
+        IRepository repo;
 
-        public UserService(IUserRepository _repo)
+        public UserService(IRepository _repo)
         {
             repo = _repo;
         }
