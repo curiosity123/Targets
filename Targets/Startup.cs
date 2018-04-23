@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Targets.Infrastructure;
+using Targets.Infrastructure.Repositories;
 
 namespace Targets
 {
@@ -25,6 +26,7 @@ namespace Targets
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<IUserRepository, InMemoryUserRepository>();
             services.AddMvc();
         }
 

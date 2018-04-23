@@ -5,37 +5,38 @@ using System.Threading.Tasks;
 using Targets.Domain;
 using Targets.Domain.Implementations;
 using Targets.Domain.Interfaces;
+using Targets.Infrastructure.Repositories;
 
 namespace Targets.Infrastructure
 {
     public class UserService : IUserService
     {
 
-        List<IUser> Users;
+        IUserRepository repo;
 
-        public UserService()
+        public UserService(IUserRepository _repo)
         {
-            Users = new List<IUser>() { new User() { NickName = "lukasz", Email = "lukasz@gmail.com", Id = Guid.NewGuid(), Password = "pass" } };
+            repo = _repo;
         }
 
         public void DeleteAccount(string Email, string Password)
         {
-            Users.Remove(Users.Where(x => x.Email == Email && x.Password == Password).FirstOrDefault());
+            repo.DeleteAccount(Email, Password);
         }
 
         public IUser Get(string Email, string Password)
         {
-            return Users.Where(x => x.Email == Email && x.Password == Password).FirstOrDefault();
+            return repo.Get(Email, Password);
         }
 
         public void RegisterAccount(string Email, string Password)
         {
-            Users.Add(new User() { Email = Email, Password = Password });
+            repo.RegisterAccount(Email, Password);
         }
 
         public void SetNickName(Guid UserId, string Nick)
         {
-            Users.Where(x => x.Id == UserId).FirstOrDefault().NickName = Nick;
+            repo.SetNickName(UserId, Nick);
         }
     }
 }

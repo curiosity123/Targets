@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Targets.Domain.Interfaces;
+using Targets.Infrastructure.Repositories;
 
 namespace Targets.Infrastructure.Services
 {
     public class ProjectService : IProjectService
     {
+
+        IUserRepository repo;
+        public ProjectService(IUserRepository UsersRepository)
+        {
+            repo = UsersRepository;
+        }
+
+
         public void AddNewProject(Guid UserId, string Title, string Description)
         {
             throw new NotImplementedException();
