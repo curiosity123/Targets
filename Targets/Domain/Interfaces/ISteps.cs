@@ -9,6 +9,6 @@ namespace Targets.Domain.Interfaces
     {
         string Title { get; set; }
         string Description { get; set; }
-        bool IsDone { get; set; }
+        bool Completed { get; set; }
     }
 }

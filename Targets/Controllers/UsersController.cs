@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Targets.Domain;
+using Targets.Domain.Implementations;
 using Targets.Domain.Interfaces;
 using Targets.Infrastructure;
 
@@ -27,20 +28,24 @@ namespace Targets.Controllers
         [HttpGet("{Email}, {Password}")]
         public IUser Get(string Email, string Password)
         {
-            return service.GetId(Email, Password);
+            return service.Get(Email, Password);
         }
 
+
         [HttpPost("RegisterAccount")]
-        public void Post([FromBody] string [] data)
+        public void Post([FromBody] User usr)
         {
-              //  service.RegisterAccount(data[0], data[1], data[2]);
+             if (usr!=null)
+                service.RegisterAccount(usr.Email, usr.Password);
+           // return Ok();
         }
 
 
         [HttpDelete("DeleteAccount")]
-        public void Delete([FromBody] string [] data)
+        public void Delete([FromBody] User usr)
         {
-                service.DeleteAccount(data[0],data[1]);
+            if (usr != null)
+                service.DeleteAccount(usr.Email, usr.Password);
         }
 
     }
