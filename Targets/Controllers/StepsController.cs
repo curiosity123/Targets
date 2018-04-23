@@ -8,44 +8,50 @@ using Targets.Domain;
 using Targets.Domain.Implementations;
 using Targets.Domain.Interfaces;
 using Targets.Infrastructure;
+using Targets.Infrastructure.DTO;
+using Targets.Infrastructure.Services;
 
 namespace Targets.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Users")]
-    public class UsersController : Controller
+    [Route("api/Steps")]
+    public class StepsController : Controller
     {
 
-        private readonly IUserService service;
+        private readonly IStepService service;
 
-        public UsersController(IUserService userService)
+        public StepsController(IStepService userService)
         {
             service = userService;
         }
 
-
-
-        [HttpGet("{Email}, {Password}")]
-        public IUser Get(string Email, string Password)
+        [HttpPost("Add")]
+        public void Post([FromBody] NewStepDto obj)
         {
-            return service.Get(Email, Password);
+            if (obj != null)
+                service.AddStep(obj.UserId, obj.ProjectTitle, obj.StepTitle, obj.StepDescription);
+        }
+
+        [HttpPost("Edit")]
+        public void Post([FromBody] EditStepDto obj)
+        {
+            if (obj != null)
+                service.EditStep(obj.UserId, obj.ProjectTitle, obj.StepTitle, obj.UpdatedStepTitle, obj.UpdatedStepDescription);
         }
 
 
-        [HttpPost("RegisterAccount")]
-        public void Post([FromBody] User usr)
+        [HttpDelete("Delete")]
+        public void Delete([FromBody] RemStepDto obj)
         {
-             if (usr!=null)
-                service.RegisterAccount(usr.Email, usr.Password);
+            if (obj != null)
+                service.RemoveStep(obj.UserId, obj.ProjectTitle, obj.StepTitle);
         }
 
-
-        [HttpDelete("DeleteAccount")]
-        public void Delete([FromBody] User usr)
+        [HttpPost("SetState")]
+        public void SetState([FromBody] SetStateStepDto obj)
         {
-            if (usr != null)
-                service.DeleteAccount(usr.Email, usr.Password);
+            if (obj != null)
+                service.SetStepStatus(obj.UserId, obj.ProjectTitle, obj.StepTitle,obj.IsDone);
         }
-
     }
 }

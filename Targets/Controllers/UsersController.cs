@@ -13,31 +13,39 @@ using Targets.Infrastructure.Services;
 namespace Targets.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Steps")]
-    public class StepsController : Controller
+    [Route("api/Users")]
+    public class UsersController : Controller
     {
 
-        private readonly IStepService service;
+        private readonly IUserService service;
 
-        public StepsController(IStepService userService)
+        public UsersController(IUserService userService)
         {
             service = userService;
         }
 
 
-        [HttpPost("AddStep")]
+
+        [HttpGet("{Email}, {Password}")]
+        public IUser Get(string Email, string Password)
+        {
+            return service.Get(Email, Password);
+        }
+
+
+        [HttpPost("RegisterAccount")]
         public void Post([FromBody] User usr)
         {
-            // if (usr!=null)
-            //    service.AddStep(usr.Email, usr.Password);
+            if (usr != null)
+                service.RegisterAccount(usr.Email, usr.Password);
         }
 
 
         [HttpDelete("DeleteAccount")]
         public void Delete([FromBody] User usr)
         {
-           // if (usr != null)
-           //     service.DeleteAccount(usr.Email, usr.Password);
+            if (usr != null)
+                service.DeleteAccount(usr.Email, usr.Password);
         }
 
     }
