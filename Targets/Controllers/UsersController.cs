@@ -37,7 +37,6 @@ namespace Targets.Controllers
         {
              if (usr!=null)
                 service.RegisterAccount(usr.Email, usr.Password);
-           // return Ok();
         }
 
 

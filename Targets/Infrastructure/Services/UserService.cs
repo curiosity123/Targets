@@ -28,11 +28,6 @@ namespace Targets.Infrastructure
             return Users.Where(x => x.Email == Email && x.Password == Password).FirstOrDefault();
         }
 
-        public Guid GetId(string Email, string Password)
-        {
-            return Users.Where(x => x.Email == Email && x.Password == Password).FirstOrDefault().Id;
-        }
-
         public void RegisterAccount(string Email, string Password)
         {
             Users.Add(new User() { Email = Email, Password = Password });
