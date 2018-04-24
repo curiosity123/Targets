@@ -12,8 +12,6 @@ namespace Targets.Tests.EndToEnd
     public class UsersControllerTest : ControllerTestsBase
     {
 
-
-
         [Test]
         public async Task ShoudRegisterAccount()
         {
@@ -29,6 +27,7 @@ namespace Targets.Tests.EndToEnd
 
             var res = await Client.GetAsync("api/Users/test@test.pl, pass");
             var responseString = await res.Content.ReadAsStringAsync();
+            Assert.IsTrue(responseString.Contains("test@test.pl"));
             Assert.AreEqual(res.StatusCode, HttpStatusCode.OK);
         }
     }
