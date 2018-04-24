@@ -8,6 +8,7 @@ using Targets.Domain;
 using Targets.Domain.Implementations;
 using Targets.Domain.Interfaces;
 using Targets.Infrastructure;
+using Targets.Infrastructure.DTO;
 using Targets.Infrastructure.Services;
 
 namespace Targets.Controllers
@@ -34,7 +35,7 @@ namespace Targets.Controllers
 
 
         [HttpPost("RegisterAccount")]
-        public void Post([FromBody] User usr)
+        public void Post([FromBody] RegisterUserDto usr)
         {
             if (usr != null)
                 service.RegisterAccount(usr.Email, usr.Password);
@@ -42,7 +43,7 @@ namespace Targets.Controllers
 
 
         [HttpDelete("DeleteAccount")]
-        public void Delete([FromBody] User usr)
+        public void Delete([FromBody] RegisterUserDto usr)
         {
             if (usr != null)
                 service.DeleteAccount(usr.Email, usr.Password);
