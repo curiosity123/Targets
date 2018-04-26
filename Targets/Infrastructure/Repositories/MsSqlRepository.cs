@@ -42,15 +42,13 @@ namespace Targets.Infrastructure.Repositories
 
         public User Get(string Email, string Password)
         {
-            dbContext.Step.Add(new Step() { Title = "dupa" });
-            dbContext.SaveChanges();
-            var s =  dbContext.Step.Where(x=>x.Id!=null).ToList();
-            return null;//dbContext.Users.Where(x => x.Email == Email && x.Password == Password).FirstOrDefault();
+            return dbContext.Users.Where(x => x.Email == Email && x.Password == Password).FirstOrDefault();
         }
 
         public void RegisterAccount(string Email, string Password)
         {
-            throw new NotImplementedException();
+            dbContext.Users.Add(new User() { Email = Email, Password = Password });
+            dbContext.SaveChanges();
         }
 
         public void RemoveProject(Guid userId, string title)

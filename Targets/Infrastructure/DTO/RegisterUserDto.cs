@@ -7,7 +7,6 @@ namespace Targets.Infrastructure.DTO
 {
     public class RegisterUserDto
     {
-        public Guid Id { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
     }

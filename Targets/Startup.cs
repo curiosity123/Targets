@@ -31,8 +31,6 @@ namespace Targets
             services.AddScoped<IRepository, MsSqlRepository>();
             services.AddMvc();
 
-            
-            var cs = "Data Source = DESKTOP - VS2BD79\\SQLEXPRESS; Integrated Security = True";
             var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<TargetsContext>(options => options.UseSqlServer(connection));
         }

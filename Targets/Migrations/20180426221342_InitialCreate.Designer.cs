@@ -11,9 +11,10 @@ using Targets.Infrastructure.EF;
 namespace Targets.Migrations
 {
     [DbContext(typeof(TargetsContext))]
-    partial class TargetsContextModelSnapshot : ModelSnapshot
+    [Migration("20180426221342_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
