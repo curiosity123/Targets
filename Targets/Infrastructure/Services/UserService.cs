@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Targets.Domain;
 using Targets.Domain.Implementations;
-using Targets.Domain.Interfaces;
 using Targets.Infrastructure.Repositories;
 
 namespace Targets.Infrastructure
@@ -24,7 +23,7 @@ namespace Targets.Infrastructure
             repo.DeleteAccount(Email, Password);
         }
 
-        public IUser Get(string Email, string Password)
+        public User Get(string Email, string Password)
         {
             return repo.Get(Email, Password);
         }

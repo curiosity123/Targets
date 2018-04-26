@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Targets.Domain;
 using Targets.Domain.Implementations;
-using Targets.Domain.Interfaces;
 using Targets.Infrastructure;
 using Targets.Infrastructure.DTO;
 using Targets.Infrastructure.Services;
@@ -28,7 +27,7 @@ namespace Targets.Controllers
 
 
         [HttpGet("{Email}, {Password}")]
-        public IUser Get(string Email, string Password)
+        public User Get(string Email, string Password)
         {
             return service.Get(Email, Password);
         }

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Targets.Domain;
 using Targets.Domain.Implementations;
-using Targets.Domain.Interfaces;
 using Targets.Infrastructure;
 using Targets.Infrastructure.DTO;
 using Targets.Infrastructure.Services;
