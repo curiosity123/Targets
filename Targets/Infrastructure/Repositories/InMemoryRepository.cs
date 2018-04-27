@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Targets.Domain.Implementations;
+using Targets.Infrastructure.Services;
 
 namespace Targets.Infrastructure.Repositories
 {
@@ -20,37 +21,37 @@ namespace Targets.Infrastructure.Repositories
 
 
 //User operations
-        public void DeleteAccount(string Email, string Password)
+        public void DeleteAccount(Token token)
         {
-            DataBase.Remove(DataBase.Where(x => x.Email == Email && x.Password == Password).FirstOrDefault());
+            DataBase.Remove(DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault());
         }
 
-        public User Get(string Email, string Password)
+        public User Get(Token token)
         {
-            return DataBase.Where(x => x.Email == Email && x.Password == Password).FirstOrDefault();
+            return DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault();
         }
 
-        public void RegisterAccount(string Email, string Password)
+        public void RegisterAccount(Token token)
         {
-            DataBase.Add(new User() { Email = Email, Password = Password });
+            DataBase.Add(new User() { Email = token.Email, Password = token.Password });
         }
 
-        public void SetNickName(Guid UserId, string Nick)
+        public void SetNickName(Token token, string Nick)
         {
-            DataBase.Where(x => x.Id == UserId).FirstOrDefault().NickName = Nick;
+            DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault().NickName = Nick;
         }
 
 
 
         //Project operations
-        public void RemoveProject(Guid userId, string title)
+        public void RemoveProject(Token token, Guid ProjectId)
         {
-            DataBase.Where(x => x.Id == userId).FirstOrDefault().Projects?.RemoveAll(x => x.Title == title);
+            DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault().Projects?.RemoveAll(x => x.Id == ProjectId);
         }
 
-        public void EditProject(Guid userId, string title, string updatedTitle, string updatedDescription)
+        public void EditProject(Token token, Guid ProjectId, string updatedTitle, string updatedDescription)
         {
-            Project prj = DataBase.Where(x => x.Id == userId).FirstOrDefault().Projects.Where(x => x.Title == title).FirstOrDefault();
+            Project prj = DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault().Projects.Where(x => x.Id == ProjectId).FirstOrDefault();
             if (prj != null)
             {
                 prj.Title = updatedTitle;
@@ -58,9 +59,9 @@ namespace Targets.Infrastructure.Repositories
             }
         }
 
-        public void AddNewProject(Guid userId, string title, string description)
+        public void AddNewProject(Token token, string title, string description)
         {
-            User usr = DataBase.Where(x => x.Id == userId).FirstOrDefault();
+            User usr = DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault();
             if (usr != null)
             {
                 usr.Projects.Add(new Project() { Title = title, Description = description });
@@ -71,21 +72,21 @@ namespace Targets.Infrastructure.Repositories
 
 
         //Step operations
-        public void AddStep(Guid userId, string projectTitle, string stepTitle, string stepDescription)
+        public void AddStep(Token token, Guid ProjectId, string stepTitle, string stepDescription)
         {
-            Project prj = DataBase.Where(x => x.Id == userId).FirstOrDefault().Projects.Where(x => x.Title == projectTitle).FirstOrDefault();
+            Project prj = DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault().Projects.Where(x => x.Id == ProjectId).FirstOrDefault();
             if (prj != null)
             {
                 prj.Steps.Add(new Step() { Title = stepTitle, Description = stepDescription, Completed = false });
             }
         }
 
-        public void EditStep(Guid userId, string projectTitle, string stepTitle, string updatedStepTitle, string updatedStepDescription)
+        public void EditStep(Token token, Guid ProjectId, Guid StepId, string updatedStepTitle, string updatedStepDescription)
         {
-            Project prj = DataBase.Where(x => x.Id == userId).FirstOrDefault().Projects.Where(x => x.Title == projectTitle).FirstOrDefault();
+            Project prj = DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault().Projects.Where(x => x.Id == ProjectId).FirstOrDefault();
             if (prj != null)
             {
-                Step step = prj.Steps.Where(x => x.Title == stepTitle).FirstOrDefault();
+                Step step = prj.Steps.Where(x => x.Id ==StepId).FirstOrDefault();
                 if (step != null)
                 {
                     step.Title = updatedStepTitle;
@@ -95,12 +96,12 @@ namespace Targets.Infrastructure.Repositories
             }
         }
 
-        public void RemoveStep(Guid userId, string projectTitle, string stepTitle)
+        public void RemoveStep(Token token, Guid ProjectId, Guid StepId)
         {
-            Project prj = DataBase.Where(x => x.Id == userId).FirstOrDefault().Projects.Where(x => x.Title == projectTitle).FirstOrDefault();
+            Project prj = DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault().Projects.Where(x => x.Id == ProjectId).FirstOrDefault();
             if (prj != null)
             {
-                Step step = prj.Steps.Where(x => x.Title == stepTitle).FirstOrDefault();
+                Step step = prj.Steps.Where(x => x.Id == StepId).FirstOrDefault();
                 if (step != null)
                 {
                     prj.Steps.Remove(step);
@@ -108,12 +109,12 @@ namespace Targets.Infrastructure.Repositories
             }
         }
 
-        public void SetStepStatus(Guid userId, string projectTitle, string stepTitle, bool isDone)
+        public void SetStepStatus(Token token, Guid ProjectId, Guid StepId, bool isDone)
         {
-            Project prj = DataBase.Where(x => x.Id == userId).FirstOrDefault().Projects.Where(x => x.Title == projectTitle).FirstOrDefault();
+            Project prj = DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault().Projects.Where(x => x.Id == ProjectId).FirstOrDefault();
             if (prj != null)
             {
-                Step step = prj.Steps.Where(x => x.Title == stepTitle).FirstOrDefault();
+                Step step = prj.Steps.Where(x => x.Id == StepId).FirstOrDefault();
                 if (step != null)
                 {
                     step.Completed = isDone;

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Targets.Domain;
 using Targets.Domain.Implementations;
 using Targets.Infrastructure.Repositories;
+using Targets.Infrastructure.Services;
 
 namespace Targets.Infrastructure
 {
@@ -18,24 +19,24 @@ namespace Targets.Infrastructure
             repo = _repo;
         }
 
-        public void DeleteAccount(string Email, string Password)
+        public void DeleteAccount(Token token)
         {
-            repo.DeleteAccount(Email, Password);
+            repo.DeleteAccount(token);
         }
 
-        public User Get(string Email, string Password)
+        public User Get(Token token)
         {
-            return repo.Get(Email, Password);
+            return repo.Get(token);
         }
 
-        public void RegisterAccount(string Email, string Password)
+        public void RegisterAccount(Token token)
         {
-            repo.RegisterAccount(Email, Password);
+            repo.RegisterAccount(token);
         }
 
-        public void SetNickName(Guid UserId, string Nick)
+        public void SetNickName(Token token, string Nick)
         {
-            repo.SetNickName(UserId, Nick);
+            repo.SetNickName(token, Nick);
         }
     }
 }

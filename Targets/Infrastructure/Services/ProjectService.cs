@@ -16,21 +16,20 @@ namespace Targets.Infrastructure.Services
         }
 
 
-        public void AddNewProject(Guid UserId, string Title, string Description)
+        public void AddNewProject(Token token, string Title, string Description)
         {
-            repo.AddNewProject(UserId, Title,  Description);
+            repo.AddNewProject(token, Title,  Description);
 
         }
 
-        public void EditProject(Guid UserId, string Title, string UpdatedTitle, string UpdatedDescription)
+        public void EditProject(Token token, Guid ProjectId, string UpdatedTitle, string UpdatedDescription)
         {
-            repo.EditProject(UserId, Title, UpdatedTitle, UpdatedDescription);
+            repo.EditProject(token, ProjectId, UpdatedTitle, UpdatedDescription);
         }
 
-
-        public void RemoveProject(Guid UserId, string Title)
+        public void RemoveProject(Token token, Guid ProjectId)
         {
-            repo.RemoveProject(UserId, Title);
+            repo.RemoveProject(token, ProjectId);
         }
     }
 }

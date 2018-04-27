@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Targets.Domain;
+﻿using Microsoft.AspNetCore.Mvc;
 using Targets.Domain.Implementations;
 using Targets.Infrastructure;
 using Targets.Infrastructure.DTO;
@@ -26,26 +20,26 @@ namespace Targets.Controllers
 
 
 
-        [HttpGet("{Email}, {Password}")]
-        public User Get(string Email, string Password)
+        [HttpGet("{token}")]
+        public User Get(Token token)
         {
-            return service.Get(Email, Password);
+            return service.Get(token);
         }
 
 
         [HttpPost("RegisterAccount")]
-        public void Post([FromBody] RegisterUserDto usr)
+        public void Post([FromBody] Token token)
         {
-            if (usr != null)
-                service.RegisterAccount(usr.Email, usr.Password);
+            if (token != null)
+                service.RegisterAccount(token);
         }
 
 
         [HttpDelete("DeleteAccount")]
-        public void Delete([FromBody] RegisterUserDto usr)
+        public void Delete([FromBody] Token token)
         {
-            if (usr != null)
-                service.DeleteAccount(usr.Email, usr.Password);
+            if (token != null)
+                service.DeleteAccount(token);
         }
 
     }

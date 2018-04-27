@@ -8,9 +8,9 @@ namespace Targets.Infrastructure.Services
     public interface IProjectService
     {
 
-        void AddNewProject(Guid UserId, string Title, string Description);
-        void EditProject(Guid UserId, string Title, string UpdatedTitle, string UpdatedDescription);
-        void RemoveProject(Guid UserId, string Title);
+        void AddNewProject(Token token, string Title, string Description);
+        void EditProject(Token token, Guid ProjectId, string UpdatedTitle, string UpdatedDescription);
+        void RemoveProject(Token token, Guid ProjectId);
 
     }
 }

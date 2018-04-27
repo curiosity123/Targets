@@ -2,6 +2,7 @@
 using System.Linq;
 using Targets.Domain.Implementations;
 using Targets.Infrastructure.EF;
+using Targets.Infrastructure.Services;
 
 namespace Targets.Infrastructure.Repositories
 {
@@ -15,58 +16,58 @@ namespace Targets.Infrastructure.Repositories
         }
 
 
-        public void AddNewProject(Guid userId, string title, string description)
+        public void AddNewProject(Token token, string title, string description)
         {
             throw new NotImplementedException();
         }
 
-        public void AddStep(Guid userId, string projectTitle, string stepTitle, string stepDescription)
+        public void AddStep(Token token, Guid ProjectId, string stepTitle, string stepDescription)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteAccount(string Email, string Password)
+        public void DeleteAccount(Token token)
         {
             throw new NotImplementedException();
         }
 
-        public void EditProject(Guid userId, string title, string updatedTitle, string updatedDescription)
+        public void EditProject(Token token, Guid ProjectId, string updatedTitle, string updatedDescription)
         {
             throw new NotImplementedException();
         }
 
-        public void EditStep(Guid userId, string projectTitle, string stepTitle, string updatedStepTitle, string updatedStepDescription)
+        public void EditStep(Token token, Guid ProjectId, Guid StepId, string updatedStepTitle, string updatedStepDescription)
         {
             throw new NotImplementedException();
         }
 
-        public User Get(string Email, string Password)
+        public User Get(Token token)
         {
-            return dbContext.Users.Where(x => x.Email == Email && x.Password == Password).FirstOrDefault();
+            return dbContext.Users.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault();
         }
 
-        public void RegisterAccount(string Email, string Password)
+        public void RegisterAccount(Token token)
         {
-            dbContext.Users.Add(new User() { Email = Email, Password = Password });
-            dbContext.SaveChanges();
+            //dbContext.Users.Add(new User() { Email = Email, Password = Password });
+            //dbContext.SaveChanges();
         }
 
-        public void RemoveProject(Guid userId, string title)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveStep(Guid userId, string projectTitle, string stepTitle)
+        public void RemoveProject(Token token, Guid ProjectId)
         {
             throw new NotImplementedException();
         }
 
-        public void SetNickName(Guid UserId, string Nick)
+        public void RemoveStep(Token token, Guid ProjectId, Guid StepId)
         {
             throw new NotImplementedException();
         }
 
-        public void SetStepStatus(Guid userId, string projectTitle, string stepTitle, bool isDone)
+        public void SetNickName(Token token, string Nick)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetStepStatus(Token token, Guid ProjectId, Guid StepId, bool isDone)
         {
             throw new NotImplementedException();
         }

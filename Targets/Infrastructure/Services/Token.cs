@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Targets.Infrastructure.DTO
+namespace Targets.Infrastructure.Services
 {
-    public class RegisterUserDto
+    public class Token
     {
         public string Email { get; set; }
         public string Password { get; set; }

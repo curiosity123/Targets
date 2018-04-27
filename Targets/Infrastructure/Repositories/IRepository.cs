@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Targets.Domain.Implementations;
+using Targets.Infrastructure.Services;
 
 namespace Targets.Infrastructure.Repositories
 {
     public interface IRepository
     {
-        User Get(string Email, string Password);
-        void RegisterAccount(string Email, string Password);
-        void SetNickName(Guid UserId, string Nick);
-        void DeleteAccount(string Email, string Password);
+        User Get(Token token);
+        void RegisterAccount(Token token);
+        void SetNickName(Token token, string Nick);
+        void DeleteAccount(Token token);
 
-        void AddNewProject(Guid userId, string title, string description);
-        void AddStep(Guid userId, string projectTitle, string stepTitle, string stepDescription);
-        void EditProject(Guid userId, string title, string updatedTitle, string updatedDescription);
-        void RemoveProject(Guid userId, string title);
-        void EditStep(Guid userId, string projectTitle, string stepTitle, string updatedStepTitle, string updatedStepDescription);
-        void RemoveStep(Guid userId, string projectTitle, string stepTitle);
-        void SetStepStatus(Guid userId, string projectTitle, string stepTitle, bool isDone);
+        void AddNewProject(Token token, string title, string description);
+        void AddStep(Token token, Guid ProjectId, string stepTitle, string stepDescription);
+        void EditProject(Token token, Guid ProjectId, string updatedTitle, string updatedDescription);
+        void RemoveProject(Token token, Guid ProjectId);
+        void EditStep(Token token, Guid ProjectId, Guid StepId, string updatedStepTitle, string updatedStepDescription);
+        void RemoveStep(Token token, Guid ProjectId, Guid StepId);
+        void SetStepStatus(Token token, Guid ProjectId, Guid StepId, bool isDone);
     }
 }

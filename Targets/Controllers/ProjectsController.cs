@@ -30,14 +30,14 @@ namespace Targets.Controllers
         public void Post([FromBody] NewPrjDto prj)
         {
              if (prj!=null)
-                service.AddNewProject(prj.UserId,prj.Title, prj.Description);
+                service.AddNewProject(prj.token,prj.Title, prj.Description);
         }
 
         [HttpPost("Edit")]
         public void Post([FromBody] EditPrjDto prj)
         {
             if (prj != null)
-                service.EditProject(prj.UserId, prj.Title,prj.UpdatedTitle, prj.UpdatedDescription);
+                service.EditProject(prj.token, prj.PrjectId,prj.UpdatedTitle, prj.UpdatedDescription);
         }
 
 
@@ -45,7 +45,7 @@ namespace Targets.Controllers
         public void Delete([FromBody] EditPrjDto prj)
         {
             if (prj != null)
-                service.RemoveProject(prj.UserId, prj.Title);
+                service.RemoveProject(prj.token, prj.PrjectId);
         }
 
     }

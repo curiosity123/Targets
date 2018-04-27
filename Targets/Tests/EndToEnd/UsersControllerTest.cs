@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Targets.Infrastructure.DTO;
+using Targets.Infrastructure.Services;
 
 namespace Targets.Tests.EndToEnd
 {
@@ -15,7 +16,7 @@ namespace Targets.Tests.EndToEnd
         [Test]
         public async Task ShoudRegisterAccount()
         {
-            RegisterUserDto usr = new RegisterUserDto()
+            Token usr = new Token()
             {
                 Email = "test@test.pl",
                 Password = "pass"

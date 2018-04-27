@@ -15,24 +15,24 @@ namespace Targets.Infrastructure.Services
             repo = _repo;
         }
 
-        public void AddStep(Guid UserId, string ProjectTitle, string StepTitle, string StepDescription)
+        public void AddStep(Token token, Guid ProjectId, string StepTitle, string StepDescription)
         {
-            repo.AddStep(UserId, ProjectTitle, StepTitle, StepDescription);
+            repo.AddStep(token, ProjectId, StepTitle, StepDescription);
         }
 
-        public void EditStep(Guid UserId, string ProjectTitle, string StepTitle, string UpdatedStepTitle, string UpdatedStepDescription)
+        public void EditStep(Token token, Guid ProjectId, Guid StepId, string UpdatedStepTitle, string UpdatedStepDescription)
         {
-            repo.EditStep(UserId, ProjectTitle, StepTitle, UpdatedStepTitle, UpdatedStepDescription);
+            repo.EditStep(token, ProjectId, StepId, UpdatedStepTitle, UpdatedStepDescription);
         }
 
-        public void RemoveStep(Guid UserId, string ProjecttTitle, string StepTitle)
+        public void RemoveStep(Token token, Guid ProjectId, Guid StepId)
         {
-            repo.RemoveStep(UserId, ProjecttTitle, StepTitle);
+            repo.RemoveStep(token, ProjectId, StepId);
         }
 
-        public void SetStepStatus(Guid UserId, string ProjecttTitle, string StepTitle, bool IsDone)
+        public void SetStepStatus(Token token, Guid ProjectId, Guid StepId, bool IsDone)
         {
-            repo.SetStepStatus(UserId, ProjecttTitle, StepTitle, IsDone);
+            repo.SetStepStatus(token, ProjectId, StepId, IsDone);
         }
     }
 }

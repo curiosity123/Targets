@@ -9,10 +9,10 @@ namespace Targets.Infrastructure.Services
 
     {
 
-        void AddStep(Guid UserId, string ProjectTitle, string StepTitle, string StepDescription);
-        void RemoveStep(Guid UserId, string ProjecttTitle, string StepTitle);
-        void EditStep(Guid UserId, string ProjectTitle, string StepTitle, string UpdatedStepTitle, string UpdatedStepDescription);
-        void SetStepStatus(Guid UserId, string ProjecttTitle, string StepTitle, bool IsDone);
+        void AddStep(Token token, Guid ProjectId, string StepTitle, string StepDescription);
+        void RemoveStep(Token token, Guid ProjectId, Guid StepId);
+        void EditStep(Token token, Guid ProjectId, Guid StepId, string UpdatedStepTitle, string UpdatedStepDescription);
+        void SetStepStatus(Token token, Guid ProjectId, Guid StepId, bool IsDone);
 
     }
 }
