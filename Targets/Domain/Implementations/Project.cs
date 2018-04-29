@@ -10,7 +10,7 @@ namespace Targets.Domain.Implementations
 
         public Project()
         {
-             
+            Id = Guid.NewGuid();
         }
         public Guid Id { get; set; }
         public string Title { get; set; }

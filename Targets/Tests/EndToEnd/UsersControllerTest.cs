@@ -6,7 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Targets.Domain.Implementations;
 using Targets.Infrastructure.DTO;
+using Newtonsoft.Json;
 using Targets.Infrastructure.Services;
 
 namespace Targets.Tests.EndToEnd
@@ -19,7 +21,7 @@ namespace Targets.Tests.EndToEnd
         {
 
         }
-        
+
 
 
         [Test]
@@ -47,6 +49,31 @@ namespace Targets.Tests.EndToEnd
             request.Content = payload;
             var deleteResponse = await Client.SendAsync(request);
             Assert.AreEqual(deleteResponse.StatusCode, HttpStatusCode.OK);
+        }
+
+
+        [Test]
+        public async Task ProjectCRUD_test()
+        {
+            Token usr = new Token()
+            {
+                Email = "test@test.pl",
+                Password = "pass"
+            };
+
+            //create test
+            StringContent payload = GetPayload(usr);
+            var response = await Client.PostAsync("api/Users/RegisterAccount/", payload);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+
+
+            var res = await Client.GetAsync("api/Users/test@test.pl,pass");
+            var responseString = await res.Content.ReadAsStringAsync();
+            User u = JsonConvert.DeserializeObject<User>(responseString);
+            Assert.IsTrue(responseString.Contains("test@test.pl"));
+            Assert.AreEqual(res.StatusCode, HttpStatusCode.OK);
+
+
         }
 
 
