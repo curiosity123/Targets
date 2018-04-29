@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Targets.Domain;
 using Targets.Domain.Implementations;
+using Targets.Infrastructure.DTO;
 using Targets.Infrastructure.Repositories;
 using Targets.Infrastructure.Services;
 
@@ -34,9 +35,5 @@ namespace Targets.Infrastructure
             repo.RegisterAccount(token);
         }
 
-        public void SetNickName(Token token, string Nick)
-        {
-            repo.SetNickName(token, Nick);
-        }
     }
 }

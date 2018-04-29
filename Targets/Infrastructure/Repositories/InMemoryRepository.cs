@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Targets.Domain.Implementations;
+using Targets.Infrastructure.DTO;
 using Targets.Infrastructure.Services;
 
 namespace Targets.Infrastructure.Repositories
@@ -34,11 +35,6 @@ namespace Targets.Infrastructure.Repositories
         public void RegisterAccount(Token token)
         {
             DataBase.Add(new User() { Email = token.Email, Password = token.Password });
-        }
-
-        public void SetNickName(Token token, string Nick)
-        {
-            DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault().NickName = Nick;
         }
 
 

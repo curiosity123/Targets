@@ -1,4 +1,5 @@
 ﻿using Targets.Domain.Implementations;
+using Targets.Infrastructure.DTO;
 using Targets.Infrastructure.Services;
 
 namespace Targets.Infrastructure
@@ -8,6 +9,6 @@ namespace Targets.Infrastructure
         User Get(Token token);
         void RegisterAccount(Token token);
         void DeleteAccount(Token token);
-        void SetNickName(Token token, string Nick);
+
     }
 }

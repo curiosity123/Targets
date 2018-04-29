@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Targets.Domain.Implementations;
+using Targets.Infrastructure.DTO;
 using Targets.Infrastructure.EF;
 using Targets.Infrastructure.Services;
 
@@ -16,6 +17,26 @@ namespace Targets.Infrastructure.Repositories
         }
 
 
+
+        public User Get(Token token)
+        {
+            return dbContext.Users.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault();
+        }
+
+        public void RegisterAccount(Token token)
+        {
+            dbContext.Users.Add(new User() { Email = token.Email, Password = token.Password });
+            dbContext.SaveChanges();
+        }
+
+        public void DeleteAccount(Token token)
+        {
+            dbContext.Users.Remove(dbContext.Users.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault());
+            dbContext.SaveChanges();
+        }
+
+
+
         public void AddNewProject(Token token, string title, string description)
         {
             throw new NotImplementedException();
@@ -26,10 +47,6 @@ namespace Targets.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public void DeleteAccount(Token token)
-        {
-            throw new NotImplementedException();
-        }
 
         public void EditProject(Token token, Guid ProjectId, string updatedTitle, string updatedDescription)
         {
@@ -41,16 +58,6 @@ namespace Targets.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public User Get(Token token)
-        {
-            return dbContext.Users.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault();
-        }
-
-        public void RegisterAccount(Token token)
-        {
-            //dbContext.Users.Add(new User() { Email = Email, Password = Password });
-            //dbContext.SaveChanges();
-        }
 
         public void RemoveProject(Token token, Guid ProjectId)
         {
@@ -62,12 +69,7 @@ namespace Targets.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public void SetNickName(Token token, string Nick)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetStepStatus(Token token, Guid ProjectId, Guid StepId, bool isDone)
+         public void SetStepStatus(Token token, Guid ProjectId, Guid StepId, bool isDone)
         {
             throw new NotImplementedException();
         }

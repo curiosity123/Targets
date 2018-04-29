@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Targets.Infrastructure.DTO;
 using Targets.Infrastructure.Repositories;
 
 namespace Targets.Infrastructure.Services

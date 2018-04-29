@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Targets.Domain.Implementations;
+using Targets.Infrastructure.DTO;
 using Targets.Infrastructure.Services;
 
 namespace Targets.Infrastructure.Repositories
@@ -11,7 +12,6 @@ namespace Targets.Infrastructure.Repositories
     {
         User Get(Token token);
         void RegisterAccount(Token token);
-        void SetNickName(Token token, string Nick);
         void DeleteAccount(Token token);
 
         void AddNewProject(Token token, string title, string description);
