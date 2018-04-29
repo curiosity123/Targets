@@ -20,10 +20,10 @@ namespace Targets.Controllers
 
 
 
-        [HttpGet("{token}")]
-        public User Get(Token token)
+        [HttpGet("{Email},{Password}")]
+        public User Get(string Email, string Password)
         {
-            return service.Get(token);
+            return service.Get(new Token() { Email = Email, Password = Password});
         }
 
 

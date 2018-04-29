@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Targets.Infrastructure.Repositories;
 
 namespace Targets.Tests.EndToEnd
 {
@@ -18,9 +20,10 @@ namespace Targets.Tests.EndToEnd
         protected ControllerTestsBase()
         {
             Server = new TestServer(new WebHostBuilder()
-                          .UseStartup<Startup>());
+                          .UseStartup<TestStartup>());
             Client = Server.CreateClient();
         }
+ 
 
         protected static StringContent GetPayload(object data)
         {
