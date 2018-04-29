@@ -13,12 +13,16 @@ namespace Targets.Infrastructure.Repositories
         public MsSqlRepository(TargetsContext _context)
         {
             dbContext = _context;
-
         }
 
 
 
         public User Get(Token token)
+        {
+            return GetUserByToken(token);
+        }
+
+        private User GetUserByToken(Token token)
         {
             return dbContext.Users.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault();
         }
@@ -37,41 +41,114 @@ namespace Targets.Infrastructure.Repositories
 
 
 
+
+
+
+
+
         public void AddNewProject(Token token, string title, string description)
         {
-            throw new NotImplementedException();
+            User user = GetUserByToken(token);
+            if (user != null)
+                user.Projects.Add(new Project() { Title = title, Description = description });
+        }
+
+        public void EditProject(Token token, Guid ProjectId, string updatedTitle, string updatedDescription)
+        {
+            User user = GetUserByToken(token);
+            if (user != null)
+            {
+                Project prj = GetProjectById(ProjectId, user);
+                if (prj != null)
+                {
+                    prj.Title = updatedTitle;
+                    prj.Description = updatedDescription;
+                }
+            }
+        }
+
+        private static Project GetProjectById(Guid ProjectId, User user)
+        {
+            return user.Projects.Where(x => x.Id == ProjectId).FirstOrDefault();
+        }
+
+        public void RemoveProject(Token token, Guid ProjectId)
+        {
+            User user = GetUserByToken(token);
+            if (user != null)
+            {
+                Project prj = GetProjectById(ProjectId, user);
+                user.Projects.Remove(prj);
+            }
+        }
+
+
+
+
+
+
+
+
+        public void EditStep(Token token, Guid ProjectId, Guid StepId, string updatedStepTitle, string updatedStepDescription)
+        {
+            User user = GetUserByToken(token);
+            if (user != null)
+            {
+                Project prj = GetProjectById(ProjectId, user);
+                if (prj != null)
+                {
+                    Step step = prj.Steps.Where(x => x.Id == StepId).FirstOrDefault();
+                    if (step != null)
+                    {
+                        step.Title = updatedStepTitle;
+                        step.Description = updatedStepDescription;
+                    }
+
+                }
+            }
         }
 
         public void AddStep(Token token, Guid ProjectId, string stepTitle, string stepDescription)
         {
-            throw new NotImplementedException();
-        }
-
-
-        public void EditProject(Token token, Guid ProjectId, string updatedTitle, string updatedDescription)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void EditStep(Token token, Guid ProjectId, Guid StepId, string updatedStepTitle, string updatedStepDescription)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public void RemoveProject(Token token, Guid ProjectId)
-        {
-            throw new NotImplementedException();
+            User user = GetUserByToken(token);
+            if (user != null)
+            {
+                Project prj = GetProjectById(ProjectId, user);
+                if (prj != null)
+                {
+                    prj.Steps.Add(new Step() { Title = stepTitle, Description = stepDescription });
+                }
+            }
         }
 
         public void RemoveStep(Token token, Guid ProjectId, Guid StepId)
         {
-            throw new NotImplementedException();
+            User user = GetUserByToken(token);
+            if (user != null)
+            {
+                Project prj = GetProjectById(ProjectId, user);
+                if (prj != null)
+                {
+                    Step step = prj.Steps.Where(x => x.Id == StepId).FirstOrDefault();
+                    if (step != null)
+                        prj.Steps.Remove(step);
+                }
+            }
         }
 
-         public void SetStepStatus(Token token, Guid ProjectId, Guid StepId, bool isDone)
+        public void SetStepStatus(Token token, Guid ProjectId, Guid StepId, bool isDone)
         {
-            throw new NotImplementedException();
+            User user = GetUserByToken(token);
+            if (user != null)
+            {
+                Project prj = GetProjectById(ProjectId, user);
+                if (prj != null)
+                {
+                    Step step = prj.Steps.Where(x => x.Id == StepId).FirstOrDefault();
+                    if (step != null)
+                        step.Completed = isDone;
+                }
+            }
         }
     }
 }
