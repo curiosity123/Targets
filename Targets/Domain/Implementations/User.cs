@@ -10,6 +10,7 @@ namespace Targets.Domain.Implementations
         public User()
         {
             Id = Guid.NewGuid();
+            Projects = new List<Project>();
         }
        
 

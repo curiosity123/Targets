@@ -19,9 +19,9 @@ namespace Targets.Controllers
 
         private readonly IProjectService service;
 
-        public ProjectsController(IProjectService userService)
+        public ProjectsController(IProjectService prjService)
         {
-            service = userService;
+            service = prjService;
         }
 
 

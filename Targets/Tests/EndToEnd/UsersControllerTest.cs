@@ -61,7 +61,7 @@ namespace Targets.Tests.EndToEnd
                 Password = "pass"
             };
 
-            //create test
+            //register user
             StringContent payload = GetPayload(usr);
             var response = await Client.PostAsync("api/Users/RegisterAccount/", payload);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
@@ -69,11 +69,17 @@ namespace Targets.Tests.EndToEnd
 
             var res = await Client.GetAsync("api/Users/test@test.pl,pass");
             var responseString = await res.Content.ReadAsStringAsync();
-            User u = JsonConvert.DeserializeObject<User>(responseString);
-            Assert.IsTrue(responseString.Contains("test@test.pl"));
             Assert.AreEqual(res.StatusCode, HttpStatusCode.OK);
+  
+            payload = GetPayload(new NewPrjDto(){ token = usr, Title = "prj", Description="dsc" });
+            response = await Client.PostAsync("api/Projects/Add/", payload);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
 
 
+            res = await Client.GetAsync("api/Users/test@test.pl,pass");
+            responseString = await res.Content.ReadAsStringAsync();
+            var u = JsonConvert.DeserializeObject<User>(responseString);
+            Assert.IsTrue(u.Projects.Count() == 1);
         }
 
 

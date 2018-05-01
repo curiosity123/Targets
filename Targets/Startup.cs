@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Targets.Infrastructure;
 using Targets.Infrastructure.EF;
 using Targets.Infrastructure.Repositories;
+using Targets.Infrastructure.Services;
 
 namespace Targets
 {
@@ -22,6 +23,8 @@ namespace Targets
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IStepService, StepService>();
             services.AddScoped<IRepository, MsSqlRepository>();
             services.AddMvc();
 

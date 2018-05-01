@@ -11,6 +11,7 @@ namespace Targets.Domain.Implementations
         public Project()
         {
             Id = Guid.NewGuid();
+            Steps = new List<Step>();
         }
         public Guid Id { get; set; }
         public string Title { get; set; }

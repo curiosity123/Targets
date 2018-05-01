@@ -19,9 +19,9 @@ namespace Targets.Controllers
 
         private readonly IStepService service;
 
-        public StepsController(IStepService userService)
+        public StepsController(IStepService stepsService)
         {
-            service = userService;
+            service = stepsService;
         }
 
         [HttpPost("Add")]
