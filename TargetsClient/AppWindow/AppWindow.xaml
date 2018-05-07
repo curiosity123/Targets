@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TargetsClient.AppWindow"
         mc:Ignorable="d"
-        Title="AppWindow" Height="300" Width="300">
+        Title="AppWindow" x:Name="window" Height="300" Width="300">
     <Window.DataContext >
         <local:AppWindowViewModel x:Name="context2"/>
     </Window.DataContext>
@@ -14,9 +14,9 @@
         <StackPanel Orientation="Vertical">
             <TextBlock Text="User email"></TextBlock>
             <TreeView ItemsSource="{Binding Items}">
-               
+
             </TreeView>
-            
+            <Button Content="Logout" Command="{Binding LogoutCmd}" CommandParameter="{Binding ElementName=window}"></Button>
         </StackPanel>
     </Grid>
 </Window>
