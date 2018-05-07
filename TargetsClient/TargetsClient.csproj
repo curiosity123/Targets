@@ -58,6 +58,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="HttpHelper.cs" />
+    <Compile Include="RelayCommand.cs" />
+    <Page Include="AppWindow\AppWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -66,6 +72,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AppWindow\AppWindow.xaml.cs">
+      <DependentUpon>AppWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppWindow\AppWindowViewModel.cs" />
+    <Compile Include="Bindable.cs" />
     <Compile Include="GetPayload.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Step.cs" />
@@ -104,9 +115,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AppWindow\" />
     <Folder Include="LoginWindow\" />
-    <Folder Include="RegisterWindow\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

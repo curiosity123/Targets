@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace TargetsClient
 {
-    class LoginWindowViewModel : INotifyPropertyChanged
+    class LoginWindowViewModel : Bindable
     {
 
         private string login = "lukasz2@gmail.com";
@@ -53,8 +53,8 @@ namespace TargetsClient
             }
         }
 
-        public ICommand LoginCmd { get { return new RelayCommand(x => true, x => TryLogin()); } }
-        public async void TryLogin()
+        public ICommand LoginCmd { get { return new RelayCommand(x => true, x => TryLogin(x)); } }
+        public async void TryLogin(object o)
         {
             HttpClient Client = new HttpClient();
             User u = null;
@@ -65,74 +65,31 @@ namespace TargetsClient
                 u = JsonConvert.DeserializeObject<User>(responseString);
             
             if (u != null)
-            {
+            {  
+                AppWindow.AppWindow w = new AppWindow.AppWindow();
+                (w.DataContext as AppWindow.AppWindowViewModel).User = u;
+                w.Show();
+                (o as LoginWindow).Close();
             }
             else
                 Error = "Serialization problem";
-
         }
 
         public ICommand RegisterCmd { get { return new RelayCommand(x => true, x => TryRegister()); } }
         public async void TryRegister()
         {
-
             Token usr = new Token()
             {
                 Email = Login,
                 Password = Password
             };
             HttpClient Client = new HttpClient();
-
-            StringContent payload = Payload(usr);
+            StringContent payload = HttpHelper.Payload(usr);
             var response = await Client.PostAsync("http://localhost:55500/api/Users/RegisterAccount/", payload);
-       
 
             Error = response.StatusCode.ToString();
-         
-
         }
 
-
-        public static StringContent Payload(object data)
-        {
-            var json = JsonConvert.SerializeObject(data);
-            return new StringContent(json, Encoding.UTF8, "application/json");
-        }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void RaisePropertyChangedEvent(string propertyName)
-        {
-            var handler = PropertyChanged;
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
-    public class RelayCommand : ICommand
-    {
-        private Predicate<object> _canExecute;
-        private Action<object> _execute;
-
-        public RelayCommand(Predicate<object> canExecute, Action<object> execute)
-        {
-            this._canExecute = canExecute;
-            this._execute = execute;
-        }
-
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return _canExecute(parameter);
-        }
-
-        public void Execute(object parameter)
-        {
-            _execute(parameter);
-        }
-    }
+    
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TargetsClient"
         mc:Ignorable="d"
-        Title="Targets" Height="350" Width="525">
+        Title="Targets" Height="350" Width="525" x:Name="window">
     <Window.DataContext >
             <local:LoginWindowViewModel x:Name="context2"/>
         </Window.DataContext>
@@ -14,7 +14,7 @@
         <StackPanel Orientation="Vertical">
             <TextBox Text="{Binding Login}" HorizontalAlignment="Center" Width="100"></TextBox>
             <TextBox Text="{Binding Password}" HorizontalAlignment="Center"  Width="100"></TextBox>
-            <Button Content="Login"  Width="100" Command="{Binding LoginCmd}"></Button>
+            <Button Content="Login"  Width="100" Command="{Binding LoginCmd}" CommandParameter="{Binding ElementName=window}"></Button>
             <TextBlock   Width="100"  HorizontalAlignment="Center" Text="{Binding Error}" ></TextBlock>
             <Button Content="or Register new account"  Command="{Binding RegisterCmd}" Width="200"  HorizontalAlignment="Center" ></Button>
         </StackPanel>
