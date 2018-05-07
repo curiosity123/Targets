@@ -14,8 +14,11 @@ namespace TargetsClient.AppWindow
         public User User
         {
             get { return user; }
-            set { user = value; }
+            set { user = value;
+                RaisePropertyChangedEvent("User");
+            }
         }
+
 
 
 

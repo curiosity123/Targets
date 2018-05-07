@@ -15,7 +15,18 @@ namespace Targets.Infrastructure.Repositories
 
         public InMemoryRepository()
         {
-            DataBase = new List<User>() { new User() {  Email = "lukasz@gmail.com", Id = Guid.NewGuid(), Password = "pass" } };
+            User u = new User() {  Email = "lukasz@gmail.com", Id = Guid.NewGuid(), Password = "pass" };
+            u.Projects.Add(new Project() { Title = "testowy prj" });
+            u.Projects.Add(new Project() { Title = "testowy prj" });
+            u.Projects.Add(new Project() { Title = "testowy prj" });
+
+            u.Projects[0].Steps.Add(new Step() { Title = "step1" });
+            u.Projects[1].Steps.Add(new Step() { Title = "step2" });
+            u.Projects[2].Steps.Add(new Step() { Title = "step1" });
+            u.Projects[2].Steps.Add(new Step() { Title = "step2" });
+
+            DataBase = new List<User>();
+            DataBase.Add(u);
         }
 
 

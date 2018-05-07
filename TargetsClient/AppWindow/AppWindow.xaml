@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TargetsClient.AppWindow"
+                xmlns:loc="clr-namespace:TargetsClient"
         mc:Ignorable="d"
         Title="AppWindow" x:Name="window" Height="300" Width="300">
     <Window.DataContext >
@@ -13,8 +14,13 @@
     <Grid>
         <StackPanel Orientation="Vertical">
             <TextBlock Text="User email"></TextBlock>
-            <TreeView ItemsSource="{Binding Items}">
+            <TreeView ItemsSource="{Binding User.Projects}" Height="200">
+                <TreeView.Resources>
+                    <DataTemplate DataType="{x:Type loc:Step}" >
+                        <TextBlock Text="{Binding Title}" />
+                    </DataTemplate>
 
+                </TreeView.Resources>
             </TreeView>
             <Button Content="Logout" Command="{Binding LogoutCmd}" CommandParameter="{Binding ElementName=window}"></Button>
         </StackPanel>
