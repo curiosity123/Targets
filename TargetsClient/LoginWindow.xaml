@@ -15,7 +15,7 @@
             <TextBox Text="{Binding Login}" HorizontalAlignment="Center" Width="100"></TextBox>
             <TextBox Text="{Binding Password}" HorizontalAlignment="Center"  Width="100"></TextBox>
             <Button Content="Login"  Width="100" Command="{Binding LoginCmd}"></Button>
-            <TextBlock Text="no error"   Width="100"  HorizontalAlignment="Center" ></TextBlock>
+            <TextBlock   Width="100"  HorizontalAlignment="Center" Text="{Binding Error}" ></TextBlock>
             <Button Content="or Register new account"  Width="200"  HorizontalAlignment="Center" ></Button>
         </StackPanel>
     </Grid>

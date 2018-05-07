@@ -15,7 +15,7 @@ namespace TargetsClient
     class LoginWindowViewModel : INotifyPropertyChanged
     {
 
-        private string login = "login";
+        private string login = "lukasz2@gmail.com";
 
         public string Login
         {
@@ -28,7 +28,7 @@ namespace TargetsClient
         }
 
 
-        private string password = "pass";
+        private string password = "pass2";
 
         public string Password
         {
@@ -55,30 +55,19 @@ namespace TargetsClient
 
         public ICommand LoginCmd { get { return new RelayCommand(x => true, x => TryLogin(null)); } }
 
-        public void TryLogin(string url)
+        public async void TryLogin(string url)
         {
-            url = "http://localhost:55500/api//Users/lukasz2@gmail.com,pass2";
-            User model = new User();
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            try
+            HttpClient Client = new HttpClient();
+
+            var res = await  Client.GetAsync("http://localhost:55500/api/Users/" + Login + "," + Password);
+            var responseString = await  res.Content.ReadAsStringAsync();
+
+            Error = res.StatusCode.ToString();
+
+
+            if(res.StatusCode== HttpStatusCode.OK)
             {
-                WebResponse response = request.GetResponse();
-                using (Stream responseStream = response.GetResponseStream())
-                {
-                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                    model = JsonConvert.DeserializeObject<User>(reader.ReadToEnd());
-                }
-            }
-            catch (WebException ex)
-            {
-                WebResponse errorResponse = ex.Response;
-                using (Stream responseStream = errorResponse.GetResponseStream())
-                {
-                    StreamReader reader = new StreamReader(responseStream, Encoding.GetEncoding("utf-8"));
-                    String errorText = reader.ReadToEnd();
-                    // log errorText
-                }
-                throw;
+               User u = JsonConvert.DeserializeObject<User>(responseString);
             }
 
         }
