@@ -53,29 +53,51 @@ namespace TargetsClient
             }
         }
 
-        public ICommand LoginCmd { get { return new RelayCommand(x => true, x => TryLogin(null)); } }
-
-        public async void TryLogin(string url)
+        public ICommand LoginCmd { get { return new RelayCommand(x => true, x => TryLogin()); } }
+        public async void TryLogin()
         {
             HttpClient Client = new HttpClient();
-
-            var res = await  Client.GetAsync("http://localhost:55500/api/Users/" + Login + "," + Password);
-            var responseString = await  res.Content.ReadAsStringAsync();
-
+            User u = null;
+            var res = await Client.GetAsync("http://localhost:55500/api/Users/" + Login + "," + Password);
+            var responseString = await res.Content.ReadAsStringAsync();
             Error = res.StatusCode.ToString();
-
-
-            if(res.StatusCode== HttpStatusCode.OK)
+            if (res.StatusCode == HttpStatusCode.OK)
+                u = JsonConvert.DeserializeObject<User>(responseString);
+            
+            if (u != null)
             {
-               User u = JsonConvert.DeserializeObject<User>(responseString);
             }
+            else
+                Error = "Serialization problem";
+
+        }
+
+        public ICommand RegisterCmd { get { return new RelayCommand(x => true, x => TryRegister()); } }
+        public async void TryRegister()
+        {
+
+            Token usr = new Token()
+            {
+                Email = Login,
+                Password = Password
+            };
+            HttpClient Client = new HttpClient();
+
+            StringContent payload = Payload(usr);
+            var response = await Client.PostAsync("http://localhost:55500/api/Users/RegisterAccount/", payload);
+       
+
+            Error = response.StatusCode.ToString();
+         
 
         }
 
 
-        
-
-
+        public static StringContent Payload(object data)
+        {
+            var json = JsonConvert.SerializeObject(data);
+            return new StringContent(json, Encoding.UTF8, "application/json");
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
