@@ -16,10 +16,12 @@
             <TextBlock Text="User email"></TextBlock>
             <TreeView ItemsSource="{Binding User.Projects}" Height="200">
                 <TreeView.Resources>
-                    <DataTemplate DataType="{x:Type loc:Step}" >
+                    <HierarchicalDataTemplate DataType="{x:Type loc:Project}" ItemsSource="{Binding Steps}">
                         <TextBlock Text="{Binding Title}" />
-                    </DataTemplate>
-
+                    </HierarchicalDataTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type loc:Step}">
+                        <TextBlock Text="{Binding Title}" /> 
+                    </HierarchicalDataTemplate>
                 </TreeView.Resources>
             </TreeView>
             <Button Content="Logout" Command="{Binding LogoutCmd}" CommandParameter="{Binding ElementName=window}"></Button>
