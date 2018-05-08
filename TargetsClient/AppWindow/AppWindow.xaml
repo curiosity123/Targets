@@ -17,13 +17,26 @@
             <TreeView ItemsSource="{Binding User.Projects}" Height="200">
                 <TreeView.Resources>
                     <HierarchicalDataTemplate DataType="{x:Type loc:Project}" ItemsSource="{Binding Steps}">
-                        <TextBlock Text="{Binding Title}" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Title}" />
+                            <TextBlock Text="{Binding Description}"></TextBlock>
+                            <CheckBox IsChecked="{Binding State}"></CheckBox>
+                            <Button >Done!</Button>
+                            <Button >Add new step</Button>
+                        </StackPanel>
                     </HierarchicalDataTemplate>
                     <HierarchicalDataTemplate DataType="{x:Type loc:Step}">
-                        <TextBlock Text="{Binding Title}" /> 
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Title}" />
+                            <TextBlock Text="{Binding Description}"></TextBlock>
+                            <CheckBox IsChecked="{Binding State}"></CheckBox>
+                            <Button >Done!</Button>
+                        </StackPanel>
                     </HierarchicalDataTemplate>
                 </TreeView.Resources>
             </TreeView>
+            <Button Content="New project" ></Button>
+            <Button Content="Delete project" ></Button>
             <Button Content="Logout" Command="{Binding LogoutCmd}" CommandParameter="{Binding ElementName=window}"></Button>
         </StackPanel>
     </Grid>
