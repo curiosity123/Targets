@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,9 +11,9 @@ namespace Targets.Infrastructure.Repositories
 {
     public interface IRepository
     {
-        User Get(Token token);
-        void RegisterAccount(Token token);
-        void DeleteAccount(Token token);
+        Task<User> GetAsync(Token token);
+        Task RegisterAccountAsync(Token token);
+        Task DeleteAccountAsync(Token token);
 
         void AddNewProject(Token token, string title, string description);
         void AddStep(Token token, Guid ProjectId, string stepTitle, string stepDescription);

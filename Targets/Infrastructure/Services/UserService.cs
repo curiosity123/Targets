@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,19 +21,19 @@ namespace Targets.Infrastructure
             repo = _repo;
         }
 
-        public void DeleteAccount(Token token)
+        public async Task DeleteAccount(Token token)
         {
-            repo.DeleteAccount(token);
+           await repo.DeleteAccountAsync(token);
         }
 
-        public User Get(Token token)
+        public async Task<User> GetAsync(Token token)
         {
-            return repo.Get(token);
+            return await repo.GetAsync(token);
         }
 
-        public void RegisterAccount(Token token)
+        public async Task RegisterAccount(Token token)
         {
-            repo.RegisterAccount(token);
+           await repo.RegisterAccountAsync(token);
         }
 
     }

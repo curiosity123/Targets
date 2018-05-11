@@ -15,7 +15,8 @@ namespace TargetsClient
     class LoginWindowViewModel : Bindable
     {
 
-        private string login = "lukasz2@gmail.com";
+        private string login = "lukasz@gmail.com";
+        private string ConnectionPath = "http://localhost:55500/api/";
 
         public string Login
         {
@@ -28,7 +29,7 @@ namespace TargetsClient
         }
 
 
-        private string password = "pass2";
+        private string password = "pass";
 
         public string Password
         {
@@ -85,7 +86,7 @@ namespace TargetsClient
             };
             HttpClient Client = new HttpClient();
             StringContent payload = HttpHelper.Payload(usr);
-            var response = await Client.PostAsync("http://localhost:55500/api/Users/RegisterAccount/", payload);
+            var response = await Client.PostAsync(ConnectionPath + "Users/RegisterAccount/", payload);
 
             Error = response.StatusCode.ToString();
         }

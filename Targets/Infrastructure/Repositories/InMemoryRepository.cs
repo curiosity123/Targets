@@ -33,19 +33,21 @@ namespace Targets.Infrastructure.Repositories
 
 
 //User operations
-        public void DeleteAccount(Token token)
+        public Task DeleteAccountAsync(Token token)
         {
-            DataBase.Remove(DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault());
+           DataBase.Remove(DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault());
+            return Task.CompletedTask;
         }
 
-        public User Get(Token token)
+        public  Task<User> GetAsync(Token token)
         {
-            return DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault();
+            return Task.FromResult( DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault());
         }
 
-        public void RegisterAccount(Token token)
+        public Task RegisterAccountAsync(Token token)
         {
-            DataBase.Add(new User() { Email = token.Email, Password = token.Password });
+           DataBase.Add(new User() { Email = token.Email, Password = token.Password });
+           return Task.CompletedTask;
         }
 
 

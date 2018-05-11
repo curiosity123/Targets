@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using Targets.Domain.Implementations;
 using Targets.Infrastructure;
 using Targets.Infrastructure.DTO;
@@ -21,9 +22,13 @@ namespace Targets.Controllers
 
 
         [HttpGet("{Email},{Password}")]
-        public User Get(string Email, string Password)
+        public async Task<IActionResult> GetAsync(string Email, string Password)
         {
-            return service.Get(new Token() { Email = Email, Password = Password});
+            var u = await service.GetAsync(new Token() { Email = Email, Password = Password });
+
+            if (u == null)
+                return NotFound();
+            return Json(u);
         }
 
 

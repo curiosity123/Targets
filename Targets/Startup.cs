@@ -25,7 +25,7 @@ namespace Targets
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IStepService, StepService>();
-            services.AddScoped<IRepository, InMemoryRepository>();
+            services.AddScoped<IRepository, MsSqlRepository>();
             services.AddMvc();
 
             var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";

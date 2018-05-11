@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Targets.Domain.Implementations;
 using Targets.Infrastructure.DTO;
 using Targets.Infrastructure.EF;
@@ -17,9 +19,9 @@ namespace Targets.Infrastructure.Repositories
 
 
 
-        public User Get(Token token)
+        public async Task<User> GetAsync(Token token)
         {
-            return GetUserByToken(token);
+            return await Task.FromResult( GetUserByToken(token));
         }
 
         private User GetUserByToken(Token token)
@@ -27,16 +29,18 @@ namespace Targets.Infrastructure.Repositories
             return dbContext.Users.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault();
         }
 
-        public void RegisterAccount(Token token)
+        public async Task RegisterAccountAsync(Token token)
         {
             dbContext.Users.Add(new User() { Email = token.Email, Password = token.Password });
             dbContext.SaveChanges();
+            await Task.CompletedTask;
         }
 
-        public void DeleteAccount(Token token)
+        public async Task DeleteAccountAsync(Token token)
         {
             dbContext.Users.Remove(dbContext.Users.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault());
             dbContext.SaveChanges();
+            await Task.CompletedTask;
         }
 
 
