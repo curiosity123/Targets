@@ -33,18 +33,21 @@ namespace Targets.Controllers
 
 
         [HttpPost("RegisterAccount")]
-        public void Post([FromBody] Token token)
+        public async Task<IActionResult> Post([FromBody] Token token)
         {
             if (token != null)
-                service.RegisterAccount(token);
+                await service.RegisterAccount(token);
+            return Ok();
+
         }
 
 
         [HttpDelete("DeleteAccount")]
-        public void Delete([FromBody] Token token)
+        public async Task<IActionResult> Delete([FromBody] Token token)
         {
             if (token != null)
-                service.DeleteAccount(token);
+                await service.DeleteAccount(token);
+            return Ok();
         }
 
 
