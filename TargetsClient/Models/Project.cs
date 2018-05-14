@@ -8,6 +8,7 @@ namespace TargetsClient
     public class Project
     {
 
+
         public Project()
         {
             Id = Guid.NewGuid();

@@ -35,8 +35,11 @@
                     </HierarchicalDataTemplate>
                 </TreeView.Resources>
             </TreeView>
-            <Button Content="New project" ></Button>
-            <Button Content="Delete project" ></Button>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="New" Command="{Binding NewCmd}"></Button>
+                <Button Content="Delete" ></Button>
+                <Button Content="Edit" ></Button>
+            </StackPanel>
             <Button Content="Logout" Command="{Binding LogoutCmd}" CommandParameter="{Binding ElementName=window}"></Button>
         </StackPanel>
     </Grid>

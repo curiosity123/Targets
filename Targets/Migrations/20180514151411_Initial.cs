@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Targets.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,6 @@ namespace Targets.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Email = table.Column<string>(nullable: true),
-                    NickName = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

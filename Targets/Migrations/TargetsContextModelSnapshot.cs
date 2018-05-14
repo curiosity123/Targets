@@ -67,8 +67,6 @@ namespace Targets.Migrations
 
                     b.Property<string>("Email");
 
-                    b.Property<string>("NickName");
-
                     b.Property<string>("Password");
 
                     b.HasKey("Id");

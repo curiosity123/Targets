@@ -1,0 +1,38 @@
+﻿<Window x:Class="TargetsClient.ToolWindow.ToolWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TargetsClient.ToolWindow"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        mc:Ignorable="d"
+        Title="ToolWindow" x:Name="window" Height="300" Width="300">
+    <Window.DataContext >
+        <local:ToolWindowViewModel x:Name="whatever"/>
+    </Window.DataContext>
+
+    <Grid>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <RadioButton Content="prj" IsChecked="True" ></RadioButton>
+                <RadioButton x:Name="RadioStep" Content="step" ></RadioButton>
+            </StackPanel>
+            <ComboBox Visibility="{Binding ElementName=RadioStep,Path=Visibility}"></ComboBox>
+            <TextBox Text="Title"></TextBox>
+            <TextBox Text="Description"></TextBox>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Cancel" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <ei:CallMethodAction TargetObject="{Binding ElementName=window}" MethodName="Close"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Content="Add" Command="{Binding CmdAdd}"></Button>
+            </StackPanel>
+
+
+        </StackPanel>
+    </Grid>
+</Window>

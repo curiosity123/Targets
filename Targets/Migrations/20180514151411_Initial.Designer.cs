@@ -11,8 +11,8 @@ using Targets.Infrastructure.EF;
 namespace Targets.Migrations
 {
     [DbContext(typeof(TargetsContext))]
-    [Migration("20180426221342_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20180514151411_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -67,8 +67,6 @@ namespace Targets.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Email");
-
-                    b.Property<string>("NickName");
 
                     b.Property<string>("Password");
 

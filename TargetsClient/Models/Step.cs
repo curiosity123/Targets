@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TargetsClient
 {
-    public class Step 
+    public class Step
     {
         public Step()
         {

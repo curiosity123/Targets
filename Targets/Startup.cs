@@ -27,8 +27,7 @@ namespace Targets
             services.AddScoped<IStepService, StepService>();
             services.AddScoped<IRepository, MsSqlRepository>();
             services.AddMvc();
-
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
+ var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<TargetsContext>(options => options.UseSqlServer(connection));
         }
 

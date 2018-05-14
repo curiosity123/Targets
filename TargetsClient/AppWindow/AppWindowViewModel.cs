@@ -31,5 +31,14 @@ namespace TargetsClient.AppWindow
         }
 
 
+
+        public ICommand NewCmd { get { return new RelayCommand(x => true, x => NewElement(x)); } }
+
+        private void NewElement(object x)
+        {
+            ToolWindow.ToolWindow t = new ToolWindow.ToolWindow();
+            t.ShowDialog();
+            //cos tam
+        }
     }
 }
