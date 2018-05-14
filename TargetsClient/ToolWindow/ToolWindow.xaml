@@ -19,8 +19,8 @@
                 <RadioButton x:Name="RadioStep" Content="step" ></RadioButton>
             </StackPanel>
             <ComboBox Visibility="{Binding ElementName=RadioStep,Path=Visibility}"></ComboBox>
-            <TextBox Text="Title"></TextBox>
-            <TextBox Text="Description"></TextBox>
+            <TextBox Text="{Binding Title}"></TextBox>
+            <TextBox Text="{Binding Description}"></TextBox>
             <StackPanel Orientation="Horizontal">
                 <Button Content="Cancel" >
                     <i:Interaction.Triggers>
@@ -29,7 +29,13 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
-                <Button Content="Add" Command="{Binding CmdAdd}"></Button>
+                <Button Content="Add" Command="{Binding CmdAdd}" CommandParameter="{Binding ElementName=window}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <ei:CallMethodAction TargetObject="{Binding ElementName=window}" MethodName="Close"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
             </StackPanel>
 
 
