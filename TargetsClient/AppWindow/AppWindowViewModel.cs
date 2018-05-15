@@ -9,16 +9,11 @@ using System.Windows.Input;
 
 namespace TargetsClient.AppWindow
 {
-    public class AppWindowViewModel :Bindable
+    public class AppWindowViewModel : Bindable
     {
-        private User user;
-
         public User User
         {
-            get { return user; }
-            set { user = value;
-                RaisePropertyChangedEvent("User");
-            }
+            get;set;
         }
 
 
@@ -27,7 +22,9 @@ namespace TargetsClient.AppWindow
         public ObservableCollection<Project> Proj
         {
             get { return projects; }
-            set { projects = value;
+            set
+            {
+                projects = value;
                 RaisePropertyChangedEvent("Proj");
             }
         }
@@ -36,7 +33,7 @@ namespace TargetsClient.AppWindow
 
 
         public ICommand LogoutCmd { get { return new RelayCommand(x => true, x => TryLogout(x)); } }
-        public async void TryLogout(object obj)
+        public void TryLogout(object obj)
         {
             LoginWindow w = new LoginWindow();
             w.Show();
@@ -55,8 +52,32 @@ namespace TargetsClient.AppWindow
 
             //cos tam
 
+            RefreshProjList();
+        }
+
+        private void RefreshProjList()
+        {
             Proj = new ObservableCollection<Project>(User.Projects);
             RaisePropertyChangedEvent("Proj");
+        }
+
+        public ICommand DeleteCmd { get { return new RelayCommand(x => true, x => DeleteElement(x)); } }
+
+        private void DeleteElement(object x)
+        {
+           if (x is Project)
+            {
+                User.Projects.Remove((x as Project));
+                RefreshProjList();
+            }
+           else
+            {
+                Step stepToRem = x as Step;
+
+                Project ProjectContainStep = (from p in User.Projects where p.Steps.Contains(stepToRem) select p).FirstOrDefault();
+                ProjectContainStep.Steps.Remove((x as Step));
+                RefreshProjList();
+            }
         }
     }
 }

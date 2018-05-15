@@ -36,8 +36,8 @@
                 </TreeView.Resources>
             </TreeView>
             <StackPanel Orientation="Horizontal">
-                <Button Content="New" Command="{Binding NewCmd}" CommandParameter="{Binding ElementName=tree}"></Button>
-                <Button Content="Delete" ></Button>
+                <Button Content="New" Command="{Binding NewCmd}" ></Button>
+                <Button Content="Delete" Command="{Binding DeleteCmd}" CommandParameter="{Binding ElementName=tree, Path=SelectedItem}"></Button>
                 <Button Content="Edit" ></Button>
             </StackPanel>
             <Button Content="Logout" Command="{Binding LogoutCmd}" CommandParameter="{Binding ElementName=window}"></Button>
