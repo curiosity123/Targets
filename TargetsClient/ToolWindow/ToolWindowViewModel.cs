@@ -8,24 +8,30 @@ using System.Windows.Input;
 
 namespace TargetsClient.ToolWindow
 {
-    public class ToolWindowViewModel:Bindable
+    public class ToolWindowViewModel : Bindable
     {
 
-        public object Element;
-
+        User user;
 
         public ToolWindowViewModel()
         {
 
         }
 
+        public ToolWindowViewModel(User u)
+        {
+            user = u;
+        }
 
-        private string title="";
+
+        private string title = "";
 
         public string Title
         {
             get { return title; }
-            set { title = value;
+            set
+            {
+                title = value;
                 RaisePropertyChangedEvent("Title");
             }
 
@@ -34,9 +40,9 @@ namespace TargetsClient.ToolWindow
 
 
 
-        private string description="";
+        private string description = "";
 
-        public string Description       
+        public string Description
         {
             get { return description; }
             set
@@ -45,6 +51,55 @@ namespace TargetsClient.ToolWindow
                 RaisePropertyChangedEvent("Description");
             }
 
+        }
+
+
+        private bool projChecked = true;
+
+        public bool ProjChecked
+        {
+            get { return projChecked; }
+            set
+            {
+                projChecked = value;
+                RaisePropertyChangedEvent("ProjChecked");
+            }
+        }
+
+
+        private bool stepChecked = false;
+
+        public bool StepChecked
+        {
+            get { return stepChecked; }
+            set
+            {
+                stepChecked = value;
+                RaisePropertyChangedEvent("StepChecked");
+            }
+        }
+
+
+
+        public List<Project> PrjList
+        {
+            get {
+                if (user != null)
+                    return user.Projects;
+                else
+                    return new List<Project>();
+            }
+        }
+
+
+        private Project selectedProject;
+
+        public Project SelectedProject
+        {
+            get { return selectedProject; }
+            set { selectedProject = value;
+                RaisePropertyChangedEvent("SelectedProject");
+            }
         }
 
 
@@ -63,6 +118,11 @@ namespace TargetsClient.ToolWindow
 
         private void Add(object x)
         {
+
+            if (ProjChecked)
+                user.Projects.Add(new Project() { Title = Title, Description = Description });
+            else
+                user.Projects[user.Projects.IndexOf(SelectedProject)].Steps.Add(new Step() { Title = Title, Description = Description });
 
         }
     }

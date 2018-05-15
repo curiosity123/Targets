@@ -42,6 +42,9 @@ namespace TargetsClient
         }
 
 
+
+
+
         private string error;
 
         public string Error

@@ -14,7 +14,7 @@
     <Grid>
         <StackPanel Orientation="Vertical">
             <TextBlock Text="User email"></TextBlock>
-            <TreeView ItemsSource="{Binding User.Projects}" Height="200">
+            <TreeView x:Name="tree" ItemsSource="{Binding Proj}" Height="200">
                 <TreeView.Resources>
                     <HierarchicalDataTemplate DataType="{x:Type loc:Project}" ItemsSource="{Binding Steps}">
                         <StackPanel Orientation="Horizontal">
@@ -36,7 +36,7 @@
                 </TreeView.Resources>
             </TreeView>
             <StackPanel Orientation="Horizontal">
-                <Button Content="New" Command="{Binding NewCmd}"></Button>
+                <Button Content="New" Command="{Binding NewCmd}" CommandParameter="{Binding ElementName=tree}"></Button>
                 <Button Content="Delete" ></Button>
                 <Button Content="Edit" ></Button>
             </StackPanel>

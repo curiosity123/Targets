@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace TargetsClient.AppWindow
@@ -16,6 +18,17 @@ namespace TargetsClient.AppWindow
             get { return user; }
             set { user = value;
                 RaisePropertyChangedEvent("User");
+            }
+        }
+
+
+        private ObservableCollection<Project> projects;
+
+        public ObservableCollection<Project> Proj
+        {
+            get { return projects; }
+            set { projects = value;
+                RaisePropertyChangedEvent("Proj");
             }
         }
 
@@ -37,8 +50,13 @@ namespace TargetsClient.AppWindow
         private void NewElement(object x)
         {
             ToolWindow.ToolWindow t = new ToolWindow.ToolWindow();
+            t.DataContext = new ToolWindow.ToolWindowViewModel(User);
             t.ShowDialog();
+
             //cos tam
+
+            Proj = new ObservableCollection<Project>(User.Projects);
+            RaisePropertyChangedEvent("Proj");
         }
     }
 }

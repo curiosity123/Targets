@@ -15,10 +15,23 @@
     <Grid>
         <StackPanel>
             <StackPanel Orientation="Horizontal">
-                <RadioButton Content="prj" IsChecked="True" ></RadioButton>
-                <RadioButton x:Name="RadioStep" Content="step" ></RadioButton>
+                <RadioButton Content="prj" IsChecked="{Binding ProjChecked}"  ></RadioButton>
+                <RadioButton x:Name="RadioStep" Content="Step" IsChecked="{Binding StepChecked}" ></RadioButton>
             </StackPanel>
-            <ComboBox Visibility="{Binding ElementName=RadioStep,Path=Visibility}"></ComboBox>
+            <ComboBox ItemsSource="{Binding PrjList}" SelectedItem="{Binding SelectedProject}" IsEnabled="{Binding ElementName=RadioStep,Path=IsChecked, Mode=TwoWay}">
+                <ComboBox.Resources>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                      <TextBlock Text="{Binding Title}"></TextBlock>
+                                </DataTemplate>
+                              
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ComboBox.Resources>
+            </ComboBox>
             <TextBox Text="{Binding Title}"></TextBox>
             <TextBox Text="{Binding Description}"></TextBox>
             <StackPanel Orientation="Horizontal">
