@@ -94,6 +94,28 @@ namespace TargetsClient
             Error = response.StatusCode.ToString();
         }
 
+        internal async void RemoveUser(User user)
+        {
+         
+
+            Token usr = new Token()
+            {
+                Email = user.Email,
+                Password = user.Password
+            };
+            HttpClient Client = new HttpClient();
+            StringContent payload = HttpHelper.Payload(usr);
+            HttpRequestMessage request = new HttpRequestMessage
+            {
+                Content = payload,
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri(ConnectionPath + "Users/DeleteAccount/")
+            };
+            var response = await Client.SendAsync(request);
+
+            Error = response.StatusCode.ToString();
+
+        }
     }
     
 }

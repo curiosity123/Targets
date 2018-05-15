@@ -79,5 +79,29 @@ namespace TargetsClient.AppWindow
                 RefreshProjList();
             }
         }
+
+
+        
+
+        public ICommand EditCmd { get { return new RelayCommand(x => true, x => EditElement(x)); } }
+
+        private void EditElement(object x)
+        {
+            
+        }
+
+
+
+        public ICommand RemoveUserCmd { get { return new RelayCommand(x => true, x => RemoveUserAccount(x)); } }
+
+        private void RemoveUserAccount(object x)
+        {
+
+
+            LoginWindow w = new LoginWindow();
+            w.Show();
+            (w.DataContext as LoginWindowViewModel).RemoveUser(User);
+            (x as AppWindow).Close();
+        }
     }
 }
