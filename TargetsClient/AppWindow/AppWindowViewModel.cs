@@ -11,9 +11,15 @@ namespace TargetsClient.AppWindow
 {
     public class AppWindowViewModel : Bindable
     {
+
+        private User user;
         public User User
         {
-            get;set;
+            get { return user; }
+            set { user = value;
+
+                RaisePropertyChangedEvent("User");
+            }
         }
 
 
@@ -28,8 +34,6 @@ namespace TargetsClient.AppWindow
                 RaisePropertyChangedEvent("Proj");
             }
         }
-
-
 
 
         public ICommand LogoutCmd { get { return new RelayCommand(x => true, x => TryLogout(x)); } }

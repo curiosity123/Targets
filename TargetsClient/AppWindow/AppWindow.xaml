@@ -13,7 +13,7 @@
 
     <Grid>
         <StackPanel Orientation="Vertical">
-            <TextBlock Text="User email"></TextBlock>
+            <TextBlock Text="{Binding User.Email}"></TextBlock>
             <TreeView x:Name="tree" ItemsSource="{Binding Proj}" Height="200">
                 <TreeView.Resources>
                     <HierarchicalDataTemplate DataType="{x:Type loc:Project}" ItemsSource="{Binding Steps}">
