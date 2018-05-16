@@ -16,7 +16,9 @@ namespace TargetsClient.AppWindow
         public User User
         {
             get { return user; }
-            set { user = value;
+            set
+            {
+                user = value;
 
                 RaisePropertyChangedEvent("User");
             }
@@ -69,12 +71,12 @@ namespace TargetsClient.AppWindow
 
         private void DeleteElement(object x)
         {
-           if (x is Project)
+            if (x is Project)
             {
                 User.Projects.Remove((x as Project));
                 RefreshProjList();
             }
-           else
+            else
             {
                 Step stepToRem = x as Step;
 
@@ -85,13 +87,47 @@ namespace TargetsClient.AppWindow
         }
 
 
-        
+
 
         public ICommand EditCmd { get { return new RelayCommand(x => true, x => EditElement(x)); } }
 
         private void EditElement(object x)
         {
-            
+
+
+            EditWindow.EditWindow e = new EditWindow.EditWindow();
+            var model = (e.DataContext as EditWindow.EditWindowViewModel);
+
+            if(x is Project)
+            {
+                model.Title = (x as Project).Title;
+                model.Description = (x as Project).Description;
+
+            }
+            else
+            {
+                model.Title = (x as Step).Title;
+                model.Description = (x as Step).Description;
+            }
+           
+            e.ShowDialog();
+
+
+            if (model.Confirm && !string.IsNullOrEmpty(model.Title) && !string.IsNullOrEmpty(model.Description))
+            {
+                if (x is Project)
+                {
+                    (x as Project).Title = model.Title;
+                    (x as Project).Description = model.Description;
+                }
+                else
+                {
+                    (x as Step).Title = model.Title;
+                    (x as Step).Description = model.Description;
+                }
+            }
+            RefreshProjList();
+
         }
 
 
