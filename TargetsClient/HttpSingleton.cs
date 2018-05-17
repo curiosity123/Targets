@@ -14,6 +14,13 @@ namespace TargetsClient
         private static readonly object locker = new object();
         private static HttpSingleton instance = null;
         private string ConnectionPath = "http://localhost:55500/api/";
+        private HttpClient Client;
+
+        private HttpSingleton()
+        {
+            Client = new HttpClient();
+            Client.Timeout = new TimeSpan(0, 0, 3);
+        }
 
         public static HttpSingleton Instance
         {
@@ -30,12 +37,6 @@ namespace TargetsClient
             }
         }
 
-        public HttpClient Client;
-        private HttpSingleton()
-        {
-            Client = new HttpClient();
-            Client.Timeout = new TimeSpan(0, 0, 3);
-        }
 
         private static StringContent Payload(object data)
         {
@@ -44,7 +45,7 @@ namespace TargetsClient
         }
 
 
-
+        #region API commands
 
         public async Task<User> LoginAsync(string Login, string Password)
         {
@@ -57,7 +58,6 @@ namespace TargetsClient
             return await Task.FromResult(u);
         }
 
-
         public async Task<HttpStatusCode> RegisterAsync(string Login, string Password)
         {
             Token usr = new Token()
@@ -69,9 +69,6 @@ namespace TargetsClient
             var response = await Client.PostAsync(ConnectionPath + "Users/RegisterAccount/", payload);
             return await Task.FromResult(response.StatusCode);
         }
-
-
-
 
         public async Task<HttpStatusCode> RemoveUserAsync(User user)
         {
@@ -91,6 +88,8 @@ namespace TargetsClient
             var response = await Client.SendAsync(request);
             return await Task.FromResult(response.StatusCode);
         }
+        
+        #endregion
 
     }
 
