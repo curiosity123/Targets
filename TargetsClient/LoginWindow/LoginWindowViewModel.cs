@@ -60,7 +60,7 @@ namespace TargetsClient
         public ICommand LoginCmd { get { return new RelayCommand(x => true, x => TryLogin(x)); } }
         public async void TryLogin(object o)
         {
-            var u = await HttpSingleton.Instance.LoginAsync(Login, Password);
+            var u = await Communication.Instance.LoginAsync(Login, Password);
 
             if (u != null)
             {
@@ -76,13 +76,13 @@ namespace TargetsClient
         public ICommand RegisterCmd { get { return new RelayCommand(x => true, x => TryRegister()); } }
         public async void TryRegister()
         {
-            var e = await HttpSingleton.Instance.RegisterAsync(Login, Password);
+            var e = await Communication.Instance.RegisterAsync(Login, Password);
             Error = e.ToString();
         }
 
         internal async void RemoveUser(User user)
         {
-            var e = await HttpSingleton.Instance.RemoveUserAsync(user);
+            var e = await Communication.Instance.RemoveUserAsync(user);
             Error = e.ToString();
         }
     }

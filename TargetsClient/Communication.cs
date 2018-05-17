@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 
 namespace TargetsClient
 {
-    public sealed class HttpSingleton
+    public sealed class Communication
     {
         private static readonly object locker = new object();
-        private static HttpSingleton instance = null;
+        private static Communication instance = null;
         private string ConnectionPath = "http://localhost:55500/api/";
         private HttpClient Client;
 
-        private HttpSingleton()
+        private Communication()
         {
             Client = new HttpClient();
             Client.Timeout = new TimeSpan(0, 0, 3);
         }
 
-        public static HttpSingleton Instance
+        public static Communication Instance
         {
             get
             {
@@ -30,7 +30,7 @@ namespace TargetsClient
                 {
                     if (instance == null)
                     {
-                        instance = new HttpSingleton();
+                        instance = new Communication();
                     }
                     return instance;
                 }
