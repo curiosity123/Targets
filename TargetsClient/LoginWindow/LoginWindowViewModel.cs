@@ -16,7 +16,7 @@ namespace TargetsClient
     {
 
         private string login = "lukasz@gmail.com";
-        private string ConnectionPath = "http://localhost:55500/api/";
+
 
         public string Login
         {
@@ -60,16 +60,10 @@ namespace TargetsClient
         public ICommand LoginCmd { get { return new RelayCommand(x => true, x => TryLogin(x)); } }
         public async void TryLogin(object o)
         {
-            HttpClient Client = new HttpClient();
-            User u = null;
-            var res = await Client.GetAsync("http://localhost:55500/api/Users/" + Login + "," + Password);
-            var responseString = await res.Content.ReadAsStringAsync();
-            Error = res.StatusCode.ToString();
-            if (res.StatusCode == HttpStatusCode.OK)
-                u = JsonConvert.DeserializeObject<User>(responseString);
-            
+            var u = await HttpSingleton.Instance.LoginAsync(Login, Password);
+
             if (u != null)
-            {  
+            {
                 AppWindow.AppWindow w = new AppWindow.AppWindow();
                 (w.DataContext as AppWindow.AppWindowViewModel).User = u;
                 w.Show();
@@ -82,40 +76,15 @@ namespace TargetsClient
         public ICommand RegisterCmd { get { return new RelayCommand(x => true, x => TryRegister()); } }
         public async void TryRegister()
         {
-            Token usr = new Token()
-            {
-                Email = Login,
-                Password = Password
-            };
-            HttpClient Client = new HttpClient();
-            StringContent payload = HttpHelper.Payload(usr);
-            var response = await Client.PostAsync(ConnectionPath + "Users/RegisterAccount/", payload);
-
-            Error = response.StatusCode.ToString();
+            var e = await HttpSingleton.Instance.RegisterAsync(Login, Password);
+            Error = e.ToString();
         }
 
         internal async void RemoveUser(User user)
         {
-         
-
-            Token usr = new Token()
-            {
-                Email = user.Email,
-                Password = user.Password
-            };
-            HttpClient Client = new HttpClient();
-            StringContent payload = HttpHelper.Payload(usr);
-            HttpRequestMessage request = new HttpRequestMessage
-            {
-                Content = payload,
-                Method = HttpMethod.Delete,
-                RequestUri = new Uri(ConnectionPath + "Users/DeleteAccount/")
-            };
-            var response = await Client.SendAsync(request);
-
-            Error = response.StatusCode.ToString();
-
+            var e = await HttpSingleton.Instance.RemoveUserAsync(user);
+            Error = e.ToString();
         }
     }
-    
+
 }

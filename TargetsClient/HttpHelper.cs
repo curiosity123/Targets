@@ -10,11 +10,7 @@ namespace TargetsClient
 {
     public  static class HttpHelper
     {
-        public static StringContent Payload(object data)
-        {
-            var json = JsonConvert.SerializeObject(data);
-            return new StringContent(json, Encoding.UTF8, "application/json");
-        }
+
 
     }
 }

@@ -10,7 +10,7 @@ namespace TargetsClient.ToolWindow
 {
     public class ToolWindowViewModel : Bindable
     {
-
+        public object Element { get; set; }
         User user;
 
         public ToolWindowViewModel()
@@ -83,7 +83,8 @@ namespace TargetsClient.ToolWindow
 
         public List<Project> PrjList
         {
-            get {
+            get
+            {
                 if (user != null)
                     return user.Projects;
                 else
@@ -97,7 +98,9 @@ namespace TargetsClient.ToolWindow
         public Project SelectedProject
         {
             get { return selectedProject; }
-            set { selectedProject = value;
+            set
+            {
+                selectedProject = value;
                 RaisePropertyChangedEvent("SelectedProject");
             }
         }
@@ -112,18 +115,15 @@ namespace TargetsClient.ToolWindow
             if (!string.IsNullOrEmpty(Title) && !string.IsNullOrEmpty(Description))
                 return true;
 
-
             return false;
         }
 
         private void Add(object x)
         {
-
             if (ProjChecked)
                 user.Projects.Add(new Project() { Title = Title, Description = Description });
             else
                 user.Projects[user.Projects.IndexOf(SelectedProject)].Steps.Add(new Step() { Title = Title, Description = Description });
-
         }
     }
 }

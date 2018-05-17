@@ -48,15 +48,14 @@ namespace TargetsClient.AppWindow
 
 
 
-        public ICommand NewCmd { get { return new RelayCommand(x => true, x => NewElement(x)); } }
+        public ICommand NewCmd { get { return new RelayCommand(x => true, x => AddElement(x)); } }
 
-        private void NewElement(object x)
+        private void AddElement(object x)
         {
             ToolWindow.ToolWindow t = new ToolWindow.ToolWindow();
             t.DataContext = new ToolWindow.ToolWindowViewModel(User);
             t.ShowDialog();
-
-            //cos tam
+                      
 
             RefreshProjList();
         }
