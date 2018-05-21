@@ -19,7 +19,7 @@ namespace TargetsClient
         private Communication()
         {
             Client = new HttpClient();
-            Client.Timeout = new TimeSpan(0, 0, 3);
+            Client.Timeout = new TimeSpan(0, 0,10);
         }
 
         public static Communication Instance
@@ -87,7 +87,25 @@ namespace TargetsClient
             var response = await Client.SendAsync(request);
             return await Task.FromResult(response.StatusCode);
         }
-        
+
+
+        public async Task<HttpStatusCode> AddNewProject(string Login, string Password, string Title, string Description)
+        {
+            Token usr = new Token()
+            {
+                Email = Login,
+                Password = Password
+            };
+            NewPrjDto edit = new NewPrjDto() { token = usr, Title = Title, Description = Description };
+
+            StringContent payload = Payload(edit);
+            var response = await Client.PostAsync(ConnectionPath + "Projects/Add/", payload);
+            return await Task.FromResult(response.StatusCode);
+        }
+
+
+
+
         #endregion
 
     }

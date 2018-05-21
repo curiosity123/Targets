@@ -25,7 +25,6 @@ namespace TargetsClient.ToolWindow
 
 
         private string title = "";
-
         public string Title
         {
             get { return title; }
@@ -37,11 +36,7 @@ namespace TargetsClient.ToolWindow
 
         }
 
-
-
-
         private string description = "";
-
         public string Description
         {
             get { return description; }
@@ -50,12 +45,9 @@ namespace TargetsClient.ToolWindow
                 description = value;
                 RaisePropertyChangedEvent("Description");
             }
-
         }
 
-
         private bool projChecked = true;
-
         public bool ProjChecked
         {
             get { return projChecked; }
@@ -68,7 +60,6 @@ namespace TargetsClient.ToolWindow
 
 
         private bool stepChecked = false;
-
         public bool StepChecked
         {
             get { return stepChecked; }
@@ -78,7 +69,6 @@ namespace TargetsClient.ToolWindow
                 RaisePropertyChangedEvent("StepChecked");
             }
         }
-
 
 
         public List<Project> PrjList
@@ -92,9 +82,7 @@ namespace TargetsClient.ToolWindow
             }
         }
 
-
         private Project selectedProject;
-
         public Project SelectedProject
         {
             get { return selectedProject; }
@@ -106,10 +94,7 @@ namespace TargetsClient.ToolWindow
         }
 
 
-
-
         public ICommand CmdAdd { get { return new RelayCommand(x => CanAdd(x), x => Add(x)); } }
-
         private bool CanAdd(object x)
         {
             if (!string.IsNullOrEmpty(Title) && !string.IsNullOrEmpty(Description))
@@ -117,11 +102,10 @@ namespace TargetsClient.ToolWindow
 
             return false;
         }
-
-        private void Add(object x)
+        private async void Add(object x)
         {
             if (ProjChecked)
-                user.Projects.Add(new Project() { Title = Title, Description = Description });
+                 await Communication.Instance.AddNewProject(user.Email, user.Password, Title, Description);
             else
                 user.Projects[user.Projects.IndexOf(SelectedProject)].Steps.Add(new Step() { Title = Title, Description = Description });
         }

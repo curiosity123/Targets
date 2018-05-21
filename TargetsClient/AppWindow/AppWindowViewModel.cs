@@ -11,7 +11,6 @@ namespace TargetsClient.AppWindow
 {
     public class AppWindowViewModel : Bindable
     {
-
         private User user;
         public User User
         {
@@ -24,9 +23,7 @@ namespace TargetsClient.AppWindow
             }
         }
 
-
         private ObservableCollection<Project> projects;
-
         public ObservableCollection<Project> Proj
         {
             get { return projects; }
@@ -35,6 +32,13 @@ namespace TargetsClient.AppWindow
                 projects = value;
                 RaisePropertyChangedEvent("Proj");
             }
+        }
+
+        private async void ReloadProjects()
+        {
+            var User = await Communication.Instance.LoginAsync(user.Email, user.Password);
+            Proj = new ObservableCollection<Project>(User.Projects);
+            RaisePropertyChangedEvent("Proj");
         }
 
 
@@ -46,34 +50,22 @@ namespace TargetsClient.AppWindow
             (obj as AppWindow).Close();
         }
 
-
-
         public ICommand NewCmd { get { return new RelayCommand(x => true, x => AddElement(x)); } }
-
         private void AddElement(object x)
         {
             ToolWindow.ToolWindow t = new ToolWindow.ToolWindow();
             t.DataContext = new ToolWindow.ToolWindowViewModel(User);
-            t.ShowDialog();
-                      
-
-            RefreshProjList();
-        }
-
-        private void RefreshProjList()
-        {
-            Proj = new ObservableCollection<Project>(User.Projects);
-            RaisePropertyChangedEvent("Proj");
+            t.ShowDialog();                 
+            ReloadProjects();
         }
 
         public ICommand DeleteCmd { get { return new RelayCommand(x => true, x => DeleteElement(x)); } }
-
         private void DeleteElement(object x)
         {
             if (x is Project)
             {
                 User.Projects.Remove((x as Project));
-                RefreshProjList();
+                ReloadProjects();
             }
             else
             {
@@ -81,19 +73,13 @@ namespace TargetsClient.AppWindow
 
                 Project ProjectContainStep = (from p in User.Projects where p.Steps.Contains(stepToRem) select p).FirstOrDefault();
                 ProjectContainStep.Steps.Remove((x as Step));
-                RefreshProjList();
+                ReloadProjects();
             }
         }
 
-
-
-
         public ICommand EditCmd { get { return new RelayCommand(x => true, x => EditElement(x)); } }
-
         private void EditElement(object x)
         {
-
-
             EditWindow.EditWindow e = new EditWindow.EditWindow();
             var model = (e.DataContext as EditWindow.EditWindowViewModel);
 
@@ -125,18 +111,13 @@ namespace TargetsClient.AppWindow
                     (x as Step).Description = model.Description;
                 }
             }
-            RefreshProjList();
+            ReloadProjects();
 
         }
 
-
-
         public ICommand RemoveUserCmd { get { return new RelayCommand(x => true, x => RemoveUserAccount(x)); } }
-
         private void RemoveUserAccount(object x)
         {
-
-
             LoginWindow w = new LoginWindow();
             w.Show();
             (w.DataContext as LoginWindowViewModel).RemoveUser(User);

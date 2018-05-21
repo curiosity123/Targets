@@ -26,7 +26,7 @@ namespace Targets
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IStepService, StepService>();
             services.AddScoped<IRepository, MsSqlRepository>();
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(x => x.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented);
  var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<TargetsContext>(options => options.UseSqlServer(connection));
         }
