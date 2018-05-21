@@ -16,8 +16,6 @@ namespace TargetsClient
     {
 
         private string login = "lukasz@gmail.com";
-
-
         public string Login
         {
             get { return login; }
@@ -28,9 +26,7 @@ namespace TargetsClient
             }
         }
 
-
         private string password = "pass";
-
         public string Password
         {
             get { return password; }
@@ -41,12 +37,7 @@ namespace TargetsClient
             }
         }
 
-
-
-
-
         private string error;
-
         public string Error
         {
             get { return error; }
@@ -57,11 +48,12 @@ namespace TargetsClient
             }
         }
 
+
+
         public ICommand LoginCmd { get { return new RelayCommand(x => true, x => TryLogin(x)); } }
         public async void TryLogin(object o)
         {
             var u = await Communication.Instance.LoginAsync(Login, Password);
-
             if (u != null)
             {
                 AppWindow.AppWindow w = new AppWindow.AppWindow();
@@ -70,7 +62,7 @@ namespace TargetsClient
                 (o as LoginWindow).Close();
             }
             else
-                Error = "Serialization problem";
+                Error = "Error";
         }
 
         public ICommand RegisterCmd { get { return new RelayCommand(x => true, x => TryRegister()); } }

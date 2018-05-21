@@ -37,7 +37,6 @@ namespace TargetsClient
             }
         }
 
-
         private static StringContent Payload(object data)
         {
             var json = JsonConvert.SerializeObject(data);
