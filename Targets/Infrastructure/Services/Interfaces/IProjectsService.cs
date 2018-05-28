@@ -10,7 +10,6 @@ namespace Targets.Controllers
         Task<IActionResult> GetProjects(Guid UserId);
         Task<IActionResult> AddNewProject(Guid UserId, string title, string description);
         Task<IActionResult> EditProject(Guid UserId, Guid projectId, string updatedTitle, string updatedDescription);
-        Task<IActionResult> DeleteProject(Guid UserId, Guid projectId, string updatedTitle, string updatedDescription);
         Task<IActionResult> SetStateStep(Guid UserId, Guid projectId, Guid stepId, bool isDone);
         Task<IActionResult> AddStep(Guid UserId, Guid projectId, string stepTitle, string stepDescription);
         Task<IActionResult> EditStep(Guid UserId, Guid projectId, Guid stepId, string updatedStepTitle, string updatedStepDescription);
