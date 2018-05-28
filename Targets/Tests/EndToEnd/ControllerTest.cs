@@ -71,7 +71,7 @@ namespace Targets.Tests.EndToEnd
             var responseString = await res.Content.ReadAsStringAsync();
             Assert.AreEqual(res.StatusCode, HttpStatusCode.OK);
 
-            payload = GetPayload(new NewPrjDto() { token = usr, Title = "prj", Description = "dsc" });
+            payload = GetPayload(new NewProjectDTO() { token = usr, Title = "prj", Description = "dsc" });
             response = await Client.PostAsync("api/Projects/Add/", payload);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
 
@@ -101,7 +101,7 @@ namespace Targets.Tests.EndToEnd
             var responseString = await res.Content.ReadAsStringAsync();
             Assert.AreEqual(res.StatusCode, HttpStatusCode.OK);
 
-            payload = GetPayload(new NewPrjDto() { token = usr, Title = "prj", Description = "dsc" });
+            payload = GetPayload(new NewProjectDTO() { token = usr, Title = "prj", Description = "dsc" });
             response = await Client.PostAsync("api/Projects/Add/", payload);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
 

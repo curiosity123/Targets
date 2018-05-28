@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace Targets.Infrastructure.DTO
 {
-    public class NickToken:Token
+    public class Credentials
     {
-        string NickName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

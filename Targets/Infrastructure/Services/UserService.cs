@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Targets.Controllers;
 using Targets.Domain;
 using Targets.Domain.Implementations;
 using Targets.Infrastructure.DTO;
@@ -21,20 +22,9 @@ namespace Targets.Infrastructure
             repo = _repo;
         }
 
-        public async Task DeleteAccount(Token token)
+        public Task<IActionResult> GetAccount(Guid UserId)
         {
-           await repo.DeleteAccountAsync(token);
+            return await repo.getAccount(UserId);
         }
-
-        public async Task<User> GetAsync(Token token)
-        {
-            return await repo.GetAsync(token);
-        }
-
-        public async Task RegisterAccount(Token token)
-        {
-           await repo.RegisterAccountAsync(token);
-        }
-
     }
 }

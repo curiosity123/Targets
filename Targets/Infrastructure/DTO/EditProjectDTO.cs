@@ -6,10 +6,9 @@ using Targets.Infrastructure.Services;
 
 namespace Targets.Infrastructure.DTO
 {
-    public class EditPrjDto
+    public class EditProjectDTO
     {
-        public Token token { get; set; }
-        public Guid PrjectId { get; set; }
+        public Guid ProjectId { get; set; }
         public string UpdatedTitle { get; set; }
         public string UpdatedDescription { get; set; }
 

@@ -11,16 +11,18 @@ namespace Targets.Infrastructure.Repositories
 {
     public interface IRepository
     {
-        Task<User> GetAsync(Token token);
-        Task RegisterAccountAsync(Token token);
-        Task DeleteAccountAsync(Token token);
+        Task<User> GetAccountAsync(Guid UserId);
+        Task RegisterAccountAsync(Credentials credentials);
+        Task DeleteAccountAsync(TokenDTO token);
 
-        void AddNewProject(Token token, string title, string description);
-        void AddStep(Token token, Guid ProjectId, string stepTitle, string stepDescription);
-        void EditProject(Token token, Guid ProjectId, string updatedTitle, string updatedDescription);
-        void RemoveProject(Token token, Guid ProjectId);
-        void EditStep(Token token, Guid ProjectId, Guid StepId, string updatedStepTitle, string updatedStepDescription);
-        void RemoveStep(Token token, Guid ProjectId, Guid StepId);
-        void SetStepStatus(Token token, Guid ProjectId, Guid StepId, bool isDone);
+        void AddNewProject(Guid UserId, string title, string description);
+        void AddStep(Guid UserId, Guid ProjectId, string stepTitle, string stepDescription);
+        void EditProject(Guid UserId, Guid ProjectId, string updatedTitle, string updatedDescription);
+        void RemoveProject(Guid UserId, Guid ProjectId);
+        void EditStep(Guid UserId, Guid ProjectId, Guid StepId, string updatedStepTitle, string updatedStepDescription);
+        void RemoveStep(Guid UserId, Guid ProjectId, Guid StepId);
+        void SetStepStatus(Guid UserId, Guid ProjectId, Guid StepId, bool isDone);
+
+
     }
 }

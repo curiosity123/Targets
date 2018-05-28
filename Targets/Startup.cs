@@ -23,7 +23,7 @@ namespace Targets
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IProjectsService, ProjectService>();
             services.AddScoped<IStepService, StepService>();
             services.AddScoped<IRepository, MsSqlRepository>();
             services.AddMvc().AddJsonOptions(x => x.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented);

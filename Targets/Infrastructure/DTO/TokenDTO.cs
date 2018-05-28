@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 
 namespace Targets.Infrastructure.DTO
 {
-    public class Token
+    public class TokenDTO
     {
-        public string Email { get; set; }
-        public string Password { get; set; }
     }
 }

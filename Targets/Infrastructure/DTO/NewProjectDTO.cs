@@ -6,9 +6,9 @@ using Targets.Infrastructure.Services;
 
 namespace Targets.Infrastructure.DTO
 {
-    public class RemPrjDto
+    public class NewProjectDTO
     {
-        public Token token { get; set; }
         public string Title { get; set; }
+        public string Description { get; set; }
     }
 }

@@ -1,16 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
 using System.Threading.Tasks;
-using Targets.Domain.Implementations;
+using Microsoft.AspNetCore.Mvc;
 using Targets.Infrastructure.DTO;
-using Targets.Infrastructure.Services;
 
-namespace Targets.Infrastructure
+namespace Targets.Controllers
 {
     public interface IUserService
     {
-        Task<User> GetAsync(Token token);
-        Task RegisterAccount(Token token);
-        Task DeleteAccount(Token token);
-
+        Task<IActionResult> GetAccount(Guid UserId);
     }
 }

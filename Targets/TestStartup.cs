@@ -29,7 +29,7 @@ namespace Targets
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IProjectsService, ProjectService>();
             services.AddScoped<IStepService, StepService>();
             services.AddSingleton<IRepository,InMemoryRepository>();
             services.AddMvc();

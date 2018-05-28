@@ -6,14 +6,10 @@ using Targets.Infrastructure.Services;
 
 namespace Targets.Infrastructure.DTO
 {
-    public class SetStateStepDto
+    public class SetStateStepDTO
     {
-            public Token token { get; set; }
             public Guid ProjectId { get; set; }
             public Guid StepId { get; set; }
             public bool IsDone { get; set; }
-
-        
-
     }
 }

@@ -16,7 +16,6 @@ namespace Targets.Domain.Implementations
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public bool Completed { get; set; }
         public List<Step> Steps { get; set; }
-           }
+    }
 }

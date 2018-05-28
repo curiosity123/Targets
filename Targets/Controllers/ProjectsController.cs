@@ -13,40 +13,71 @@ using Targets.Infrastructure.Services;
 namespace Targets.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Projects")]
+    [Route("Projects")]
     public class ProjectsController : Controller
     {
 
-        private readonly IProjectService service;
+        private readonly IProjectsService service;
 
-        public ProjectsController(IProjectService prjService)
+        public ProjectsController(IProjectsService prjService)
         {
             service = prjService;
         }
 
 
-
-        [HttpPost("Add")]
-        public void Post([FromBody] NewPrjDto prj)
+        [HttpGet("GetProjects")]
+        public async Task<IActionResult> GetProjects()
         {
-             if (prj!=null)
-                service.AddNewProject(prj.token,prj.Title, prj.Description);
+            return await service.GetProjects(Guid.Empty);
         }
 
-        [HttpPost("Edit")]
-        public void Post([FromBody] EditPrjDto prj)
+        [HttpPost("AddProject")]
+        public async Task<IActionResult> AddProject([FromBody] NewProjectDTO prj)
         {
-            if (prj != null)
-                service.EditProject(prj.token, prj.PrjectId,prj.UpdatedTitle, prj.UpdatedDescription);
+            return await service.AddNewProject(Guid.Empty,prj.Title, prj.Description);
+        }
+
+        [HttpPost("EditProject")]
+        public async Task<IActionResult> EditProject([FromBody] EditProjectDTO prj)
+        {
+            return await service.EditProject(Guid.Empty, prj.ProjectId, prj.UpdatedTitle, prj.UpdatedDescription);
         }
 
 
-        [HttpDelete("Delete")]
-        public void Delete([FromBody] EditPrjDto prj)
+        [HttpDelete("DeleteProject")]
+        public async Task<IActionResult> DeleteProject([FromBody] RemProjectDTO  prj)
         {
-            if (prj != null)
-                service.RemoveProject(prj.token, prj.PrjectId);
+            return await service.DeleteProject(Guid.Empty, prj.ProjectId);
         }
+
+
+        [HttpPost("SetStateStep")]
+        public async Task<IActionResult> SetStateStep([FromBody] SetStateStepDTO prj)
+        {
+            return await service.SetStateStep(Guid.Empty, prj.ProjectId, prj.StepId, prj.IsDone);
+        }
+
+
+        [HttpPost("AddStep")]
+        public async Task<IActionResult> AddStep([FromBody] NewStepDTO prj)
+        {
+            return await service.AddStep(Guid.Empty, prj.ProjectId, prj.StepTitle, prj.StepDescription);
+        }
+
+        [HttpPost("EditStep")]
+        public async Task<IActionResult> EditStep([FromBody] EditStepDTO prj)
+        {
+            return await service.EditStep(Guid.Empty, prj.ProjectId, prj.StepId, prj.UpdatedStepTitle, prj.UpdatedStepDescription);
+        }
+
+
+        [HttpDelete("DeleteStep")]
+        public async Task<IActionResult> DeleteStep([FromBody] RemStepDTO prj)
+        {
+            return await service.DeleteStep(Guid.Empty, prj.ProjectId, prj.StepId);
+        }
+
+
 
     }
 }

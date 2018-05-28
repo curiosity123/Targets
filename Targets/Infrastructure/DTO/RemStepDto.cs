@@ -6,9 +6,8 @@ using Targets.Infrastructure.Services;
 
 namespace Targets.Infrastructure.DTO
 {
-    public class RemStepDto
+    public class RemStepDTO
     {
-        public Token token { get; set; }
         public Guid ProjectId { get; set; }
         public Guid StepId { get; set; }
        
