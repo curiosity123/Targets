@@ -10,7 +10,7 @@ namespace Targets.Controllers
 {
     [Produces("application/json")]
     [Route("User")]
-    public class UserController : Controller
+    public class UserController : MyControllerBase
     {
 
         private readonly IUserService service;

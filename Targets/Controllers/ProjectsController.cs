@@ -14,7 +14,7 @@ namespace Targets.Controllers
 {
     [Produces("application/json")]
     [Route("Projects")]
-    public class ProjectsController : Controller
+    public class ProjectsController : MyControllerBase
     {
 
         private readonly IProjectsService service;

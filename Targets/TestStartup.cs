@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Targets.Controllers;
 using Targets.Infrastructure;
 using Targets.Infrastructure.EF;
 using Targets.Infrastructure.Repositories;
@@ -30,7 +31,7 @@ namespace Targets
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProjectsService, ProjectService>();
-            services.AddScoped<IStepService, StepService>();
+            services.AddScoped<IAccountService, AccountService>();
             services.AddSingleton<IRepository,InMemoryRepository>();
             services.AddMvc();
 

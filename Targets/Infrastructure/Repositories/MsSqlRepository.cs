@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Targets.Domain.Implementations;
 using Targets.Infrastructure.DTO;
@@ -17,142 +19,55 @@ namespace Targets.Infrastructure.Repositories
             dbContext = _context;
         }
 
-
-
-        public async Task<User> GetAsync(Token token)
+        public async Task AddNewProject(Guid userId, string title, string description)
         {
-            return await Task.FromResult( GetUserByToken(token));
+            await dbContext.Projects.AddAsync(new Project());
+           
         }
 
-        private User GetUserByToken(Token token)
+        public Task AddStep(Guid userId, Guid projectId, string stepTitle, string stepDescription)
         {
-            return dbContext.Users.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault();
+            throw new NotImplementedException();
         }
 
-        public async Task RegisterAccountAsync(Token token)
+        public Task EditProject(Guid userId, Guid projectId, string updatedTitle, string updatedDescription)
         {
-            dbContext.Users.Add(new User() { Email = token.Email, Password = token.Password });
-            dbContext.SaveChanges();
-            await Task.CompletedTask;
+            throw new NotImplementedException();
         }
 
-        public async Task DeleteAccountAsync(Token token)
+        public Task EditStep(Guid userId, Guid projectId, Guid stepId, string updatedStepTitle, string updatedStepDescription)
         {
-            dbContext.Users.Remove(dbContext.Users.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault());
-            dbContext.SaveChanges();
-            await Task.CompletedTask;
+            throw new NotImplementedException();
         }
 
-
-
-
-
-
-
-
-        public void AddNewProject(Token token, string title, string description)
+        public Task<IActionResult> GetAccountAsync(Guid userId)
         {
-            User user = GetUserByToken(token);
-            if (user != null)
-                user.Projects.Add(new Project() { Title = title, Description = description });
+            throw new NotImplementedException();
         }
 
-        public void EditProject(Token token, Guid ProjectId, string updatedTitle, string updatedDescription)
+        public Task<IActionResult> GetProjects(Guid userId)
         {
-            User user = GetUserByToken(token);
-            if (user != null)
-            {
-                Project prj = GetProjectById(ProjectId, user);
-                if (prj != null)
-                {
-                    prj.Title = updatedTitle;
-                    prj.Description = updatedDescription;
-                }
-            }
+            throw new NotImplementedException();
         }
 
-        private static Project GetProjectById(Guid ProjectId, User user)
+        public Task RegisterAccountAsync(Credentials credentials)
         {
-            return user.Projects.Where(x => x.Id == ProjectId).FirstOrDefault();
+            throw new NotImplementedException();
         }
 
-        public void RemoveProject(Token token, Guid ProjectId)
+        public Task RemoveProject(Guid userId, Guid projectId)
         {
-            User user = GetUserByToken(token);
-            if (user != null)
-            {
-                Project prj = GetProjectById(ProjectId, user);
-                user.Projects.Remove(prj);
-            }
+            throw new NotImplementedException();
         }
 
-
-
-
-
-
-
-
-        public void EditStep(Token token, Guid ProjectId, Guid StepId, string updatedStepTitle, string updatedStepDescription)
+        public Task RemoveStep(Guid userId, Guid projectId, Guid stepId)
         {
-            User user = GetUserByToken(token);
-            if (user != null)
-            {
-                Project prj = GetProjectById(ProjectId, user);
-                if (prj != null)
-                {
-                    Step step = prj.Steps.Where(x => x.Id == StepId).FirstOrDefault();
-                    if (step != null)
-                    {
-                        step.Title = updatedStepTitle;
-                        step.Description = updatedStepDescription;
-                    }
-
-                }
-            }
+            throw new NotImplementedException();
         }
 
-        public void AddStep(Token token, Guid ProjectId, string stepTitle, string stepDescription)
+        public Task SetStepStatus(Guid userId, Guid projectId, Guid stepId, bool isDone)
         {
-            User user = GetUserByToken(token);
-            if (user != null)
-            {
-                Project prj = GetProjectById(ProjectId, user);
-                if (prj != null)
-                {
-                    prj.Steps.Add(new Step() { Title = stepTitle, Description = stepDescription });
-                }
-            }
-        }
-
-        public void RemoveStep(Token token, Guid ProjectId, Guid StepId)
-        {
-            User user = GetUserByToken(token);
-            if (user != null)
-            {
-                Project prj = GetProjectById(ProjectId, user);
-                if (prj != null)
-                {
-                    Step step = prj.Steps.Where(x => x.Id == StepId).FirstOrDefault();
-                    if (step != null)
-                        prj.Steps.Remove(step);
-                }
-            }
-        }
-
-        public void SetStepStatus(Token token, Guid ProjectId, Guid StepId, bool isDone)
-        {
-            User user = GetUserByToken(token);
-            if (user != null)
-            {
-                Project prj = GetProjectById(ProjectId, user);
-                if (prj != null)
-                {
-                    Step step = prj.Steps.Where(x => x.Id == StepId).FirstOrDefault();
-                    if (step != null)
-                        step.Completed = isDone;
-                }
-            }
+            throw new NotImplementedException();
         }
     }
 }

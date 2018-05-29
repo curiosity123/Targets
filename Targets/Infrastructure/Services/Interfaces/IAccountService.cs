@@ -8,7 +8,7 @@ namespace Targets.Controllers
     public interface IAccountService
     {
         Task<TokenDTO> GetToken(Credentials credentials);
-        Task<IActionResult> RegisterAccount(Credentials credentials);
-        Task<IActionResult> DeleteAccount(Guid UserId);
+        Task RegisterAccount(Credentials credentials);
+        Task DeleteAccount(Guid UserId);
     }
 }

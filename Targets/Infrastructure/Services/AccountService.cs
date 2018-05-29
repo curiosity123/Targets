@@ -22,20 +22,20 @@ namespace Targets.Infrastructure.Services
 
 
 
-        public Task<IActionResult> DeleteAccount(Guid UserId)
+        public Task DeleteAccount(Guid UserId)
         {
             throw new NotImplementedException();
         }
 
 
-        public Task<IActionResult> RegisterAccount(Credentials credentials)
+        public Task RegisterAccount(Credentials credentials)
         {
-            return await repo.RegisterAccountAsync(credentials);
+            return repo.RegisterAccountAsync(credentials);
         }
 
-        public Task<TokenDTO> IAccountService.GetToken(Credentials credentials)
+        public Task<TokenDTO> GetToken(Credentials credentials)
         {
-                  return await new TokenDTO();
+            return Task.FromResult(new TokenDTO());
         }
     }
 }

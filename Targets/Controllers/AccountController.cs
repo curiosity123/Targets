@@ -10,7 +10,7 @@ namespace Targets.Controllers
 {
     [Produces("application/json")]
     [Route("Account")]
-    public class AccountController : Controller
+    public class AccountController : MyControllerBase
     {
 
         private readonly IAccountService service;

@@ -23,45 +23,45 @@ namespace Targets.Infrastructure.Services
 
         public Task<IActionResult> GetProjects(Guid UserId)
         {
-            return await repo.GetProjects(UserId);
+            return repo.GetProjects(UserId);
         }
 
-        public Task<IActionResult> AddNewProject(Guid UserId, string title, string description)
+        public Task AddNewProject(Guid UserId, string title, string description)
         {
-            return await repo.AddNewProject(UserId, title, description);
+            return repo.AddNewProject(UserId, title, description);
         }
 
-        public Task<IActionResult> EditProject(Guid UserId, Guid projectId, string updatedTitle, string updatedDescription)
+        public Task EditProject(Guid UserId, Guid projectId, string updatedTitle, string updatedDescription)
         {
-            return await repo.EditProject(UserId, projectId, updatedTitle, updatedDescription);
-        }
-
-
-        public Task<IActionResult> SetStateStep(Guid UserId, Guid projectId, Guid stepId, bool isDone)
-        {
-            return await repo.SetStepStatus(UserId, projectId, stepId, isDone);
-        }
-
-        public Task<IActionResult> AddStep(Guid UserId, Guid projectId, string stepTitle, string stepDescription)
-        {
-            return await repo.AddStep(UserId, projectId, stepTitle, stepDescription);
-        }
-
-        public Task<IActionResult> EditStep(Guid UserId, Guid projectId, Guid stepId, string updatedStepTitle, string updatedStepDescription)
-        {
-            return await repo.EditStep(UserId, projectId, stepId, updatedStepTitle, updatedStepDescription);
+            return repo.EditProject(UserId, projectId, updatedTitle, updatedDescription);
         }
 
 
-
-        public Task<IActionResult> DeleteProject(Guid UserId, Guid projectId)
+        public Task SetStateStep(Guid UserId, Guid projectId, Guid stepId, bool isDone)
         {
-            return await repo.RemoveProject(UserId, projectId);
+            return repo.SetStepStatus(UserId, projectId, stepId, isDone);
         }
 
-        public Task<IActionResult> DeleteStep(Guid UserId, Guid projectId, Guid stepId)
+        public Task AddStep(Guid UserId, Guid projectId, string stepTitle, string stepDescription)
         {
-          return await repo.RemoveStep(UserId, projectId, stepId);
+            return repo.AddStep(UserId, projectId, stepTitle, stepDescription);
+        }
+
+        public Task EditStep(Guid UserId, Guid projectId, Guid stepId, string updatedStepTitle, string updatedStepDescription)
+        {
+            return repo.EditStep(UserId, projectId, stepId, updatedStepTitle, updatedStepDescription);
+        }
+
+
+
+        public Task DeleteProject(Guid UserId, Guid projectId)
+        {
+            return repo.RemoveProject(UserId, projectId);
+        }
+
+        public Task DeleteStep(Guid UserId, Guid projectId, Guid stepId)
+        {
+          return repo.RemoveStep(UserId, projectId, stepId);
         }
     }
 }

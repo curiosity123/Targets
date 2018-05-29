@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Targets.Domain.Implementations;
 using Targets.Infrastructure.DTO;
 using Targets.Infrastructure.Services;
@@ -29,106 +30,54 @@ namespace Targets.Infrastructure.Repositories
             DataBase.Add(u);
         }
 
-
-
-
-//User operations
-        public Task DeleteAccountAsync(Token token)
+        public Task AddNewProject(Guid userId, string title, string description)
         {
-           DataBase.Remove(DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault());
-            return Task.CompletedTask;
+            throw new NotImplementedException();
         }
 
-        public  Task<User> GetAsync(Token token)
+        public Task AddStep(Guid userId, Guid projectId, string stepTitle, string stepDescription)
         {
-            return Task.FromResult( DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault());
+            throw new NotImplementedException();
         }
 
-        public Task RegisterAccountAsync(Token token)
+        public Task EditProject(Guid userId, Guid projectId, string updatedTitle, string updatedDescription)
         {
-           DataBase.Add(new User() { Email = token.Email, Password = token.Password });
-           return Task.CompletedTask;
+            throw new NotImplementedException();
         }
 
-
-
-        //Project operations
-        public void RemoveProject(Token token, Guid ProjectId)
+        public Task EditStep(Guid userId, Guid projectId, Guid stepId, string updatedStepTitle, string updatedStepDescription)
         {
-            DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault().Projects?.RemoveAll(x => x.Id == ProjectId);
+            throw new NotImplementedException();
         }
 
-        public void EditProject(Token token, Guid ProjectId, string updatedTitle, string updatedDescription)
+        public Task<IActionResult> GetAccountAsync(Guid userId)
         {
-            Project prj = DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault().Projects.Where(x => x.Id == ProjectId).FirstOrDefault();
-            if (prj != null)
-            {
-                prj.Title = updatedTitle;
-                prj.Description = updatedDescription;
-            }
+            throw new NotImplementedException();
         }
 
-        public void AddNewProject(Token token, string title, string description)
+        public Task<IActionResult> GetProjects(Guid userId)
         {
-            User usr = DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault();
-            if (usr != null)
-            {
-                usr.Projects.Add(new Project() { Title = title, Description = description });
-            }
+            throw new NotImplementedException();
         }
 
-
-
-
-        //Step operations
-        public void AddStep(Token token, Guid ProjectId, string stepTitle, string stepDescription)
+        public Task RegisterAccountAsync(Credentials credentials)
         {
-            Project prj = DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault().Projects.Where(x => x.Id == ProjectId).FirstOrDefault();
-            if (prj != null)
-            {
-                prj.Steps.Add(new Step() { Title = stepTitle, Description = stepDescription, Completed = false });
-            }
+            throw new NotImplementedException();
         }
 
-        public void EditStep(Token token, Guid ProjectId, Guid StepId, string updatedStepTitle, string updatedStepDescription)
+        public Task RemoveProject(Guid userId, Guid projectId)
         {
-            Project prj = DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault().Projects.Where(x => x.Id == ProjectId).FirstOrDefault();
-            if (prj != null)
-            {
-                Step step = prj.Steps.Where(x => x.Id ==StepId).FirstOrDefault();
-                if (step != null)
-                {
-                    step.Title = updatedStepTitle;
-                    step.Description = updatedStepDescription;
-                    step.Completed = false;
-                }
-            }
+            throw new NotImplementedException();
         }
 
-        public void RemoveStep(Token token, Guid ProjectId, Guid StepId)
+        public Task RemoveStep(Guid userId, Guid projectId, Guid stepId)
         {
-            Project prj = DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault().Projects.Where(x => x.Id == ProjectId).FirstOrDefault();
-            if (prj != null)
-            {
-                Step step = prj.Steps.Where(x => x.Id == StepId).FirstOrDefault();
-                if (step != null)
-                {
-                    prj.Steps.Remove(step);
-                }
-            }
+            throw new NotImplementedException();
         }
 
-        public void SetStepStatus(Token token, Guid ProjectId, Guid StepId, bool isDone)
+        public Task SetStepStatus(Guid userId, Guid projectId, Guid stepId, bool isDone)
         {
-            Project prj = DataBase.Where(x => x.Email == token.Email && x.Password == token.Password).FirstOrDefault().Projects.Where(x => x.Id == ProjectId).FirstOrDefault();
-            if (prj != null)
-            {
-                Step step = prj.Steps.Where(x => x.Id == StepId).FirstOrDefault();
-                if (step != null)
-                {
-                    step.Completed = isDone;
-                }
-            }
+            throw new NotImplementedException();
         }
     }
 }

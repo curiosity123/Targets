@@ -24,7 +24,7 @@ namespace Targets.Infrastructure
 
         public Task<IActionResult> GetAccount(Guid UserId)
         {
-            return await repo.getAccount(UserId);
+            return repo.GetAccountAsync(UserId);
         }
     }
 }
