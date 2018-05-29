@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Targets.Controllers;
 using Targets.Infrastructure;
 using Targets.Infrastructure.EF;
 using Targets.Infrastructure.Repositories;
@@ -24,7 +25,7 @@ namespace Targets
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProjectsService, ProjectService>();
-            services.AddScoped<IStepService, StepService>();
+            services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IRepository, MsSqlRepository>();
             services.AddMvc().AddJsonOptions(x => x.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented);
  var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";

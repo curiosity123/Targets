@@ -32,49 +32,49 @@ namespace Targets.Controllers
         }
 
         [HttpPost("AddProject")]
-        public async Task<IActionResult> AddProject([FromBody] NewProjectDTO prj)
+        public async Task AddProject([FromBody] NewProjectDTO prj)
         {
-            return await service.AddNewProject(Guid.Empty,prj.Title, prj.Description);
+             await service.AddNewProject(Guid.Empty,prj.Title, prj.Description);
         }
 
         [HttpPost("EditProject")]
-        public async Task<IActionResult> EditProject([FromBody] EditProjectDTO prj)
+        public async Task EditProject([FromBody] EditProjectDTO prj)
         {
-            return await service.EditProject(Guid.Empty, prj.ProjectId, prj.UpdatedTitle, prj.UpdatedDescription);
+            await service.EditProject(Guid.Empty, prj.ProjectId, prj.UpdatedTitle, prj.UpdatedDescription);
         }
 
 
         [HttpDelete("DeleteProject")]
-        public async Task<IActionResult> DeleteProject([FromBody] RemProjectDTO  prj)
+        public async Task DeleteProject([FromBody] RemProjectDTO  prj)
         {
-            return await service.DeleteProject(Guid.Empty, prj.ProjectId);
+            await service.DeleteProject(Guid.Empty, prj.ProjectId);
         }
 
 
         [HttpPost("SetStateStep")]
-        public async Task<IActionResult> SetStateStep([FromBody] SetStateStepDTO prj)
+        public async Task SetStateStep([FromBody] SetStateStepDTO prj)
         {
-            return await service.SetStateStep(Guid.Empty, prj.ProjectId, prj.StepId, prj.IsDone);
+             await service.SetStateStep(Guid.Empty, prj.ProjectId, prj.StepId, prj.IsDone);
         }
 
 
         [HttpPost("AddStep")]
-        public async Task<IActionResult> AddStep([FromBody] NewStepDTO prj)
+        public async Task AddStep([FromBody] NewStepDTO prj)
         {
-            return await service.AddStep(Guid.Empty, prj.ProjectId, prj.StepTitle, prj.StepDescription);
+            await service.AddStep(Guid.Empty, prj.ProjectId, prj.StepTitle, prj.StepDescription);
         }
 
         [HttpPost("EditStep")]
-        public async Task<IActionResult> EditStep([FromBody] EditStepDTO prj)
+        public async Task EditStep([FromBody] EditStepDTO prj)
         {
-            return await service.EditStep(Guid.Empty, prj.ProjectId, prj.StepId, prj.UpdatedStepTitle, prj.UpdatedStepDescription);
+             await service.EditStep(Guid.Empty, prj.ProjectId, prj.StepId, prj.UpdatedStepTitle, prj.UpdatedStepDescription);
         }
 
 
         [HttpDelete("DeleteStep")]
-        public async Task<IActionResult> DeleteStep([FromBody] RemStepDTO prj)
+        public async Task DeleteStep([FromBody] RemStepDTO prj)
         {
-            return await service.DeleteStep(Guid.Empty, prj.ProjectId, prj.StepId);
+             await service.DeleteStep(Guid.Empty, prj.ProjectId, prj.StepId);
         }
 
 

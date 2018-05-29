@@ -34,20 +34,20 @@ namespace Targets.Controllers
 
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register([FromBody] Credentials credentials)
+        public async Task Register([FromBody] Credentials credentials)
         {
             if (credentials != null)
-                return await service.RegisterAccount(credentials);
-            return Ok();
+                await service.RegisterAccount(credentials);
+           
 
         }
 
 
         [HttpDelete("Delete")]
-        public async Task<IActionResult> Delete()
+        public async Task Delete()
         {
        
-                return await service.DeleteAccount(Guid.Empty);
+                await service.DeleteAccount(Guid.Empty);
 
         }
 
