@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace Targets.Infrastructure.DTO
 {
-    public class TokenDTO
+    public class JwtDTO
     {
         public string Token { get; set; }
-        public string Role { get; set; }
         public long Expires { get; set; }
     }
 }
