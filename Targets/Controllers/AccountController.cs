@@ -25,7 +25,7 @@ namespace Targets.Controllers
         [HttpGet("Login")]
         public async Task<IActionResult> Login([FromBody] Credentials credentials)
         {
-            var t = await service.GetToken(credentials);
+            var t = await service.Login(credentials);
 
             if (t == null)
                 return NotFound();

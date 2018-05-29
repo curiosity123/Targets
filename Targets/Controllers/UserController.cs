@@ -23,9 +23,9 @@ namespace Targets.Controllers
 
 
         [HttpGet("Get")]
-        public async Task<IActionResult> Get()
+        public async Task<User> Get([FromBody] Credentials cred)
         {
-            return await service.GetAccount(Guid.Empty);
+            return await service.GetAccount(cred);
 
         }
 

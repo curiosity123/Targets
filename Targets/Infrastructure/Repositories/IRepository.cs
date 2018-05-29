@@ -16,7 +16,7 @@ namespace Targets.Infrastructure.Repositories
         Task<IActionResult> GetProjects(Guid userId);
         Task AddNewProject(Guid userId, string title, string description);
         Task EditProject(Guid userId, Guid projectId, string updatedTitle, string updatedDescription);
-        Task<IActionResult> GetAccountAsync(Guid userId);
+        Task<User> GetAccountAsync(string Email, string Password);
         Task RemoveProject(Guid userId, Guid projectId);
         Task AddStep(Guid userId, Guid projectId, string stepTitle, string stepDescription);
         Task EditStep(Guid userId, Guid projectId, Guid stepId, string updatedStepTitle, string updatedStepDescription);

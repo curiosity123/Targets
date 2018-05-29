@@ -40,7 +40,8 @@ namespace Targets.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IActionResult> GetAccountAsync(Guid userId)
+
+        public Task<User> GetAccountAsync(string Email, string Password)
         {
             throw new NotImplementedException();
         }
