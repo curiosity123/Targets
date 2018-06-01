@@ -25,8 +25,6 @@ namespace Targets.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("Completed");
-
                     b.Property<string>("Description");
 
                     b.Property<string>("Title");
@@ -37,7 +35,7 @@ namespace Targets.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Projects");
+                    b.ToTable("Project");
                 });
 
             modelBuilder.Entity("Targets.Domain.Implementations.Step", b =>
@@ -57,7 +55,7 @@ namespace Targets.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Steps");
+                    b.ToTable("Step");
                 });
 
             modelBuilder.Entity("Targets.Domain.Implementations.User", b =>
@@ -65,9 +63,15 @@ namespace Targets.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("CreartedAt");
+
                     b.Property<string>("Email");
 
+                    b.Property<string>("NickName");
+
                     b.Property<string>("Password");
+
+                    b.Property<string>("Role");
 
                     b.HasKey("Id");
 

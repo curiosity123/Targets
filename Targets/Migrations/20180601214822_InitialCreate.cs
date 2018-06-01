@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Targets.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,8 +13,11 @@ namespace Targets.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    CreartedAt = table.Column<DateTime>(nullable: false),
                     Email = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true)
+                    NickName = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
+                    Role = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -22,20 +25,19 @@ namespace Targets.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Projects",
+                name: "Project",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Completed = table.Column<bool>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true),
                     UserId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Projects", x => x.Id);
+                    table.PrimaryKey("PK_Project", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Projects_Users_UserId",
+                        name: "FK_Project_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -43,7 +45,7 @@ namespace Targets.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Steps",
+                name: "Step",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -54,33 +56,33 @@ namespace Targets.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Steps", x => x.Id);
+                    table.PrimaryKey("PK_Step", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Steps_Projects_ProjectId",
+                        name: "FK_Step_Project_ProjectId",
                         column: x => x.ProjectId,
-                        principalTable: "Projects",
+                        principalTable: "Project",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Projects_UserId",
-                table: "Projects",
+                name: "IX_Project_UserId",
+                table: "Project",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Steps_ProjectId",
-                table: "Steps",
+                name: "IX_Step_ProjectId",
+                table: "Step",
                 column: "ProjectId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Steps");
+                name: "Step");
 
             migrationBuilder.DropTable(
-                name: "Projects");
+                name: "Project");
 
             migrationBuilder.DropTable(
                 name: "Users");

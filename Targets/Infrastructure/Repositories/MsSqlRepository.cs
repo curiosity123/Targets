@@ -20,9 +20,8 @@ namespace Targets.Infrastructure.Repositories
         }
 
         public async Task AddNewProject(Guid userId, string title, string description)
-        {
-            await dbContext.Projects.AddAsync(new Project());
-           
+        {//await dbContext.Projects.AddAsync(new Project());
+
         }
 
         public Task AddStep(Guid userId, Guid projectId, string stepTitle, string stepDescription)

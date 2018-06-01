@@ -9,7 +9,8 @@ using Targets.Infrastructure.DTO;
 using Targets.Infrastructure.Services;
 
 namespace Targets.Infrastructure.Repositories
-{
+{//Update-Database
+ //Add-Migration InitialCreate 
     public interface IRepository
     {
         Task RegisterAccountAsync(Credentials credentials);
