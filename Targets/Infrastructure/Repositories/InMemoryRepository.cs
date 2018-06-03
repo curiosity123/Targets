@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Targets.Domain.Implementations;
 using Targets.Infrastructure.DTO;
+using Targets.Infrastructure.EF;
 using Targets.Infrastructure.Services;
 
 namespace Targets.Infrastructure.Repositories
@@ -12,22 +13,23 @@ namespace Targets.Infrastructure.Repositories
     public class InMemoryRepository : IRepository
     {
 
-        List<User> DataBase;
+        TargetsContext DataBase;
 
-        public InMemoryRepository()
+        public InMemoryRepository(TargetsContext _context)
         {
-            User u = new User() {  Email = "lukasz@gmail.com", Id = Guid.NewGuid(), Password = "pass" };
-            u.Projects.Add(new Project() { Title = "testowy prj", Description = "desc" });
-            u.Projects.Add(new Project() { Title = "testowy prj" });
-            u.Projects.Add(new Project() { Title = "testowy prj" });
+            DataBase = _context;
+            //User u = new User() {  Email = "lukasz@gmail.com", Id = Guid.NewGuid(), Password = "pass" };
+            //u.Projects.Add(new Project() { Title = "testowy prj", Description = "desc" });
+            //u.Projects.Add(new Project() { Title = "testowy prj" });
+            //u.Projects.Add(new Project() { Title = "testowy prj" });
 
-            u.Projects[0].Steps.Add(new Step() { Title = "step1", Description = "desc" });
-            u.Projects[1].Steps.Add(new Step() { Title = "step2" });
-            u.Projects[2].Steps.Add(new Step() { Title = "step1", Description = "desc" });
-            u.Projects[2].Steps.Add(new Step() { Title = "step2" });
+            //u.Projects[0].Steps.Add(new Step() { Title = "step1", Description = "desc" });
+            //u.Projects[1].Steps.Add(new Step() { Title = "step2" });
+            //u.Projects[2].Steps.Add(new Step() { Title = "step1", Description = "desc" });
+            //u.Projects[2].Steps.Add(new Step() { Title = "step2" });
 
-            DataBase = new List<User>();
-            DataBase.Add(u);
+            //DataBase = new List<User>();
+            //DataBase.Add(u);
         }
 
         public Task AddNewProject(Guid userId, string title, string description)
@@ -63,8 +65,13 @@ namespace Targets.Infrastructure.Repositories
 
         public Task RegisterAccountAsync(Credentials credentials)
         {
-            throw new NotImplementedException();
+            DataBase.Add(new User() { Id = Guid.NewGuid(), Email = credentials.Email, Password = credentials.Password });
+            return Task.CompletedTask;
         }
+
+
+
+
 
         public Task RemoveProject(Guid userId, Guid projectId)
         {

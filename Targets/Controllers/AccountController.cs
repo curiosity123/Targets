@@ -8,8 +8,7 @@ using Targets.Infrastructure.Services;
 
 namespace Targets.Controllers
 {
-    [Produces("application/json")]
-    [Route("Account")]
+
     public class AccountController : MyControllerBase
     {
 
@@ -34,23 +33,22 @@ namespace Targets.Controllers
 
 
         [HttpPost("Register")]
-        public async Task Register([FromBody] Credentials credentials)
+        public async Task<IActionResult> Register([FromBody] Credentials credentials)
         {
             if (credentials != null)
                 await service.RegisterAccount(credentials);
-           
+            return Ok();
 
         }
 
 
         [HttpDelete("Delete")]
-        public async Task Delete()
+        public async Task<IActionResult> Delete()
         {
-       
-                await service.DeleteAccount(Guid.Empty);
+            await service.DeleteAccount(Guid.Empty);
+            return Ok();//
 
         }
-
 
 
     }
