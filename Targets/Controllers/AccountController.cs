@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Targets.Domain.Implementations;
@@ -35,9 +36,9 @@ namespace Targets.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] Credentials credentials)
         {
-            if (credentials != null)
-                await service.RegisterAccount(credentials);
-            return Ok();
+            //  if (credentials != null)
+            //     await service.RegisterAccount(credentials);
+             return Ok();
 
         }
 
@@ -45,7 +46,7 @@ namespace Targets.Controllers
         [HttpDelete("Delete")]
         public async Task<IActionResult> Delete()
         {
-            await service.DeleteAccount(Guid.Empty);
+            //await service.DeleteAccount(Guid.Empty);
             return Ok();//
 
         }

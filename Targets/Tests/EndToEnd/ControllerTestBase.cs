@@ -19,8 +19,7 @@ namespace Targets.Tests.EndToEnd
 
         protected ControllerTestsBase()
         {
-            Server = new TestServer(new WebHostBuilder()
-                          .UseStartup<TestStartup>());
+            Server = new TestServer(new WebHostBuilder().UseStartup<TestStartup>());
             Client = Server.CreateClient();
         }
  

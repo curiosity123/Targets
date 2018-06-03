@@ -14,6 +14,7 @@ using Targets.Infrastructure;
 using Targets.Infrastructure.EF;
 using Targets.Infrastructure.Repositories;
 using Targets.Infrastructure.Services;
+using Targets.Infrastructure.Services.Interfaces;
 
 namespace Targets
 {
@@ -33,6 +34,7 @@ namespace Targets
             services.AddScoped<IProjectsService, ProjectService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddSingleton<IRepository,InMemoryRepository>();
+            services.AddScoped<IJwtHandler, JwtHandler>();
             services.AddMvc();
 
             var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
