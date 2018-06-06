@@ -21,34 +21,53 @@ namespace Targets.Infrastructure.Services
         public JwtHandler(IOptions<JwtSettings> jwtSettings)
         {
             _jwtSettings = jwtSettings.Value;
-            _jwtSettings.Key = "super_secret_123!";
-            _jwtSettings.Issuer = "http://localhost:5000";
-            _jwtSettings.ExpiryMinutes = 60;
         }
 
         public JwtDTO CreateToken(Guid userId, string role)
         {
-            var now = DateTime.UtcNow;
-            var claims = new Claim[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-                new Claim(JwtRegisteredClaimNames.UniqueName, userId.ToString()),
-                new Claim(ClaimTypes.Role, role),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, now.ToTimestamp().ToString()),
-            };
 
-            var expires = now.AddMinutes(_jwtSettings.ExpiryMinutes);
+            var nowUtc = DateTime.UtcNow;
+            var expires = nowUtc.AddMinutes(_jwtSettings.ExpiryMinutes);
+            var centuryBegin = new DateTime(1970, 1, 1).ToUniversalTime();
+            var exp = (long)(new TimeSpan(expires.Ticks - centuryBegin.Ticks).TotalSeconds);
+            var iat = (long)(new TimeSpan(nowUtc.Ticks - centuryBegin.Ticks).TotalSeconds);
+            var payload = new JwtPayload
+            {
+                {"sub", userId},
+                {"iss", _jwtSettings.Issuer},
+                {"iat", iat},
+                {"exp", exp},
+                {"unique_name", userId},
+            };
             var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key)),
                 SecurityAlgorithms.HmacSha256);
-            var jwt = new JwtSecurityToken(
-                issuer: _jwtSettings.Issuer,
-                claims: claims,
-                notBefore: now,
-                expires: expires,
-                signingCredentials: signingCredentials
-            );
+
+            var jwt = new JwtSecurityToken(new JwtHeader(signingCredentials), payload);
             var token = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+
+
+            //var now = DateTime.UtcNow;
+            //var claims = new Claim[]
+            //{
+            //    new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
+            //    new Claim(JwtRegisteredClaimNames.UniqueName, userId.ToString()),
+            //    new Claim(ClaimTypes.Role, role),
+            //    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            //    new Claim(JwtRegisteredClaimNames.Iat, now.ToTimestamp().ToString()),
+            //};
+
+            //var expires = now.AddMinutes(_jwtSettings.ExpiryMinutes);
+            //var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key)),
+            //    SecurityAlgorithms.HmacSha256);
+            //var jwt = new JwtSecurityToken(
+            //    issuer: _jwtSettings.Issuer,
+            //    claims: claims,
+            //    notBefore: now,
+            //    expires: expires,
+            //    signingCredentials: signingCredentials
+            //);
+            //var token = new JwtSecurityTokenHandler().WriteToken(jwt);
 
             return new JwtDTO
             {

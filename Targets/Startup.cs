@@ -31,6 +31,7 @@ namespace Targets
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().AddJsonOptions(x => x.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented);
+            services.AddSingleton<IConfiguration>(Configuration);
             var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<TargetsContext>(options => options.UseSqlServer(connection));
             services.AddScoped<IUserService, UserService>();
@@ -43,9 +44,6 @@ namespace Targets
             var jwtSection = Configuration.GetSection("jwt");
             var jwtOptions = new JwtSettings();
             jwtSection.Bind(jwtOptions);
-            //jwtOptions.Key = "super_secret_123!";
-            //jwtOptions.Issuer = "http://localhost:5000";
-            //jwtOptions.ExpiryMinutes= 60;
             services.AddAuthentication()
                 .AddJwtBearer(cfg =>
                 {
