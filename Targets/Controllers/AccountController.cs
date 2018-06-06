@@ -22,19 +22,16 @@ namespace Targets.Controllers
 
 
 
-        [HttpGet("Login")]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] Credentials credentials)
         {
-            var t = await service.Login(credentials);
-
-            if (t == null)
-                return NotFound();
-            return Json(t);
+            var j =  Json(await service.Login(credentials));
+            return j;
         }
 
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register([FromBody] Credentials credentials)
+        public async Task<IActionResult> Register([FromBody]Credentials credentials)
         {
             //  if (credentials != null)
             //     await service.RegisterAccount(credentials);

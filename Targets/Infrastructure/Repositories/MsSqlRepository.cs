@@ -42,7 +42,7 @@ namespace Targets.Infrastructure.Repositories
 
         public Task<User> GetAccountAsync(string Email, string Password)
         {
-            throw new NotImplementedException();
+         return Task.FromResult<User>(new User { Email = "test", Password = "pass"} );
         }
 
         public Task<IActionResult> GetProjects(Guid userId)

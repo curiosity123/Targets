@@ -21,6 +21,9 @@ namespace Targets.Infrastructure.Services
         public JwtHandler(IOptions<JwtSettings> jwtSettings)
         {
             _jwtSettings = jwtSettings.Value;
+            _jwtSettings.Key = "super_secret_123!";
+            _jwtSettings.Issuer = "http://localhost:5000";
+            _jwtSettings.ExpiryMinutes = 60;
         }
 
         public JwtDTO CreateToken(Guid userId, string role)
