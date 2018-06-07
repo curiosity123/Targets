@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Targets.Domain.Implementations;
 using Targets.Infrastructure.DTO;
 
 namespace Targets.Controllers
 {
     public interface IProjectsService
     {
-        Task<IActionResult> GetProjects(Guid UserId);
+        Task<List<Project>> GetProjects(Guid UserId);
         Task AddNewProject(Guid UserId, string title, string description);
         Task EditProject(Guid UserId, Guid projectId, string updatedTitle, string updatedDescription);
         Task SetStateStep(Guid UserId, Guid projectId, Guid stepId, bool isDone);

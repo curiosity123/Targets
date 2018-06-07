@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Targets.Controllers;
+using Targets.Domain.Implementations;
 using Targets.Infrastructure.DTO;
 using Targets.Infrastructure.Repositories;
 
@@ -21,9 +22,9 @@ namespace Targets.Infrastructure.Services
         
 
 
-        public Task<IActionResult> GetProjects(Guid UserId)
+        public Task<List<Project>> GetProjects(Guid UserId)
         {
-            return repo.GetProjects(UserId);
+            return repo.GetProjectsAsync(UserId);
         }
 
         public Task AddNewProject(Guid UserId, string title, string description)

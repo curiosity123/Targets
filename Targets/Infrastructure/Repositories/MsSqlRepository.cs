@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -59,23 +60,42 @@ namespace Targets.Infrastructure.Repositories
         #region Project
 
         public Task AddNewProject(Guid userId, string title, string description)
-        {//await dbContext.Projects.AddAsync(new Project());
-            throw new NotImplementedException();
+        {
+            var user = dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
+            if (user != null)
+                user.Projects.Add(new Project() { Title = title, Description = description });
+            dbContext.SaveChanges();
+            return Task.CompletedTask;
         }
 
         public Task EditProject(Guid userId, Guid projectId, string updatedTitle, string updatedDescription)
         {
-            throw new NotImplementedException();
+            var user = dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
+            if (user != null)
+            {
+                var prj = user.Projects.Where(x => x.Id == projectId).FirstOrDefault();
+                prj.Title = updatedTitle;
+                prj.Description = updatedDescription;
+                dbContext.SaveChanges();
+            }
+            return Task.CompletedTask;
         }
 
-        public Task<IActionResult> GetProjects(Guid userId)
+        public Task<List<Project>> GetProjectsAsync(Guid userId)
         {
-            throw new NotImplementedException();
+            var user = dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
+                return  Task.FromResult<List<Project>>(user.Projects);
         }
 
         public Task RemoveProject(Guid userId, Guid projectId)
         {
-            throw new NotImplementedException();
+            var user = dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
+            if (user != null)
+            {
+                var prj = user.Projects.Where(x => x.Id == projectId).FirstOrDefault();
+                user.Projects.Remove(prj);
+            }
+            return Task.CompletedTask;
         }
 
         #endregion

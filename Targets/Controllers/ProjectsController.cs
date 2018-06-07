@@ -28,7 +28,7 @@ namespace Targets.Controllers
 
         [HttpGet("GetProjects")]
         [Authorize]
-        public async Task<IActionResult> GetProjects()
+        public async Task<List<Project>> GetProjects()
         {
             return await service.GetProjects(UserId);
         }
