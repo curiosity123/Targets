@@ -19,36 +19,8 @@ namespace Targets.Infrastructure.Repositories
             dbContext = _context;
         }
 
-        public async Task AddNewProject(Guid userId, string title, string description)
-        {//await dbContext.Projects.AddAsync(new Project());
 
-        }
-
-        public Task AddStep(Guid userId, Guid projectId, string stepTitle, string stepDescription)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task EditProject(Guid userId, Guid projectId, string updatedTitle, string updatedDescription)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task EditStep(Guid userId, Guid projectId, Guid stepId, string updatedStepTitle, string updatedStepDescription)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public Task<User> GetAccountAsync(Guid UserId)
-        {
-            return Task.FromResult<User>((from x in dbContext.Users where x.Id == UserId select x).FirstOrDefault());
-        }
-
-        public Task<IActionResult> GetProjects(Guid userId)
-        {
-            throw new NotImplementedException();
-        }
+        #region Account
 
         public Task<User> LoginAsync(Credentials credentials)
         {
@@ -72,7 +44,50 @@ namespace Targets.Infrastructure.Repositories
             return Task.CompletedTask;
         }
 
+        #endregion
+
+        #region User  
+
+        public Task<User> GetAccountAsync(Guid UserId)
+        {
+            return Task.FromResult<User>((from x in dbContext.Users where x.Id == UserId select x).FirstOrDefault());
+        }
+
+        #endregion
+
+
+        #region Project
+
+        public Task AddNewProject(Guid userId, string title, string description)
+        {//await dbContext.Projects.AddAsync(new Project());
+            throw new NotImplementedException();
+        }
+
+        public Task EditProject(Guid userId, Guid projectId, string updatedTitle, string updatedDescription)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IActionResult> GetProjects(Guid userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task RemoveProject(Guid userId, Guid projectId)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region Step
+
+        public Task AddStep(Guid userId, Guid projectId, string stepTitle, string stepDescription)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task EditStep(Guid userId, Guid projectId, Guid stepId, string updatedStepTitle, string updatedStepDescription)
         {
             throw new NotImplementedException();
         }
@@ -86,5 +101,10 @@ namespace Targets.Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
+
+        #endregion
+
+
+
     }
 }
