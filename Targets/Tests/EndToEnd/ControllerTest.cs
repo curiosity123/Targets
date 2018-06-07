@@ -1,16 +1,10 @@
 ﻿using Newtonsoft.Json;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
-using Targets.Domain.Implementations;
-using Targets.Infrastructure.DTO;
-using Newtonsoft.Json;
-using Targets.Infrastructure.Services;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using Targets.Infrastructure.DTO;
 
 namespace Targets.Tests.EndToEnd
 {
@@ -66,10 +60,11 @@ namespace Targets.Tests.EndToEnd
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
 
             ////delete test
-            //var request = new HttpRequestMessage(HttpMethod.Delete, "api/Users/DeleteAccount/");
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+            var request = new HttpRequestMessage(HttpMethod.Delete, "Account/Delete");
             //request.Content = payload;
-            //var deleteResponse = await Client.SendAsync(request);
-            //Assert.AreEqual(deleteResponse.StatusCode, HttpStatusCode.OK);
+            var deleteResponse = await Client.SendAsync(request);
+            Assert.AreEqual(deleteResponse.StatusCode, HttpStatusCode.OK);
         }
 
 

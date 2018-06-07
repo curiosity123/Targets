@@ -10,7 +10,7 @@ using Targets.Infrastructure.Services;
 
 namespace Targets.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     [Produces("application/json")]
     [Route("User")]
     public class UserController : MyControllerBase
