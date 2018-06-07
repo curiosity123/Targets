@@ -10,6 +10,7 @@ using Targets.Domain.Implementations;
 using Targets.Infrastructure.DTO;
 using Newtonsoft.Json;
 using Targets.Infrastructure.Services;
+using System.Net.Http.Headers;
 
 namespace Targets.Tests.EndToEnd
 {
@@ -27,6 +28,9 @@ namespace Targets.Tests.EndToEnd
         [Test]
         public async Task UserCRUD_test()
         {
+            //Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Your Oauth token");
+
+
             Credentials usr = new Credentials()
             {
                 Email = "test@test.pl",
@@ -35,7 +39,25 @@ namespace Targets.Tests.EndToEnd
 
             //create test
             StringContent payload = GetPayload(usr);
-            var response = await Client.PostAsync("Account/Register", payload);
+            var response = await Client.PostAsync("Account/Login", payload);
+            var responseString = await response.Content.ReadAsStringAsync();
+
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+
+            TokenDTO token = JsonConvert.DeserializeObject<TokenDTO>(responseString);
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+            var res = await Client.GetAsync("Account/Get");
+
+            var respon = await res.Content.ReadAsStringAsync();
+            Assert.AreEqual(res.StatusCode, HttpStatusCode.OK);
+
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token+"d");
+            res = await Client.GetAsync("Account/Get");
+            Assert.AreEqual(res.StatusCode, HttpStatusCode.Unauthorized);
+
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Oauth");
+            response = await Client.PostAsync("Account/Login", payload);
+            responseString = await response.Content.ReadAsStringAsync();
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
 
             //read test
@@ -55,21 +77,21 @@ namespace Targets.Tests.EndToEnd
         [Test]
         public async Task ProjectCRUD_test()
         {
-            Credentials usr = new Credentials()
-            {
-                Email = "test@test.pl",
-                Password = "pass"
-            };
+            //Credentials usr = new Credentials()
+            //{
+            //    Email = "test@test.pl",
+            //    Password = "pass"
+            //};
 
-            //register user
-            StringContent payload = GetPayload(usr);
-            var response = await Client.PostAsync("api/Users/RegisterAccount/", payload);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            ////register user
+            //StringContent payload = GetPayload(usr);
+            //var response = await Client.PostAsync("api/Users/RegisterAccount/", payload);
+            //Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
 
 
-            var res = await Client.GetAsync("api/Users/test@test.pl,pass");
-            var responseString = await res.Content.ReadAsStringAsync();
-            Assert.AreEqual(res.StatusCode, HttpStatusCode.OK);
+            //var res = await Client.GetAsync("api/Users/test@test.pl,pass");
+            //var responseString = await res.Content.ReadAsStringAsync();
+            //Assert.AreEqual(res.StatusCode, HttpStatusCode.OK);
 
             //payload = GetPayload(new NewProjectDTO() {, Title = "prj", Description = "dsc" });
             //response = await Client.PostAsync("api/Projects/Add/", payload);

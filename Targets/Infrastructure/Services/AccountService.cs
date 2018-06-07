@@ -39,15 +39,21 @@ namespace Targets.Infrastructure.Services
 
         public async Task<TokenDTO> Login(Credentials credentials)
         {
-           var u = await repo.GetAccountAsync("ll", "ll");
-            var jwt = _JwtHandler.CreateToken(u.Id, u.Role );
+           var u = await repo.GetAccountAsync(credentials.Email, credentials.Password);
 
-            return new TokenDTO
+            if (u != null)
             {
-                Token = jwt.Token,
-                Expires = jwt.Expires,
-                Role = u.Role
-            };
+                var jwt = _JwtHandler.CreateToken(u.Id, u.Role);
+
+                return new TokenDTO
+                {
+                    Token = jwt.Token,
+                    Expires = jwt.Expires,
+                    Role = u.Role
+                };
+            }
+            else
+                return null;
         }
     }
 }
