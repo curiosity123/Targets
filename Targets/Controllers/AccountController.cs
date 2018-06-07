@@ -11,7 +11,7 @@ using Targets.Infrastructure.Services;
 
 namespace Targets.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class AccountController : MyControllerBase
     {
 

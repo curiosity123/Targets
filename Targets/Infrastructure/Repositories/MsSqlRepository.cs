@@ -58,8 +58,9 @@ namespace Targets.Infrastructure.Repositories
 
         public Task RegisterAccountAsync(Credentials credentials)
         {
-            if ((from x in dbContext.Users where x.Email == credentials.Email select x).Count() != 0)
+            if ((from x in dbContext.Users where x.Email == credentials.Email select x).Count() == 0)
                 dbContext.Users.Add(new User() { Email = credentials.Email, Password = credentials.Password });
+            dbContext.SaveChanges();
             return Task.CompletedTask;
         }
 

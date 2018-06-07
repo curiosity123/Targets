@@ -39,32 +39,31 @@ namespace Targets.Tests.EndToEnd
 
             //create test
             StringContent payload = GetPayload(usr);
-            var response = await Client.PostAsync("Account/Login", payload);
+            var response = await Client.PostAsync("Account/Register", payload);
             var responseString = await response.Content.ReadAsStringAsync();
+
+
+            payload = GetPayload(usr);
+            response = await Client.PostAsync("Account/Login", payload);
+            responseString = await response.Content.ReadAsStringAsync();
 
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
 
             TokenDTO token = JsonConvert.DeserializeObject<TokenDTO>(responseString);
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
-            var res = await Client.GetAsync("Account/Get");
+            var res = await Client.GetAsync("User/Get");
 
             var respon = await res.Content.ReadAsStringAsync();
             Assert.AreEqual(res.StatusCode, HttpStatusCode.OK);
 
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token+"d");
-            res = await Client.GetAsync("Account/Get");
+            res = await Client.GetAsync("User/Get");
             Assert.AreEqual(res.StatusCode, HttpStatusCode.Unauthorized);
 
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Oauth");
             response = await Client.PostAsync("Account/Login", payload);
             responseString = await response.Content.ReadAsStringAsync();
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
-
-            //read test
-            //var res = await Client.GetAsync("api/Users/test@test.pl,pass");
-            //var responseString = await res.Content.ReadAsStringAsync();
-            //Assert.IsTrue(responseString.Contains("test@test.pl"));
-            //Assert.AreEqual(res.StatusCode, HttpStatusCode.OK);
 
             ////delete test
             //var request = new HttpRequestMessage(HttpMethod.Delete, "api/Users/DeleteAccount/");
@@ -73,37 +72,6 @@ namespace Targets.Tests.EndToEnd
             //Assert.AreEqual(deleteResponse.StatusCode, HttpStatusCode.OK);
         }
 
-
-        [Test]
-        public async Task ProjectCRUD_test()
-        {
-            //Credentials usr = new Credentials()
-            //{
-            //    Email = "test@test.pl",
-            //    Password = "pass"
-            //};
-
-            ////register user
-            //StringContent payload = GetPayload(usr);
-            //var response = await Client.PostAsync("api/Users/RegisterAccount/", payload);
-            //Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
-
-
-            //var res = await Client.GetAsync("api/Users/test@test.pl,pass");
-            //var responseString = await res.Content.ReadAsStringAsync();
-            //Assert.AreEqual(res.StatusCode, HttpStatusCode.OK);
-
-            //payload = GetPayload(new NewProjectDTO() {, Title = "prj", Description = "dsc" });
-            //response = await Client.PostAsync("api/Projects/Add/", payload);
-            //Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
-
-
-            //res = await Client.GetAsync("api/Users/test@test.pl,pass");
-            //responseString = await res.Content.ReadAsStringAsync();
-            //var u = JsonConvert.DeserializeObject<User>(responseString);
-            //Assert.IsTrue(u.Projects.Count() == 1);
-        }
-       
 
     }
 }

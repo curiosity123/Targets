@@ -38,7 +38,7 @@ namespace Targets
             services.AddScoped<IProjectsService, ProjectService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IJwtHandler, JwtHandler>();
-            services.AddScoped<IRepository, MsSqlRepository>();
+            services.AddSingleton<IRepository, MsSqlRepository>();
 
 
             var jwtSection = Configuration.GetSection("jwt");
