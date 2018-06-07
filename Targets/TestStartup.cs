@@ -33,7 +33,7 @@ namespace Targets
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProjectsService, ProjectService>();
             services.AddScoped<IAccountService, AccountService>();
-            services.AddSingleton<IRepository,InMemoryRepository>();
+            services.AddSingleton<IRepository,MsSqlRepository>();
             services.AddScoped<IJwtHandler, JwtHandler>();
             services.AddMvc();
 
