@@ -56,7 +56,6 @@ namespace Targets.Infrastructure.Repositories
 
         #endregion
 
-
         #region Project
 
         public Task AddNewProject(Guid userId, string title, string description)
@@ -94,6 +93,7 @@ namespace Targets.Infrastructure.Repositories
             {
                 var prj = user.Projects.Where(x => x.Id == projectId).FirstOrDefault();
                 user.Projects.Remove(prj);
+                dbContext.SaveChanges();
             }
             return Task.CompletedTask;
         }
@@ -104,27 +104,78 @@ namespace Targets.Infrastructure.Repositories
 
         public Task AddStep(Guid userId, Guid projectId, string stepTitle, string stepDescription)
         {
-            throw new NotImplementedException();
+            var user = dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
+            if (user != null)
+            {
+                var prj = user.Projects.Where(x => x.Id == projectId).FirstOrDefault();
+                if(prj!=null)
+                {
+                    prj.Steps.Add(new Step() { Title = stepTitle, Description = stepDescription, Completed = false });
+                    dbContext.SaveChanges();
+                }
+            }
+
+            return Task.CompletedTask;
         }
 
         public Task EditStep(Guid userId, Guid projectId, Guid stepId, string updatedStepTitle, string updatedStepDescription)
         {
-            throw new NotImplementedException();
+            var user = dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
+            if (user != null)
+            {
+                var prj = user.Projects.Where(x => x.Id == projectId).FirstOrDefault();
+                if (prj != null)
+                {
+                    var step = prj.Steps.Where(x => x.Id == stepId).FirstOrDefault();
+                    if (step != null)
+                    {
+                        step.Title = updatedStepTitle;
+                        step.Description = updatedStepDescription;
+                        dbContext.SaveChanges();
+                    }
+                }
+            }
+
+            return Task.CompletedTask;
         }
 
         public Task RemoveStep(Guid userId, Guid projectId, Guid stepId)
         {
-            throw new NotImplementedException();
+            var user = dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
+            if (user != null)
+            {
+                var prj = user.Projects.Where(x => x.Id == projectId).FirstOrDefault();
+                if (prj != null)
+                {
+                    prj.Steps.Remove( prj.Steps.Where(x => x.Id == stepId).FirstOrDefault());
+                    dbContext.SaveChanges();
+                }
+            }
+
+            return Task.CompletedTask;
         }
 
         public Task SetStepStatus(Guid userId, Guid projectId, Guid stepId, bool isDone)
         {
-            throw new NotImplementedException();
+            var user = dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
+            if (user != null)
+            {
+                var prj = user.Projects.Where(x => x.Id == projectId).FirstOrDefault();
+                if (prj != null)
+                {
+                    var step = prj.Steps.Where(x => x.Id == stepId).FirstOrDefault();
+                    if (step != null)
+                    {
+                        step.Completed = isDone;
+                        dbContext.SaveChanges();
+                    }
+                }
+            }
+
+            return Task.CompletedTask;
         }
 
         #endregion
-
-
 
     }
 }
