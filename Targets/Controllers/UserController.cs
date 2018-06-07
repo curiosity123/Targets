@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Targets.Domain.Implementations;
@@ -23,10 +24,10 @@ namespace Targets.Controllers
 
 
         [HttpGet("Get")]
-        public async Task<User> Get([FromBody] Credentials cred)
+        [Authorize]
+        public async Task<User> Get()
         {
-            return await service.GetAccount(cred);
-
+            return await service.GetAccount(UserId);
         }
 
     }

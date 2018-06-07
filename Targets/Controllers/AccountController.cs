@@ -28,7 +28,7 @@ namespace Targets.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] Credentials credentials)
         {
-            var token = await service.Login(credentials);
+            var token = await service.LoginAsync(credentials);
             if (token != null)
             {
                 var j = Json(token);
@@ -39,28 +39,22 @@ namespace Targets.Controllers
         }
 
 
-        [HttpGet("Get")]
-        [Authorize]
-        public async Task<IActionResult> Get()
-        {
-           
-            return Ok("jest super");
-        }
 
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody]Credentials credentials)
         {
-            //  if (credentials != null)
-            //     await service.RegisterAccount(credentials);
-             return Ok();
+              if (credentials != null)
+                 await service.RegisterAccount(credentials);
+            return Created(credentials.Email, null);
 
         }
 
 
         [HttpDelete("Delete")]
+        [Authorize]
         public async Task<IActionResult> Delete()
         {
-            //await service.DeleteAccount(Guid.Empty);
+            await service.DeleteAccount(UserId);
             return Ok();//
 
         }

@@ -40,9 +40,9 @@ namespace Targets.Infrastructure.Repositories
         }
 
 
-        public Task<User> GetAccountAsync(string Email, string Password)
+        public Task<User> GetAccountAsync(Guid UserId)
         {
-         return Task.FromResult<User>(new User { Email = "test", Password = "pass"} );
+            return Task.FromResult<User>((from x in dbContext.Users where x.Id == UserId select x).FirstOrDefault());
         }
 
         public Task<IActionResult> GetProjects(Guid userId)
@@ -50,9 +50,25 @@ namespace Targets.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<User> LoginAsync(Credentials credentials)
+        {
+            var user = (from x in dbContext.Users where x.Email == credentials.Email && x.Password == credentials.Password select x).FirstOrDefault();
+            return Task.FromResult<User>(user);
+        }
+
         public Task RegisterAccountAsync(Credentials credentials)
         {
-            throw new NotImplementedException();
+            if ((from x in dbContext.Users where x.Email == credentials.Email select x).Count() != 0)
+                dbContext.Users.Add(new User() { Email = credentials.Email, Password = credentials.Password });
+            return Task.CompletedTask;
+        }
+
+        public Task RemoveAccountAsync(Guid UserId)
+        {
+            var user = (from x in dbContext.Users where x.Id == UserId select x).FirstOrDefault();
+            if (user != null)
+                dbContext.Users.Remove(user);
+            return Task.CompletedTask;
         }
 
         public Task RemoveProject(Guid userId, Guid projectId)

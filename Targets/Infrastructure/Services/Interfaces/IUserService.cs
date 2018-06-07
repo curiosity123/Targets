@@ -8,6 +8,6 @@ namespace Targets.Controllers
 {
     public interface IUserService
     {
-        Task<User> GetAccount(Credentials cred);
+        Task<User> GetAccount(Guid UserId);
     }
 }

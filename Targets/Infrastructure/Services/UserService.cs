@@ -22,9 +22,9 @@ namespace Targets.Infrastructure
             repo = _repo;
         }
 
-        public Task<User> GetAccount(Credentials cred)
+        public Task<User> GetAccount(Guid UserId)
         {
-            return  repo.GetAccountAsync(cred.Email, cred.Password);
+            return  repo.GetAccountAsync(UserId);
         }
 
 

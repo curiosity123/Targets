@@ -12,9 +12,7 @@ using Targets.Infrastructure.Services.Interfaces;
 namespace Targets.Infrastructure.Services
 {
     public class AccountService : IAccountService
-    {
-
-
+    { 
         IRepository repo;
         IJwtHandler _JwtHandler;
 
@@ -28,18 +26,17 @@ namespace Targets.Infrastructure.Services
 
         public Task DeleteAccount(Guid UserId)
         {
-            throw new NotImplementedException();
+           return repo.RemoveAccountAsync(UserId);
         }
-
 
         public Task RegisterAccount(Credentials credentials)
         {
             return repo.RegisterAccountAsync(credentials);
         }
 
-        public async Task<TokenDTO> Login(Credentials credentials)
+        public async Task<TokenDTO> LoginAsync(Credentials credentials)
         {
-           var u = await repo.GetAccountAsync(credentials.Email, credentials.Password);
+           var u = await repo.LoginAsync(credentials);
 
             if (u != null)
             {
