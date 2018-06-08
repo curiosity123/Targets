@@ -22,9 +22,6 @@ namespace Targets.Tests.EndToEnd
         [Test]
         public async Task UserCRUD_test()
         {
-            //Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Your Oauth token");
-
-
             Credentials usr = new Credentials()
             {
                 Email = "test@test.pl",
@@ -66,6 +63,7 @@ namespace Targets.Tests.EndToEnd
             var deleteResponse = await Client.SendAsync(request);
             Assert.AreEqual(deleteResponse.StatusCode, HttpStatusCode.OK);
         }
+
 
 
     }

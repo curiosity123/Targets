@@ -36,8 +36,8 @@ namespace TargetsClient.AppWindow
 
         private async void ReloadProjects()
         {
-            var User = await Communication.Instance.LoginAsync(user.Email, user.Password);
-            Proj = new ObservableCollection<Project>(User.Projects);
+           // var User = await Communication.Instance.LoginAsync(user.Email, user.Password);
+           // Proj = new ObservableCollection<Project>(User.Projects);
             RaisePropertyChangedEvent("Proj");
         }
 

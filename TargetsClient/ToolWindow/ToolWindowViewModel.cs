@@ -104,10 +104,10 @@ namespace TargetsClient.ToolWindow
         }
         private async void Add(object x)
         {
-            if (ProjChecked)
-                 await Communication.Instance.AddNewProject(user.Email, user.Password, Title, Description);
-            else
-                user.Projects[user.Projects.IndexOf(SelectedProject)].Steps.Add(new Step() { Title = Title, Description = Description });
+            //if (ProjChecked)
+            //     await Communication.Instance.AddNewProject(user.Email, user.Password, Title, Description);
+            //else
+            //    user.Projects[user.Projects.IndexOf(SelectedProject)].Steps.Add(new Step() { Title = Title, Description = Description });
         }
     }
 }

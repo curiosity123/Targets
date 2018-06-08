@@ -80,8 +80,11 @@
     </Compile>
     <Compile Include="EditWindow\EditWindowViewModel.cs" />
     <Compile Include="Communication.cs" />
-    <Compile Include="Models\EditPrjDto.cs" />
-    <Compile Include="Models\NewPrjDto.cs" />
+    <Compile Include="Models\Credentials.cs" />
+    <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\Step.cs" />
+    <Compile Include="Models\TokenDTO.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ToolWindow\ToolWindow.xaml.cs">
       <DependentUpon>ToolWindow.xaml</DependentUpon>
@@ -108,10 +111,6 @@
     </Compile>
     <Compile Include="AppWindow\AppWindowViewModel.cs" />
     <Compile Include="Bindable.cs" />
-    <Compile Include="Models\Project.cs" />
-    <Compile Include="Models\Step.cs" />
-    <Compile Include="Models\Token.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="LoginWindow\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

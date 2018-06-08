@@ -57,7 +57,6 @@ namespace TargetsClient
             if (u != null)
             {
                 AppWindow.AppWindow w = new AppWindow.AppWindow();
-                (w.DataContext as AppWindow.AppWindowViewModel).User = u;
                 w.Show();
                 (o as LoginWindow).Close();
             }
@@ -74,7 +73,7 @@ namespace TargetsClient
 
         internal async void RemoveUser(User user)
         {
-            var e = await Communication.Instance.RemoveUserAsync(user);
+            var e = await Communication.Instance.RemoveUserAsync();
             Error = e.ToString();
         }
     }

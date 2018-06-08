@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TargetsClient
 {
-    public class Token
+    public class Credentials
     {
         public string Email { get; set; }
         public string Password { get; set; }

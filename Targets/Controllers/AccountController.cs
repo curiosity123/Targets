@@ -41,6 +41,7 @@ namespace Targets.Controllers
 
 
         [HttpPost("Register")]
+        [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody]Credentials credentials)
         {
               if (credentials != null)
