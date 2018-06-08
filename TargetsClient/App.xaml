@@ -4,6 +4,34 @@
              xmlns:local="clr-namespace:TargetsClient"
              StartupUri="LoginWindow/LoginWindow.xaml">
     <Application.Resources>
-         
+        
+        <Style TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="#2286c3" BorderThickness="0">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="7" Direction="330" Color="Black" ShadowDepth="4" Opacity="0.3"></DropShadowEffect>
+                            </Border.Effect>
+                            <ContentPresenter x:Name="cp" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="White"></ContentPresenter>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#E0F2F1"></Setter>
+                                <Setter TargetName="cp" Property="TextBlock.Foreground" Value="Gray"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#9be7ff"></Setter>
+                                <Setter TargetName="cp" Property="TextBlock.Foreground" Value="Black"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#2286c3"></Setter>
+                                <Setter TargetName="cp" Property="TextBlock.Foreground" Value="Black"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>
