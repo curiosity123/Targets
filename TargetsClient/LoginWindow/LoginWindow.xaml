@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TargetsClient"
         mc:Ignorable="d"
-        Title="Targets" Height="350" Width="525" x:Name="window" Background="#64b5f6">
+        Title="Targets" Height="350" Width="525" x:Name="window" Background="#3ccc00">
     <Window.DataContext >
         <local:LoginWindowViewModel x:Name="context2"/>
     </Window.DataContext>
