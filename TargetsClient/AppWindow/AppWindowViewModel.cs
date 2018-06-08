@@ -118,9 +118,10 @@ namespace TargetsClient.AppWindow
         public ICommand RemoveUserCmd { get { return new RelayCommand(x => true, x => RemoveUserAccount(x)); } }
         private void RemoveUserAccount(object x)
         {
+            var e = Communication.Instance.RemoveUserAsync();
             LoginWindow w = new LoginWindow();
             w.Show();
-            (w.DataContext as LoginWindowViewModel).RemoveUser(User);
+          
             (x as AppWindow).Close();
         }
     }

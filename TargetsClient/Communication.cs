@@ -16,7 +16,7 @@ namespace TargetsClient
         private static Communication instance = null;
         private string ConnectionPath = "http://localhost:55500/";
         private HttpClient Client;
-        private TokenDTO Token;
+        public TokenDTO Token;
 
         private Communication()
         {
@@ -48,7 +48,7 @@ namespace TargetsClient
 
         #region API commands
 
-        public async Task<Credentials> LoginAsync(string Login, string Password)
+        public async Task<HttpStatusCode> LoginAsync(string Login, string Password)
         {
             Credentials usr = new Credentials()
             {
@@ -61,7 +61,7 @@ namespace TargetsClient
             var responseString = await response.Content.ReadAsStringAsync();
 
             Token = JsonConvert.DeserializeObject<TokenDTO>(responseString);
-            return await Task.FromResult(usr);
+            return await Task.FromResult(response.StatusCode);
         }
 
         public async Task<HttpStatusCode> RegisterAsync(string Login, string Password)

@@ -41,7 +41,10 @@ namespace Targets.Infrastructure.Repositories
         {
             var user = (from x in dbContext.Users where x.Id == UserId select x).FirstOrDefault();
             if (user != null)
+            {
                 dbContext.Users.Remove(user);
+                dbContext.SaveChanges();
+            }
             return Task.CompletedTask;
         }
 

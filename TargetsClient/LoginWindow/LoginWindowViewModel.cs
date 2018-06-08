@@ -14,7 +14,10 @@ namespace TargetsClient
 {
     class LoginWindowViewModel : Bindable
     {
-
+        public LoginWindowViewModel()
+        {
+            Communication.Instance.Token = new TokenDTO();
+        }
         private string login = "lukasz@gmail.com";
         public string Login
         {
@@ -54,7 +57,7 @@ namespace TargetsClient
         public async void TryLogin(object o)
         {
             var u = await Communication.Instance.LoginAsync(Login, Password);
-            if (u != null)
+            if (u== HttpStatusCode.OK)
             {
                 AppWindow.AppWindow w = new AppWindow.AppWindow();
                 w.Show();
@@ -71,11 +74,6 @@ namespace TargetsClient
             Error = e.ToString();
         }
 
-        internal async void RemoveUser(User user)
-        {
-            var e = await Communication.Instance.RemoveUserAsync();
-            Error = e.ToString();
-        }
     }
 
 }
