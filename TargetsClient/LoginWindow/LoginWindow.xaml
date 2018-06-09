@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TargetsClient"
         mc:Ignorable="d"
-        Title="Targets" Height="350" Width="525" x:Name="window" Background="#3ccc00">
+        Title="Targets" Height="350" Width="525" x:Name="window" Background="#3d444f">
     <Window.DataContext >
         <local:LoginWindowViewModel x:Name="context2"/>
     </Window.DataContext>
@@ -29,15 +29,15 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Grid.ColumnSpan="4" FontSize="20"  Text="Welcome in Targets app" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-        <RadioButton x:Name="RadioLogin" IsChecked="True"  Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center">Login</RadioButton>
-        <RadioButton x:Name="RadioRegister" Grid.Column="2"  Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Center">Register</RadioButton>
-        <TextBlock Text="Or" Grid.Row="1"   Grid.ColumnSpan="5" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        <TextBlock Grid.ColumnSpan="4" FontSize="20" Foreground="White" Text="Welcome in Targets app" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        <RadioButton x:Name="RadioLogin" IsChecked="True" Foreground="White"  Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center">Login</RadioButton>
+        <RadioButton x:Name="RadioRegister" Grid.Column="2" Foreground="White"  Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Center">Register</RadioButton>
+        <TextBlock Text="Or" Grid.Row="1"   Grid.ColumnSpan="5" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         
         <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"  Text="{Binding Login}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Width="200" Height="40"></TextBox>
         <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"  Text="{Binding Password}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center"  Width="200" Height="40"></TextBox>
 
-        <TextBlock Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"  Width="200" Height=" 40" HorizontalAlignment="Center" Text="{Binding Error}" ></TextBlock>
+        <TextBlock Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Foreground="White"  Width="200" Height=" 40" HorizontalAlignment="Center" Text="{Binding Error}" ></TextBlock>
 
         <Button Visibility="{Binding ElementName=RadioLogin, Path=IsChecked, Converter={StaticResource BoolConverter}}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"  Content="Login" Command="{Binding LoginCmd}" CommandParameter="{Binding ElementName=window}"  Width="200" Height="40" ></Button>
         <Button Visibility="{Binding ElementName=RadioRegister, Path=IsChecked, Converter={StaticResource BoolConverter}}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Content="Register new account"  Command="{Binding RegisterCmd}" Width="200" Height="40" HorizontalAlignment="Center" ></Button>
