@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -30,15 +31,22 @@ namespace TargetsClient.AppWindow
             set
             {
                 projects = value;
+                Thread.Sleep(500);
                 RaisePropertyChangedEvent("Proj");
             }
         }
-
+        public AppWindowViewModel()
+        {
+            ReloadProjects();
+        }
         private async void ReloadProjects()
         {
-           // var User = await Communication.Instance.LoginAsync(user.Email, user.Password);
-           // Proj = new ObservableCollection<Project>(User.Projects);
-            RaisePropertyChangedEvent("Proj");
+            
+            User = await Communication.Instance.GetUser();
+
+            if (user == null)
+                return;
+            Proj = new ObservableCollection<Project>(User.Projects);
         }
 
 
@@ -60,21 +68,24 @@ namespace TargetsClient.AppWindow
         }
 
         public ICommand DeleteCmd { get { return new RelayCommand(x => true, x => DeleteElement(x)); } }
-        private void DeleteElement(object x)
+        private async void DeleteElement(object x)
         {
             if (x is Project)
             {
-                User.Projects.Remove((x as Project));
-                ReloadProjects();
+                var p = x as Project;
+                 await Communication.Instance.RemoveProject(new RemProjectDTO {  ProjectId = p.Id});
+       
             }
             else
             {
                 Step stepToRem = x as Step;
-
-                Project ProjectContainStep = (from p in User.Projects where p.Steps.Contains(stepToRem) select p).FirstOrDefault();
-                ProjectContainStep.Steps.Remove((x as Step));
-                ReloadProjects();
+                var pid = (from a in User.Projects where a.Steps.Contains(stepToRem) select a).FirstOrDefault();
+                if(pid!=null)
+                     await Communication.Instance.RemoveStep(new RemStepDTO { ProjectId = pid.Id, StepId = stepToRem.Id });
+              
             }
+
+            ReloadProjects();
         }
 
         public ICommand EditCmd { get { return new RelayCommand(x => true, x => EditElement(x)); } }

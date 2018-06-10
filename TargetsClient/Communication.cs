@@ -21,7 +21,7 @@ namespace TargetsClient
         private Communication()
         {
             Client = new HttpClient();
-            Client.Timeout = new TimeSpan(0, 0, 10);
+            Client.Timeout = new TimeSpan(0, 0, 100);
         }
 
         public static Communication Instance
@@ -89,22 +89,87 @@ namespace TargetsClient
         }
 
 
-        //public async Task<HttpStatusCode> AddNewProject(string Login, string Password, string Title, string Description)
-        //{
-        //    Token usr = new Token()
-        //    {
-        //        Email = Login,
-        //        Password = Password
-        //    };
-        //    NewPrjDto edit = new NewPrjDto() { token = usr, Title = Title, Description = Description };
+        public async Task<User> GetUser()
+        {
+            User u = null;
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token.Token);
 
-        //    StringContent payload = Payload(edit);
-        //    var response = await Client.PostAsync(ConnectionPath + "Projects/Add/", payload);
-        //    return await Task.FromResult(response.StatusCode);
-        //}
+            var res = await Client.GetAsync(ConnectionPath + "User/Get");
+
+            var respon = await res.Content.ReadAsStringAsync();
+            var Error = res.StatusCode.ToString();
+            if (res.StatusCode == HttpStatusCode.OK)
+                u = JsonConvert.DeserializeObject<User>(respon);
+            return await Task.FromResult(u);
+        }
 
 
+        public async Task<HttpStatusCode> AddNewProject(string Title, string Description)
+        {
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token.Token);
+            NewProjectDTO edit = new NewProjectDTO() { Title = Title, Description = Description };
+            StringContent payload = Payload(edit);
+            var response = await Client.PostAsync(ConnectionPath + "Projects/AddProject", payload);
+            return await Task.FromResult(response.StatusCode);
+        }
 
+        public async Task<HttpStatusCode> AddNewStep(Guid projectId, string Title, string Description)
+        {
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token.Token);
+            NewStepDTO edit = new NewStepDTO() { ProjectId= projectId,  StepTitle = Title, StepDescription = Description };
+            StringContent payload = Payload(edit);
+            var response = await Client.PostAsync(ConnectionPath + "Projects/AddStep", payload);
+            return await Task.FromResult(response.StatusCode);
+        }
+
+        public async Task<HttpStatusCode> RemoveProject(RemProjectDTO prj)
+        {
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token.Token);
+            RemProjectDTO edit = new RemProjectDTO() { ProjectId = prj.ProjectId };
+            StringContent payload = Payload(edit);
+            var request = new HttpRequestMessage(HttpMethod.Delete, ConnectionPath + "Projects/DeleteProject");
+            request.Content = payload;
+            var deleteResponse = await Client.SendAsync(request);
+            return await Task.FromResult(deleteResponse.StatusCode);
+        }
+
+        public async Task<HttpStatusCode> RemoveStep(RemStepDTO prj)
+        {
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token.Token);
+            RemStepDTO edit = new RemStepDTO() { ProjectId = prj.ProjectId, StepId = prj.StepId };
+            StringContent payload = Payload(edit);
+            var request = new HttpRequestMessage(HttpMethod.Delete, ConnectionPath + "Projects/DeleteStep");
+            request.Content = payload;
+            var deleteResponse = await Client.SendAsync(request);
+            return await Task.FromResult(deleteResponse.StatusCode);
+        }
+
+        public async Task<HttpStatusCode> EditProject(EditProjectDTO prj)
+        {
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token.Token);
+            EditProjectDTO edit = new EditProjectDTO() { ProjectId = prj.ProjectId, UpdatedTitle = prj.UpdatedTitle, UpdatedDescription = prj.UpdatedDescription };
+            StringContent payload = Payload(edit);
+            var response = await Client.PostAsync(ConnectionPath + "Projects/EditProject", payload);
+            return await Task.FromResult(response.StatusCode);
+        }
+
+        public async Task<HttpStatusCode> EditStep(EditStepDTO prj)
+        {
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token.Token);
+            EditStepDTO edit = new EditStepDTO() { ProjectId = prj.ProjectId, StepId = prj.StepId, UpdatedStepTitle = prj.UpdatedStepTitle, UpdatedStepDescription = prj.UpdatedStepDescription };
+            StringContent payload = Payload(edit);
+            var response = await Client.PostAsync(ConnectionPath + "Projects/EditStep", payload);
+            return await Task.FromResult(response.StatusCode);
+        }
+
+        public async Task<HttpStatusCode> SetStep(SetStateStepDTO prj)
+        {
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token.Token);
+            SetStateStepDTO edit = new SetStateStepDTO() {   ProjectId = prj.ProjectId, StepId = prj.StepId, IsDone = prj.IsDone };
+            StringContent payload = Payload(edit);
+            var response = await Client.PostAsync(ConnectionPath + "Projects/SetStateStep", payload);
+            return await Task.FromResult(response.StatusCode);
+        }
 
         #endregion
 

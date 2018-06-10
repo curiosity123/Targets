@@ -36,7 +36,7 @@ namespace TargetsClient.EditWindow
 
         private void Ok(object x)
         {
-            Confirm = true;
+           // await Communication.Instance.EditStep(SelectedProject.Id,, Title, Description);
             (x as EditWindow).Close();
         }
 
