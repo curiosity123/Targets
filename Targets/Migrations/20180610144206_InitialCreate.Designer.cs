@@ -11,7 +11,7 @@ using Targets.Infrastructure.EF;
 namespace Targets.Migrations
 {
     [DbContext(typeof(TargetsContext))]
-    [Migration("20180607205354_InitialCreate")]
+    [Migration("20180610144206_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

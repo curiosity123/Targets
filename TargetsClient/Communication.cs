@@ -14,7 +14,7 @@ namespace TargetsClient
     {
         private static readonly object locker = new object();
         private static Communication instance = null;
-        private string ConnectionPath = "http://localhost:55500/";
+        private string ConnectionPath = "http://targets.lukaszadach.pl/";
         private HttpClient Client;
         public TokenDTO Token;
 
