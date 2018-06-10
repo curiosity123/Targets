@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,7 +55,9 @@ namespace Targets.Infrastructure.Repositories
 
         public Task<User> GetAccountAsync(Guid UserId)
         {
-            return Task.FromResult<User>((from x in dbContext.Users where x.Id == UserId select x).FirstOrDefault());
+            var u = (from x in dbContext.Users where x.Id == UserId select x).Include("Projects.Steps").ToList();
+ 
+            return Task.FromResult<User>(u.FirstOrDefault());
         }
 
         #endregion
@@ -63,10 +66,12 @@ namespace Targets.Infrastructure.Repositories
 
         public Task AddNewProject(Guid userId, string title, string description)
         {
-            var user = dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
+            var user = dbContext.Users.Where(x => x.Id == userId).Include("Projects.Steps").FirstOrDefault();
             if (user != null)
                 user.Projects.Add(new Project() { Title = title, Description = description });
+            dbContext.Entry(user.Projects).State = EntityState.Modified;
             dbContext.SaveChanges();
+            
             return Task.CompletedTask;
         }
 
@@ -84,8 +89,8 @@ namespace Targets.Infrastructure.Repositories
         }
 
         public Task<List<Project>> GetProjectsAsync(Guid userId)
-        {
-            var user = dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
+        { 
+            var user = dbContext.Users.Where(x => x.Id == userId).Include(x => x.Projects).FirstOrDefault();
                 return  Task.FromResult<List<Project>>(user.Projects);
         }
 

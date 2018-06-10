@@ -46,7 +46,10 @@ namespace TargetsClient.AppWindow
 
             if (user == null)
                 return;
-            Proj = new ObservableCollection<Project>(User.Projects);
+
+
+
+            Proj =new ObservableCollection<Project>(User.Projects);
         }
 
 

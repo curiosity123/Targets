@@ -14,7 +14,7 @@ namespace TargetsClient
     {
         private static readonly object locker = new object();
         private static Communication instance = null;
-        private string ConnectionPath = "http://targets.lukaszadach.pl/";
+        private string ConnectionPath = "http://localhost:55500/";
         private HttpClient Client;
         public TokenDTO Token;
 
@@ -100,6 +100,21 @@ namespace TargetsClient
             var Error = res.StatusCode.ToString();
             if (res.StatusCode == HttpStatusCode.OK)
                 u = JsonConvert.DeserializeObject<User>(respon);
+            return await Task.FromResult(u);
+        }
+
+
+        public async Task<List<Project>> GetProjects()
+        {
+            List<Project> u = null;
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token.Token);
+
+            var res = await Client.GetAsync(ConnectionPath + "Projects/GetProjects");
+
+            var respon = await res.Content.ReadAsStringAsync();
+            var Error = res.StatusCode.ToString();
+            if (res.StatusCode == HttpStatusCode.OK)
+                u = JsonConvert.DeserializeObject<List<Project>>(respon);
             return await Task.FromResult(u);
         }
 
