@@ -4,43 +4,56 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TargetsClient.AppWindow"
-                xmlns:loc="clr-namespace:TargetsClient"
+                xmlns:loc="clr-namespace:TargetsClient" WindowStyle="ToolWindow" ResizeMode="NoResize"
         mc:Ignorable="d"
-        Title="AppWindow" x:Name="window" Height="300" Width="300">
+        Title="AppWindow" x:Name="window" Height="500" Width="490"  Background="#374b4f">
     <Window.DataContext >
         <local:AppWindowViewModel x:Name="context2"/>
     </Window.DataContext>
 
-    <Grid>
-        <StackPanel Orientation="Vertical">
-            <TextBlock Text="{Binding User.Email}"></TextBlock>
-            <TreeView x:Name="tree" ItemsSource="{Binding Proj}" Height="200">
-                <TreeView.Resources>
-                    <HierarchicalDataTemplate DataType="{x:Type loc:Project}" ItemsSource="{Binding Steps}">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Title}" />
-                            <TextBlock Text="{Binding Description}"></TextBlock>
-                            <CheckBox IsChecked="{Binding State}"></CheckBox>
-                            <Button >Done!</Button>
-                        </StackPanel>
-                    </HierarchicalDataTemplate>
-                    <HierarchicalDataTemplate DataType="{x:Type loc:Step}">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Title}" />
-                            <TextBlock Text="{Binding Description}"></TextBlock>
-                            <CheckBox IsChecked="{Binding State}"></CheckBox>
-                            <Button >Done!</Button>
-                        </StackPanel>
-                    </HierarchicalDataTemplate>
-                </TreeView.Resources>
-            </TreeView>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="New" Command="{Binding NewCmd}" ></Button>
-                <Button Content="Delete" Command="{Binding DeleteCmd}" CommandParameter="{Binding ElementName=tree, Path=SelectedItem}"></Button>
-                <Button Content="Edit" Command="{Binding EditCmd}" CommandParameter="{Binding ElementName=tree, Path=SelectedItem}"></Button>
-            </StackPanel>
-            <Button Content="Logout" Command="{Binding LogoutCmd}" CommandParameter="{Binding ElementName=window}"></Button>
-            <Button Content="Remove account" Command="{Binding RemoveUserCmd}" CommandParameter="{Binding ElementName=window}"></Button>
-        </StackPanel>
+    <Grid VerticalAlignment="Stretch" Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="{Binding User.Email}" Foreground="White" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        <TextBlock Text="Your projects list:" Foreground="White" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+
+        <TreeView x:Name="tree" Grid.Row="2" Margin="0,10"  Grid.ColumnSpan="3" HorizontalAlignment="Stretch"  ItemsSource="{Binding Proj}" VerticalAlignment="Stretch"  Background="#374b4f">
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type loc:Project}" ItemsSource="{Binding Steps}">
+                    <StackPanel Orientation="Horizontal" Height="40" Background="#102327" >
+                        <TextBlock Text="{Binding Title}" VerticalAlignment="Center" Width="100" Foreground="White" Margin="20,0"  />
+                        <TextBlock Text="{Binding Description}" VerticalAlignment="Center" Width="100"  Foreground="White" Margin="20,0" ></TextBlock>
+                        <CheckBox IsChecked="{Binding State}" VerticalAlignment="Center"></CheckBox>
+                        <Button >Done!</Button>
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type loc:Step}">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"   Height="40"  Background="#102327">
+                        <TextBlock Text="{Binding Title}" VerticalAlignment="Center" Width="100"  Foreground="White" Margin="20,0"  />
+                        <TextBlock Text="{Binding Description}" VerticalAlignment="Center" Width="100" Foreground="White" Margin="20,0" ></TextBlock>
+                        <CheckBox IsChecked="{Binding State}" VerticalAlignment="Center"></CheckBox>
+                        <Button >Done!</Button>
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+            </TreeView.Resources>
+        </TreeView>
+
+        <Button Grid.Row="3" Grid.Column="0" Content="New" Command="{Binding NewCmd}" ></Button>
+        <Button Grid.Row="3" Grid.Column="1" Content="Delete" Command="{Binding DeleteCmd}" CommandParameter="{Binding ElementName=tree, Path=SelectedItem}"></Button>
+        <Button Grid.Row="3" Grid.Column="2" Content="Edit" Command="{Binding EditCmd}" CommandParameter="{Binding ElementName=tree, Path=SelectedItem}"></Button>
+
+        <Button Grid.Row="0" Grid.Column="0" Content="Logout" Command="{Binding LogoutCmd}" CommandParameter="{Binding ElementName=window}"></Button>
+        <Button Grid.Row="0" Grid.Column="2" Content="Remove account" HorizontalAlignment="Right" Command="{Binding RemoveUserCmd}" CommandParameter="{Binding ElementName=window}"></Button>
+
     </Grid>
 </Window>
