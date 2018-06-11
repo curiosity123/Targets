@@ -112,7 +112,7 @@ namespace Targets.Infrastructure.Repositories
 
         public Task AddStep(Guid userId, Guid projectId, string stepTitle, string stepDescription)
         {
-            var user = dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
+            var user = dbContext.Users.Where(x => x.Id == userId).Include("Projects.Steps").FirstOrDefault();
             if (user != null)
             {
                 var prj = user.Projects.Where(x => x.Id == projectId).FirstOrDefault();

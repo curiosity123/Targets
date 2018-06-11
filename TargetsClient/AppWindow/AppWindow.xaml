@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TargetsClient.AppWindow"
-                xmlns:loc="clr-namespace:TargetsClient" WindowStyle="ToolWindow" ResizeMode="NoResize"
+                xmlns:loc="clr-namespace:TargetsClient" WindowStyle="ToolWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         Title="AppWindow" x:Name="window" Height="500" Width="490"  Background="#374b4f">
     <Window.DataContext >
@@ -29,36 +29,38 @@
 
         <TreeView x:Name="tree" Grid.Row="2" Margin="0,10"  Grid.ColumnSpan="3" HorizontalAlignment="Stretch"  ItemsSource="{Binding Proj}" VerticalAlignment="Stretch"  Background="#374b4f">
             <TreeView.Resources>
-                <DataTemplate x:Key="element">
-                    
-                </DataTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type loc:Project}" ItemsSource="{Binding Steps}" >
-                    <StackPanel Orientation="Horizontal" x:Name="border"  Height="40" Background="#102327" >
-                        <TextBlock Text="Title:" VerticalAlignment="Center" Foreground="White"  Margin="10,0"></TextBlock>
-                        <TextBlock Text="{Binding Title}" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" Margin="10,0"  />
-                        <TextBlock Text="Description:" VerticalAlignment="Center" Foreground="White" Margin="10,0"></TextBlock>
-                        <TextBlock  Text="{Binding Description}" VerticalAlignment="Center"  HorizontalAlignment="Left"   Foreground="White" Margin="10,0" ></TextBlock>
+                    <StackPanel Orientation="Horizontal" x:Name="border"  Height="50" Background="#102327" >
+                        <StackPanel Orientation="Vertical" Width="370">
+                            <TextBlock Text="{Binding Title}" FontSize="18" VerticalAlignment="Center"  HorizontalAlignment="Left"  Foreground="White" Margin="10,0"  />
+                            <TextBlock Text="{Binding Description}" FontSize="12" VerticalAlignment="Center"  HorizontalAlignment="Left" Foreground="White" Margin="10,0" ></TextBlock>
+                        </StackPanel>
                         <CheckBox IsChecked="{Binding State}" VerticalAlignment="Center" Margin="10,0"></CheckBox>
                     </StackPanel>
                     <HierarchicalDataTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True" >
                             <Setter TargetName="border" Property="Background" Value="#62777b"></Setter>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="false" >
+                            <Setter TargetName="border" Property="Background" Value="#102327"></Setter>
                         </Trigger>
                     </HierarchicalDataTemplate.Triggers>
                 </HierarchicalDataTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type loc:Step}">
-                    <StackPanel x:Name="border" Orientation="Horizontal" HorizontalAlignment="Stretch"   Height="40"  Background="#102327">
-                        <TextBlock Text="Title:" VerticalAlignment="Center" Foreground="White" Margin="10,0"></TextBlock>
-                        <TextBlock Text="{Binding Title}" VerticalAlignment="Center"  HorizontalAlignment="Left"  Foreground="White" Margin="10,0"  />
-                        <TextBlock Text="Description:" VerticalAlignment="Center" Foreground="White" Margin="10,0"></TextBlock>
-                        <TextBlock Text="{Binding Description}" VerticalAlignment="Center"  HorizontalAlignment="Left" Foreground="White" Margin="10,0" ></TextBlock>
+                    <StackPanel x:Name="border" Orientation="Horizontal" HorizontalAlignment="Stretch"   Height="50"  Background="#102327">
+                        <StackPanel Orientation="Vertical" Width="370" >
+                            <TextBlock Text="{Binding Title}" FontSize="18" VerticalAlignment="Center"  HorizontalAlignment="Left"  Foreground="White" Margin="10,0"  />
+                            <TextBlock Text="{Binding Description}" FontSize="12" VerticalAlignment="Center"  HorizontalAlignment="Left" Foreground="White" Margin="10,0" ></TextBlock>
+                        </StackPanel>
                         <CheckBox IsChecked="{Binding State}" VerticalAlignment="Center" Margin="10,0"></CheckBox>
                     </StackPanel>
                     <HierarchicalDataTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True" >
                             <Setter TargetName="border" Property="Background" Value="#62777b"></Setter>
                         </Trigger>
-
+                        <Trigger Property="IsMouseOver" Value="false" >
+                            <Setter TargetName="border" Property="Background" Value="#102327"></Setter>
+                        </Trigger>
                     </HierarchicalDataTemplate.Triggers>
                 </HierarchicalDataTemplate>
             </TreeView.Resources>

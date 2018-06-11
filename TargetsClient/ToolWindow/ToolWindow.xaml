@@ -7,51 +7,70 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         mc:Ignorable="d"
-        Title="ToolWindow" x:Name="window" Height="300" Width="300">
+        Title="ToolWindow" x:Name="window" Height="350" Width="300" Background="#374b4f" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Window.DataContext >
         <local:ToolWindowViewModel x:Name="whatever"/>
     </Window.DataContext>
 
-    <Grid>
-        <StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <RadioButton Content="prj" IsChecked="{Binding ProjChecked}"  ></RadioButton>
-                <RadioButton x:Name="RadioStep" Content="Step" IsChecked="{Binding StepChecked}" ></RadioButton>
-            </StackPanel>
-            <ComboBox ItemsSource="{Binding PrjList}" SelectedItem="{Binding SelectedProject}" IsEnabled="{Binding ElementName=RadioStep,Path=IsChecked, Mode=TwoWay}">
-                <ComboBox.Resources>
-                    <Style TargetType="ComboBoxItem">
-                        <Setter Property="ContentTemplate">
-                            <Setter.Value>
-                                <DataTemplate>
-                                      <TextBlock Text="{Binding Title}"></TextBlock>
-                                </DataTemplate>
-                              
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ComboBox.Resources>
-            </ComboBox>
-            <TextBox Text="{Binding Title}"></TextBox>
-            <TextBox Text="{Binding Description}"></TextBox>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Cancel" >
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <ei:CallMethodAction TargetObject="{Binding ElementName=window}" MethodName="Close"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
-                <Button Content="Add" Command="{Binding CmdAdd}" CommandParameter="{Binding ElementName=window}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <ei:CallMethodAction TargetObject="{Binding ElementName=window}" MethodName="Close"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
-            </StackPanel>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Foreground="White" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center">Add new element</TextBlock>
+        <RadioButton Content="New Project" Grid.Row="2" Foreground="White"  Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding ProjChecked}"  ></RadioButton>
+        <RadioButton x:Name="RadioStep" Grid.Row="2" Foreground="White"  Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center"  Content="New Step" IsChecked="{Binding StepChecked}" ></RadioButton>
+
+        <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Foreground="White"  HorizontalAlignment="Center" VerticalAlignment="Center">Or</TextBlock>
+
+        <ComboBox ItemsSource="{Binding PrjList}" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedProject}" IsEnabled="{Binding ElementName=RadioStep,Path=IsChecked, Mode=TwoWay}">
+            <ComboBox.Resources>
+                <Style TargetType="ComboBoxItem">
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Title}"></TextBlock>
+                            </DataTemplate>
+
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ComboBox.Resources>
+        </ComboBox>
+        <TextBox Text="{Binding Title}" Grid.Row="6" Grid.ColumnSpan="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></TextBox>
+        <TextBox Text="{Binding Description}" Grid.Row="8" Grid.ColumnSpan="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></TextBox>
+
+        <Button Content="Cancel" Grid.Row="10" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <ei:CallMethodAction TargetObject="{Binding ElementName=window}" MethodName="Close"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        <Button Content="Add" Grid.Row="10" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Command="{Binding CmdAdd}" CommandParameter="{Binding ElementName=window}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <ei:CallMethodAction TargetObject="{Binding ElementName=window}" MethodName="Close"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+  
 
 
-        </StackPanel>
+
     </Grid>
 </Window>
