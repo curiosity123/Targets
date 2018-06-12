@@ -28,8 +28,8 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <TextBlock  Grid.Row="0" Grid.ColumnSpan="2" Foreground="White" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center">Modify selected element</TextBlock>
-        <TextBox Text="{Binding Title}" Grid.Row="2" Grid.ColumnSpan="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
-        <TextBox Text="{Binding Description}"  Grid.Row="4" Grid.ColumnSpan="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
+        <TextBox Text="{Binding Title}" Tag="Enter title here"  Grid.Row="2" Grid.ColumnSpan="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
+        <TextBox Text="{Binding Description}" Tag="Enter description here"   Grid.Row="4" Grid.ColumnSpan="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
 
         <Button Content="Cancel" Grid.Row="6" Command="{Binding CmdCancel}" CommandParameter="{Binding ElementName=window}" >
             <i:Interaction.Triggers>

@@ -51,8 +51,8 @@
                 </Style>
             </ComboBox.Resources>
         </ComboBox>
-        <TextBox Text="{Binding Title}" Grid.Row="6" Grid.ColumnSpan="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></TextBox>
-        <TextBox Text="{Binding Description}" Grid.Row="8" Grid.ColumnSpan="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></TextBox>
+        <TextBox Text="{Binding Title}" Tag="Enter title here" Grid.Row="6" Grid.ColumnSpan="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></TextBox>
+        <TextBox Text="{Binding Description}" Tag="Enter description here" Grid.Row="8" Grid.ColumnSpan="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></TextBox>
 
         <Button Content="Cancel" Grid.Row="10" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <i:Interaction.Triggers>

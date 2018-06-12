@@ -18,7 +18,7 @@ namespace TargetsClient
         {
             Communication.Instance.Token = new TokenDTO();
         }
-        private string login = "lukasz@gmail.com";
+        private string login = "";
         public string Login
         {
             get { return login; }
@@ -29,7 +29,7 @@ namespace TargetsClient
             }
         }
 
-        private string password = "pass";
+        private string password = "";
         public string Password
         {
             get { return password; }
