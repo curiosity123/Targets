@@ -27,8 +27,16 @@ namespace TargetsClient
 
         }
 
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if ((sender as PasswordBox).Password == "")
+                (sender as PasswordBox).Tag = "Enter your password";
+            else
+            {
+                (sender as PasswordBox).Tag = "";
+                ((sender as PasswordBox).DataContext as LoginWindowViewModel).Password = (sender as PasswordBox).Password;
+            }
 
-
-
+        }
     }
 }

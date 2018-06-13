@@ -35,7 +35,7 @@
         <TextBlock Text="Or" Grid.Row="1"   Grid.ColumnSpan="5" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         
         <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Tag="Enter your login"  Text="{Binding Login}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Width="200" Height="40"></TextBox>
-        <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"   Tag="Enter your password"  Text="{Binding Password}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center"  Width="200" Height="40"></TextBox>
+        <PasswordBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"   Tag="Enter your password"  PasswordChanged="PasswordBox_PasswordChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center"  Width="200" Height="40"></PasswordBox>
         <TextBlock Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Foreground="White" Height=" 40" HorizontalAlignment="Center" Text="{Binding Error}" ></TextBlock>
 
         <Button Visibility="{Binding ElementName=RadioLogin, Path=IsChecked, Converter={StaticResource BoolConverter}}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"  Content="Login" Command="{Binding LoginCmd}" CommandParameter="{Binding ElementName=window}"  Width="200" Height="40" ></Button>
