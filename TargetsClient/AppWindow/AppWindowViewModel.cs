@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -132,11 +133,14 @@ namespace TargetsClient.AppWindow
         public ICommand RemoveUserCmd { get { return new RelayCommand(x => true, x => RemoveUserAccount(x)); } }
         private void RemoveUserAccount(object x)
         {
-            var e = Communication.Instance.RemoveUserAsync();
-            LoginWindow w = new LoginWindow();
-            w.Show();
-          
-            (x as AppWindow).Close();
+            if (MessageBox.Show("Do you realy want to remove this account permanently?", "Attention!", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                var e = Communication.Instance.RemoveUserAsync();
+                LoginWindow w = new LoginWindow();
+                w.Show();
+
+                (x as AppWindow).Close();
+            }
         }
     }
 }
