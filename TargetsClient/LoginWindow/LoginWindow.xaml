@@ -12,6 +12,11 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolConverter"></BooleanToVisibilityConverter>
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding  Command="{Binding LoginCmd}" CommandParameter="{Binding ElementName=window}"  Key="Enter"/>
+        <KeyBinding  Command="{Binding CloseCmd}" CommandParameter="{Binding ElementName=window}"  Key="Esc"/>
+    </Window.InputBindings>
+
 
     <Grid>
         <Grid.ColumnDefinitions>

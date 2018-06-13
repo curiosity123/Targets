@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace TargetsClient
 {
@@ -17,5 +18,6 @@ namespace TargetsClient
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
+        public ICommand CloseCmd { get { return new RelayCommand(x => true, x => (x as LoginWindow).Close()); } }
     }
 }
