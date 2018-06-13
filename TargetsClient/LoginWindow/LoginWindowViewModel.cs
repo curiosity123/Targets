@@ -51,7 +51,7 @@ namespace TargetsClient
             }
         }
 
-
+ 
 
         public ICommand LoginCmd { get { return new RelayCommand(x => true, x => TryLogin(x)); } }
         public async void TryLogin(object o)

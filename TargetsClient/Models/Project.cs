@@ -19,5 +19,11 @@ namespace TargetsClient
         public string Description { get; set; }
         public bool Completed { get; set; }
         public List<Step> Steps { get; set; }
-           }
+        public override string ToString()
+        {
+            return Title;
+        }
+
+    }
+    
 }

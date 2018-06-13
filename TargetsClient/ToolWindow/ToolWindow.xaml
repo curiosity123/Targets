@@ -37,7 +37,7 @@
 
         <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Foreground="White"  HorizontalAlignment="Center" VerticalAlignment="Center">Or</TextBlock>
 
-        <ComboBox ItemsSource="{Binding PrjList}" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedProject}" IsEnabled="{Binding ElementName=RadioStep,Path=IsChecked, Mode=TwoWay}">
+        <ComboBox ItemsSource="{Binding PrjList}" SelectedIndex="0" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedProject}" IsEnabled="{Binding ElementName=RadioStep,Path=IsChecked, Mode=TwoWay}">
             <ComboBox.Resources>
                 <Style TargetType="ComboBoxItem">
                     <Setter Property="ContentTemplate">
@@ -51,8 +51,8 @@
                 </Style>
             </ComboBox.Resources>
         </ComboBox>
-        <TextBox Text="{Binding Title}" Tag="Enter title here" Grid.Row="6" Grid.ColumnSpan="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></TextBox>
-        <TextBox Text="{Binding Description}" Tag="Enter description here" Grid.Row="8" Grid.ColumnSpan="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></TextBox>
+        <TextBox Text="{Binding Title}" Tag="Enter title here" Grid.Row="6" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></TextBox>
+        <TextBox Text="{Binding Description}" Tag="Enter description here" Grid.Row="8" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></TextBox>
 
         <Button Content="Cancel" Grid.Row="10" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <i:Interaction.Triggers>
