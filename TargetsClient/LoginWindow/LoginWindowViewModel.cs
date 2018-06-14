@@ -26,6 +26,7 @@ namespace TargetsClient
             {
                 login = value;
                 RaisePropertyChangedEvent("Login");
+                Error = "";
             }
         }
 
@@ -37,6 +38,7 @@ namespace TargetsClient
             {
                 password = value;
                 RaisePropertyChangedEvent("Password");
+                Error = "";
             }
         }
 
@@ -53,24 +55,43 @@ namespace TargetsClient
 
  
 
-        public ICommand LoginCmd { get { return new RelayCommand(x => true, x => TryLogin(x)); } }
+        public ICommand LoginCmd { get { return new RelayCommand(x => Validate(), x => TryLogin(x)); } }
+        private bool LogingInProgres = false;
+        private bool Validate()
+        {
+            if (!string.IsNullOrEmpty(Login) && !string.IsNullOrEmpty(Password) && !LogingInProgres)
+                return true;
+            return false;
+        }
+
         public async void TryLogin(object o)
         {
+            Error = "Please wait a while :)";
+            LogingInProgres = true;
             var u = await Communication.Instance.LoginAsync(Login, Password);
-            if (u== HttpStatusCode.OK)
+            if (u == HttpStatusCode.OK)
             {
                 AppWindow.AppWindow w = new AppWindow.AppWindow();
                 w.Show();
                 (o as LoginWindow).Close();
             }
             else
+            {
                 Error = "Error";
+                LogingInProgres = false;
+                RaisePropertyChangedEvent("Login");
+            }
         }
 
-        public ICommand RegisterCmd { get { return new RelayCommand(x => true, x => TryRegister()); } }
+        public ICommand RegisterCmd { get { return new RelayCommand(x => Validate(), x => TryRegister()); } }
         public async void TryRegister()
         {
+            Error = "Please wait a while :)";
+            LogingInProgres = true;
             var e = await Communication.Instance.RegisterAsync(Login, Password);
+
+            LogingInProgres = false;
+            RaisePropertyChangedEvent("Login");
             Error = e.ToString();
         }
 

@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace TargetsClient.EditWindow
 {
-    public class EditWindowViewModel:Bindable
+    public class EditWindowViewModel : Bindable
     {
 
 
@@ -17,7 +17,9 @@ namespace TargetsClient.EditWindow
         public string Title
         {
             get { return title; }
-            set { title = value;
+            set
+            {
+                title = value;
                 RaisePropertyChangedEvent("Title");
             }
         }
@@ -27,16 +29,25 @@ namespace TargetsClient.EditWindow
         public string Description
         {
             get { return description; }
-            set { description = value;
+            set
+            {
+                description = value;
                 RaisePropertyChangedEvent("Description");
             }
         }
 
-        public ICommand CmdOk { get { return new RelayCommand(x => true, x => Ok(x)); } }
+        public ICommand CmdOk { get { return new RelayCommand(x => Validate(), x => Ok(x)); } }
+
+        private bool Validate()
+        {
+            if (!string.IsNullOrEmpty(Title) && !string.IsNullOrEmpty(Description))
+                return true;
+            return false;
+        }
 
         private void Ok(object x)
         {
-           // await Communication.Instance.EditStep(SelectedProject.Id,, Title, Description);
+            // await Communication.Instance.EditStep(SelectedProject.Id,, Title, Description);
             (x as EditWindow).Close();
         }
 

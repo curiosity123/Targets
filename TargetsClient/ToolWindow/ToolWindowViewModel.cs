@@ -97,7 +97,9 @@ namespace TargetsClient.ToolWindow
         public ICommand CmdAdd { get { return new RelayCommand(x => CanAdd(x), x => Add(x)); } }
         private bool CanAdd(object x)
         {
-            if (!string.IsNullOrEmpty(Title) && !string.IsNullOrEmpty(Description))
+            if (!string.IsNullOrEmpty(Title) && !string.IsNullOrEmpty(Description) && ProjChecked)
+                return true;
+            if (!string.IsNullOrEmpty(Title) && !string.IsNullOrEmpty(Description) && StepChecked && SelectedProject!=null)
                 return true;
 
             return false;
