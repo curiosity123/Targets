@@ -25,14 +25,13 @@ namespace TargetsClient.AppWindow
             }
         }
 
-        private ObservableCollection<Project> projects;
-        public ObservableCollection<Project> Proj
+        private List<Project> projects;
+        public List<Project> Proj
         {
             get { return projects; }
             set
             {
-                projects = value;
-                Thread.Sleep(500);
+                projects = value;    
                 RaisePropertyChangedEvent("Proj");
             }
         }
@@ -47,10 +46,7 @@ namespace TargetsClient.AppWindow
 
             if (user == null)
                 return;
-
-
-
-            Proj =new ObservableCollection<Project>(User.Projects);
+            Proj =  await Communication.Instance.GetProjects();
         }
 
 
@@ -67,7 +63,8 @@ namespace TargetsClient.AppWindow
         {
             ToolWindow.ToolWindow t = new ToolWindow.ToolWindow();
             t.DataContext = new ToolWindow.ToolWindowViewModel(User);
-            t.ShowDialog();                 
+            t.ShowDialog();
+            Thread.Sleep(1000);
             ReloadProjects();
         }
 
