@@ -25,7 +25,7 @@ namespace TargetsClient.AppWindow
             }
         }
 
-        private List<Project> projects;
+        private List<Project> projects = new List<Project>();
         public List<Project> Proj
         {
             get { return projects; }
@@ -81,7 +81,7 @@ namespace TargetsClient.AppWindow
             ReloadProjects();
         }
 
-        public ICommand DeleteCmd { get { return new RelayCommand(x => true, x => DeleteElement(x)); } }
+        public ICommand DeleteCmd { get { return new RelayCommand(x => projects.Count>0 && x!=null, x => DeleteElement(x)); } }
         private async void DeleteElement(object x)
         {
             if (x is Project)
@@ -93,7 +93,7 @@ namespace TargetsClient.AppWindow
             else
             {
                 Step stepToRem = x as Step;
-                var pid = (from a in User.Projects where a.Steps.Contains(stepToRem) select a).FirstOrDefault();
+                var pid = (from a in projects where a.Steps.Contains(stepToRem) select a).FirstOrDefault();
                 if (pid != null)
                     await Communication.Instance.RemoveStep(new RemStepDTO { ProjectId = pid.Id, StepId = stepToRem.Id });
 
@@ -102,7 +102,7 @@ namespace TargetsClient.AppWindow
             ReloadProjects();
         }
 
-        public ICommand EditCmd { get { return new RelayCommand(x => true, x => EditElement(x)); } }
+        public ICommand EditCmd { get { return new RelayCommand(x => projects.Count> 0 && x != null, x => EditElement(x)); } }
         private async void EditElement(object x)
         {
             EditWindow.EditWindow e = new EditWindow.EditWindow();
