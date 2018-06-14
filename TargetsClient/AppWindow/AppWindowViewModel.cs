@@ -49,6 +49,19 @@ namespace TargetsClient.AppWindow
             Proj = await Communication.Instance.GetProjects();
         }
 
+        private bool stepState;
+
+        public bool StepState
+        {
+            get { return stepState; }
+            set
+            {
+                stepState = value;
+                RaisePropertyChangedEvent("StepState");
+
+            }
+        }
+
 
         public ICommand LogoutCmd { get { return new RelayCommand(x => true, x => TryLogout(x)); } }
         public void TryLogout(object obj)
@@ -143,6 +156,23 @@ namespace TargetsClient.AppWindow
                 w.Show();
 
                 (x as AppWindow).Close();
+            }
+        }
+
+        public ICommand ChangeStateCmd { get { return new RelayCommand(x => true, x => ChangeState(x)); } }
+
+        private async void ChangeState(object o)
+        {
+            if (o is Step)
+            {
+                var step = o as Step;
+                var pId = (from a in projects where a.Steps.Contains(step) select a).FirstOrDefault();
+                if (pId != null)
+                {
+                    await Communication.Instance.SetStep(new SetStateStepDTO() { ProjectId = pId.Id, StepId = step.Id, IsDone = step.Completed });
+                    Thread.Sleep(1000);
+                    ReloadProjects();
+                }
             }
         }
     }

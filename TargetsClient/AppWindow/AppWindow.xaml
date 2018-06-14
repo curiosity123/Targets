@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TargetsClient.AppWindow"
-                xmlns:loc="clr-namespace:TargetsClient" WindowStyle="ToolWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        
+        xmlns:loc="clr-namespace:TargetsClient" WindowStyle="ToolWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         Title="AppWindow" x:Name="window" Height="500" Width="490"  Background="#374b4f">
     <Window.DataContext >
@@ -35,7 +37,6 @@
                             <TextBlock Text="{Binding Title}" FontSize="18" VerticalAlignment="Center"  HorizontalAlignment="Left"  Foreground="White" Margin="10,0"  />
                             <TextBlock Text="{Binding Description}" FontSize="12" VerticalAlignment="Center"  HorizontalAlignment="Left" Foreground="White" Margin="10,0" ></TextBlock>
                         </StackPanel>
-                        <CheckBox IsChecked="{Binding State}" VerticalAlignment="Center" Margin="10,0"></CheckBox>
                     </StackPanel>
                     <HierarchicalDataTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True" >
@@ -46,13 +47,22 @@
                         </Trigger>
                     </HierarchicalDataTemplate.Triggers>
                 </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type loc:Step}">
+                <HierarchicalDataTemplate DataType="{x:Type loc:Step}" x:Name="step">
                     <StackPanel x:Name="border" Orientation="Horizontal" HorizontalAlignment="Stretch"   Height="50"  Background="#102327">
                         <StackPanel Orientation="Vertical" Width="370" >
                             <TextBlock Text="{Binding Title}" FontSize="18" VerticalAlignment="Center"  HorizontalAlignment="Left"  Foreground="White" Margin="10,0"  />
                             <TextBlock Text="{Binding Description}" FontSize="12" VerticalAlignment="Center"  HorizontalAlignment="Left" Foreground="White" Margin="10,0" ></TextBlock>
                         </StackPanel>
-                        <CheckBox IsChecked="{Binding State}" VerticalAlignment="Center" Margin="10,0"></CheckBox>
+                        <CheckBox x:Name="check" IsChecked="{Binding Completed ,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="10,0">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Checked">
+                                    <i:InvokeCommandAction Command="{Binding ElementName=tree, Path=DataContext.ChangeStateCmd}" CommandParameter="{Binding}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="Unchecked">
+                                    <i:InvokeCommandAction Command="{Binding ElementName=tree, Path=DataContext.ChangeStateCmd}" CommandParameter="{Binding}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
                     </StackPanel>
                     <HierarchicalDataTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True" >
