@@ -45,9 +45,9 @@ namespace TargetsClient.EditWindow
             return false;
         }
 
-        private void Ok(object x)
+        private async void Ok(object x)
         {
-            // await Communication.Instance.EditStep(SelectedProject.Id,, Title, Description);
+            Confirm = true;
             (x as EditWindow).Close();
         }
 

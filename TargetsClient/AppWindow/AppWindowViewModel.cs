@@ -31,7 +31,7 @@ namespace TargetsClient.AppWindow
             get { return projects; }
             set
             {
-                projects = value;    
+                projects = value;
                 RaisePropertyChangedEvent("Proj");
             }
         }
@@ -41,12 +41,12 @@ namespace TargetsClient.AppWindow
         }
         private async void ReloadProjects()
         {
-            
+
             User = await Communication.Instance.GetUser();
 
             if (user == null)
                 return;
-            Proj =  await Communication.Instance.GetProjects();
+            Proj = await Communication.Instance.GetProjects();
         }
 
 
@@ -74,39 +74,38 @@ namespace TargetsClient.AppWindow
             if (x is Project)
             {
                 var p = x as Project;
-                 await Communication.Instance.RemoveProject(new RemProjectDTO {  ProjectId = p.Id});
-       
+                await Communication.Instance.RemoveProject(new RemProjectDTO { ProjectId = p.Id });
+
             }
             else
             {
                 Step stepToRem = x as Step;
                 var pid = (from a in User.Projects where a.Steps.Contains(stepToRem) select a).FirstOrDefault();
-                if(pid!=null)
-                     await Communication.Instance.RemoveStep(new RemStepDTO { ProjectId = pid.Id, StepId = stepToRem.Id });
-              
-            }
+                if (pid != null)
+                    await Communication.Instance.RemoveStep(new RemStepDTO { ProjectId = pid.Id, StepId = stepToRem.Id });
 
+            }
+            Thread.Sleep(500);
             ReloadProjects();
         }
 
         public ICommand EditCmd { get { return new RelayCommand(x => true, x => EditElement(x)); } }
-        private void EditElement(object x)
+        private async void EditElement(object x)
         {
             EditWindow.EditWindow e = new EditWindow.EditWindow();
             var model = (e.DataContext as EditWindow.EditWindowViewModel);
 
-            if(x is Project)
+            if (x is Project)
             {
                 model.Title = (x as Project).Title;
                 model.Description = (x as Project).Description;
-
             }
             else
             {
                 model.Title = (x as Step).Title;
                 model.Description = (x as Step).Description;
             }
-           
+
             e.ShowDialog();
 
 
@@ -114,15 +113,22 @@ namespace TargetsClient.AppWindow
             {
                 if (x is Project)
                 {
-                    (x as Project).Title = model.Title;
-                    (x as Project).Description = model.Description;
+                    var p = x as Project;
+                    p.Title = model.Title;
+                    p.Description = model.Description;
+                    await Communication.Instance.EditProject(new EditProjectDTO() { ProjectId = p.Id, UpdatedTitle = p.Title, UpdatedDescription = p.Description });
                 }
                 else
                 {
-                    (x as Step).Title = model.Title;
-                    (x as Step).Description = model.Description;
+                    var p = x as Step;
+                    p.Title = model.Title;
+                    p.Description = model.Description;
+                    var pId = (from a in projects where a.Steps.Contains(p) select a).FirstOrDefault();
+                    if (pId != null)
+                        await Communication.Instance.EditStep(new EditStepDTO() { ProjectId = pId.Id, StepId = p.Id, UpdatedStepTitle = p.Title, UpdatedStepDescription = p.Description });
                 }
             }
+            Thread.Sleep(1000);
             ReloadProjects();
 
         }
