@@ -56,7 +56,7 @@ namespace Targets.Infrastructure.Repositories
         public Task<User> GetAccountAsync(Guid UserId)
         {
             var u = (from x in dbContext.Users where x.Id == UserId select x).Include("Projects.Steps").ToList();
- 
+
             return Task.FromResult<User>(u.FirstOrDefault());
         }
 
@@ -66,18 +66,17 @@ namespace Targets.Infrastructure.Repositories
 
         public Task AddNewProject(Guid userId, string title, string description)
         {
-            var user = dbContext.Users.Where(x => x.Id == userId).Include("Projects.Steps").FirstOrDefault();
+            var user = dbContext.Users.Where(x => x.Id == userId).Include("Projects").FirstOrDefault();
             if (user != null)
                 user.Projects.Add(new Project() { Title = title, Description = description });
-            dbContext.Entry(user.Projects).State = EntityState.Modified;
             dbContext.SaveChanges();
-            
+
             return Task.CompletedTask;
         }
 
         public Task EditProject(Guid userId, Guid projectId, string updatedTitle, string updatedDescription)
         {
-            var user = dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
+            var user = dbContext.Users.Where(x => x.Id == userId).Include("Projects").FirstOrDefault();
             if (user != null)
             {
                 var prj = user.Projects.Where(x => x.Id == projectId).FirstOrDefault();
@@ -89,20 +88,30 @@ namespace Targets.Infrastructure.Repositories
         }
 
         public Task<List<Project>> GetProjectsAsync(Guid userId)
-        { 
+        {
             var user = dbContext.Users.Where(x => x.Id == userId).Include(x => x.Projects).FirstOrDefault();
-                return  Task.FromResult<List<Project>>(user.Projects);
+            return Task.FromResult<List<Project>>(user.Projects);
         }
 
         public Task RemoveProject(Guid userId, Guid projectId)
         {
-            var user = dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
-            if (user != null)
-            {
-                var prj = user.Projects.Where(x => x.Id == projectId).FirstOrDefault();
-                user.Projects.Remove(prj);
-                dbContext.SaveChanges();
-            }
+            //try
+            //{
+
+            //    var user = dbContext.Users.Where(x => x.Id == userId).Include("Projects.Steps").FirstOrDefault();
+            //    if (user != null)
+            //    {
+            //        var steps = user.Projects.Where(x => x.Id == projectId).FirstOrDefault().Steps;
+            //        var prj = user.Projects.Where(x => x.Id == projectId).FirstOrDefault();
+            //        dbContext.Steps.RemoveRange(steps);
+            //        dbContext.Projects.Remove(prj);
+            //        dbContext.SaveChanges();
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    return Task.FromResult(ex);
+            //}
             return Task.CompletedTask;
         }
 
@@ -116,7 +125,7 @@ namespace Targets.Infrastructure.Repositories
             if (user != null)
             {
                 var prj = user.Projects.Where(x => x.Id == projectId).FirstOrDefault();
-                if(prj!=null)
+                if (prj != null)
                 {
                     prj.Steps.Add(new Step() { Title = stepTitle, Description = stepDescription, Completed = false });
                     dbContext.SaveChanges();
@@ -128,7 +137,7 @@ namespace Targets.Infrastructure.Repositories
 
         public Task EditStep(Guid userId, Guid projectId, Guid stepId, string updatedStepTitle, string updatedStepDescription)
         {
-            var user = dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
+            var user = dbContext.Users.Where(x => x.Id == userId).Include("Projects.Steps").FirstOrDefault();
             if (user != null)
             {
                 var prj = user.Projects.Where(x => x.Id == projectId).FirstOrDefault();
@@ -149,13 +158,14 @@ namespace Targets.Infrastructure.Repositories
 
         public Task RemoveStep(Guid userId, Guid projectId, Guid stepId)
         {
-            var user = dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
+            var user = dbContext.Users.Where(x => x.Id == userId).Include("Projects.Steps").FirstOrDefault();
             if (user != null)
             {
                 var prj = user.Projects.Where(x => x.Id == projectId).FirstOrDefault();
                 if (prj != null)
                 {
-                    prj.Steps.Remove( prj.Steps.Where(x => x.Id == stepId).FirstOrDefault());
+                    var step = prj.Steps.Where(x => x.Id == stepId).FirstOrDefault();
+                    dbContext.Steps.Remove(step);
                     dbContext.SaveChanges();
                 }
             }
@@ -165,7 +175,7 @@ namespace Targets.Infrastructure.Repositories
 
         public Task SetStepStatus(Guid userId, Guid projectId, Guid stepId, bool isDone)
         {
-            var user = dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
+            var user = dbContext.Users.Where(x => x.Id == userId).Include("Projects.Steps").FirstOrDefault();
             if (user != null)
             {
                 var prj = user.Projects.Where(x => x.Id == projectId).FirstOrDefault();

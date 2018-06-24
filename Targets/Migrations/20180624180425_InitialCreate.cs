@@ -25,7 +25,7 @@ namespace Targets.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Project",
+                name: "Projects",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -35,9 +35,9 @@ namespace Targets.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Project", x => x.Id);
+                    table.PrimaryKey("PK_Projects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Project_Users_UserId",
+                        name: "FK_Projects_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -45,7 +45,7 @@ namespace Targets.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Step",
+                name: "Steps",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -56,33 +56,33 @@ namespace Targets.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Step", x => x.Id);
+                    table.PrimaryKey("PK_Steps", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Step_Project_ProjectId",
+                        name: "FK_Steps_Projects_ProjectId",
                         column: x => x.ProjectId,
-                        principalTable: "Project",
+                        principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Project_UserId",
-                table: "Project",
+                name: "IX_Projects_UserId",
+                table: "Projects",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Step_ProjectId",
-                table: "Step",
+                name: "IX_Steps_ProjectId",
+                table: "Steps",
                 column: "ProjectId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Step");
+                name: "Steps");
 
             migrationBuilder.DropTable(
-                name: "Project");
+                name: "Projects");
 
             migrationBuilder.DropTable(
                 name: "Users");

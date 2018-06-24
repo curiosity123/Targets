@@ -14,7 +14,7 @@ namespace TargetsClient
     {
         private static readonly object locker = new object();
         private static Communication instance = null;
-        private string ConnectionPath = "http://localhost:55500/";
+        private string ConnectionPath = "http://targets.lukaszadach.pl/"; //"http://localhost:55500/";
         private HttpClient Client;
         public TokenDTO Token;
 
@@ -142,10 +142,15 @@ namespace TargetsClient
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token.Token);
             RemProjectDTO edit = new RemProjectDTO() { ProjectId = prj.ProjectId };
             StringContent payload = Payload(edit);
-            var request = new HttpRequestMessage(HttpMethod.Delete, ConnectionPath + "Projects/DeleteProject");
-            request.Content = payload;
-            var deleteResponse = await Client.SendAsync(request);
-            return await Task.FromResult(deleteResponse.StatusCode);
+
+
+            var response = await Client.DeleteAsync(ConnectionPath + "Projects/DeleteProject/"+ prj.ProjectId.ToString());
+            return await Task.FromResult(response.StatusCode);
+
+            //var request = new HttpRequestMessage(HttpMethod.Delete, ConnectionPath + "Projects/DeleteProject");
+            //request.Content = payload;
+            //var deleteResponse = await Client.SendAsync(request);
+            //return await Task.FromResult(deleteResponse.StatusCode);
         }
 
         public async Task<HttpStatusCode> RemoveStep(RemStepDTO prj)

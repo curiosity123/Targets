@@ -35,7 +35,7 @@ namespace Targets.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Project");
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("Targets.Domain.Implementations.Step", b =>
@@ -55,7 +55,7 @@ namespace Targets.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Step");
+                    b.ToTable("Steps");
                 });
 
             modelBuilder.Entity("Targets.Domain.Implementations.User", b =>

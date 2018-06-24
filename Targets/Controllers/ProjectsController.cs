@@ -48,11 +48,11 @@ namespace Targets.Controllers
         }
 
 
-        [HttpDelete("DeleteProject")]
+        [HttpDelete("DeleteProject/{pid}")]
         [Authorize]
-        public async Task DeleteProject([FromBody] RemProjectDTO  prj)
+        public async Task DeleteProject(Guid  pid)
         {
-            await service.DeleteProject(UserId, prj.ProjectId);
+            await service.DeleteProject(UserId, pid);
         }
 
 

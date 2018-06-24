@@ -32,7 +32,7 @@ namespace Targets
         {
             services.AddMvc().AddJsonOptions(x => x.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented);
             services.AddSingleton<IConfiguration>(Configuration);
-             var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection =   var connection = @"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.AspNetCore.NewDb;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<TargetsContext>(options => options.UseSqlServer(connection));
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProjectsService, ProjectService>();

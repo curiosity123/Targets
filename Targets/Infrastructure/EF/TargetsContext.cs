@@ -9,6 +9,7 @@ namespace Targets.Infrastructure.EF
            : base(options)
         { }
         public DbSet<User> Users { get; set; }
-
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Step> Steps { get; set; }
     }
 }
