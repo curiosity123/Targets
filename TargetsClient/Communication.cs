@@ -12,6 +12,18 @@ namespace TargetsClient
 {
     public sealed class Communication
     {
+
+        //        webio konfig dla asp net delete put
+        //             <modules runAllManagedModulesForAllRequests="false">
+        //<remove name = "SmoothHandler" />
+        //< remove name="RestfulUrlMapModule" />
+        //<remove name = "PlaylistHandler" />
+        //< remove name="BitrateModule" />
+        //<remove name = "LiveStreamingHandler" />
+        //</ modules >
+
+
+
         private static readonly object locker = new object();
         private static Communication instance = null;
         private string ConnectionPath = "http://targets.lukaszadach.pl/"; //"http://localhost:55500/";
@@ -131,7 +143,7 @@ namespace TargetsClient
         public async Task<HttpStatusCode> AddNewStep(Guid projectId, string Title, string Description)
         {
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token.Token);
-            NewStepDTO edit = new NewStepDTO() { ProjectId= projectId,  StepTitle = Title, StepDescription = Description };
+            NewStepDTO edit = new NewStepDTO() { ProjectId = projectId, StepTitle = Title, StepDescription = Description };
             StringContent payload = Payload(edit);
             var response = await Client.PostAsync(ConnectionPath + "Projects/AddStep", payload);
             return await Task.FromResult(response.StatusCode);
@@ -144,7 +156,7 @@ namespace TargetsClient
             StringContent payload = Payload(edit);
 
 
-            var response = await Client.DeleteAsync(ConnectionPath + "Projects/DeleteProject/"+ prj.ProjectId.ToString());
+            var response = await Client.DeleteAsync(ConnectionPath + "Projects/DeleteProject/" + prj.ProjectId.ToString());
             return await Task.FromResult(response.StatusCode);
 
             //var request = new HttpRequestMessage(HttpMethod.Delete, ConnectionPath + "Projects/DeleteProject");
@@ -185,7 +197,7 @@ namespace TargetsClient
         public async Task<HttpStatusCode> SetStep(SetStateStepDTO prj)
         {
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token.Token);
-            SetStateStepDTO edit = new SetStateStepDTO() {   ProjectId = prj.ProjectId, StepId = prj.StepId, IsDone = prj.IsDone };
+            SetStateStepDTO edit = new SetStateStepDTO() { ProjectId = prj.ProjectId, StepId = prj.StepId, IsDone = prj.IsDone };
             StringContent payload = Payload(edit);
             var response = await Client.PostAsync(ConnectionPath + "Projects/SetStateStep", payload);
             return await Task.FromResult(response.StatusCode);

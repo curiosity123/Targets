@@ -95,23 +95,23 @@ namespace Targets.Infrastructure.Repositories
 
         public Task RemoveProject(Guid userId, Guid projectId)
         {
-            //try
-            //{
+            try
+            {
 
-            //    var user = dbContext.Users.Where(x => x.Id == userId).Include("Projects.Steps").FirstOrDefault();
-            //    if (user != null)
-            //    {
-            //        var steps = user.Projects.Where(x => x.Id == projectId).FirstOrDefault().Steps;
-            //        var prj = user.Projects.Where(x => x.Id == projectId).FirstOrDefault();
-            //        dbContext.Steps.RemoveRange(steps);
-            //        dbContext.Projects.Remove(prj);
-            //        dbContext.SaveChanges();
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    return Task.FromResult(ex);
-            //}
+                var user = dbContext.Users.Where(x => x.Id == userId).Include("Projects.Steps").FirstOrDefault();
+                if (user != null)
+                {
+                    var steps = user.Projects.Where(x => x.Id == projectId).FirstOrDefault().Steps;
+                    var prj = user.Projects.Where(x => x.Id == projectId).FirstOrDefault();
+                    dbContext.Steps.RemoveRange(steps);
+                    dbContext.Projects.Remove(prj);
+                    dbContext.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(ex);
+            }
             return Task.CompletedTask;
         }
 
