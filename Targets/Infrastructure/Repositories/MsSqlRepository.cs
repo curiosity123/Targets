@@ -40,9 +40,15 @@ namespace Targets.Infrastructure.Repositories
 
         public Task RemoveAccountAsync(Guid UserId)
         {
-            var user = (from x in dbContext.Users where x.Id == UserId select x).FirstOrDefault();
+            var user = (from x in dbContext.Users where x.Id == UserId select x).Include("Projects.Steps").FirstOrDefault();
             if (user != null)
             {
+                foreach (var p in user.Projects)
+                {
+                    var steps = dbContext.Projects.Where(x => x.Id == p.Id).FirstOrDefault().Steps;
+                    dbContext.Steps.RemoveRange(steps);
+                    dbContext.Projects.Remove(p);
+                }
                 dbContext.Users.Remove(user);
                 dbContext.SaveChanges();
             }

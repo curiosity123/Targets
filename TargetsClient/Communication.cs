@@ -14,14 +14,15 @@ namespace TargetsClient
     {
 
         //        webio konfig dla asp net delete put
-        //             <modules runAllManagedModulesForAllRequests="false">
-        //<remove name = "SmoothHandler" />
-        //< remove name="RestfulUrlMapModule" />
-        //<remove name = "PlaylistHandler" />
-        //< remove name="BitrateModule" />
-        //<remove name = "LiveStreamingHandler" />
-        //</ modules >
-
+        /*
+                     <modules runAllManagedModulesForAllRequests = "false" >
+        < remove name = "SmoothHandler" />
+        < remove name = "RestfulUrlMapModule" />
+        < remove name = "PlaylistHandler" />
+        < remove name = "BitrateModule" />
+        < remove name = "LiveStreamingHandler" />
+        </ modules >
+        */
 
 
         private static readonly object locker = new object();
