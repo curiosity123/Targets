@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace TargetsClient.AppWindow
+namespace TargetsClient.ConfirmWindow
 {
     /// <summary>
-    /// Interaction logic for AppWindow.xaml
+    /// Interaction logic for ConfirmWindow.xaml
     /// </summary>
-    public partial class AppWindow : FocusRoutedEvents
+    public partial class ConfirmWindow : FocusRoutedEvents
     {
-        public AppWindow()
+        public ConfirmWindow()
         {
             InitializeComponent();
         }

@@ -1,4 +1,4 @@
-﻿<Window x:Class="TargetsClient.ToolWindow.ToolWindow"
+﻿<events:FocusRoutedEvents x:Class="TargetsClient.ToolWindow.ToolWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,71 +6,120 @@
         xmlns:local="clr-namespace:TargetsClient.ToolWindow"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:events="clr-namespace:TargetsClient"
         mc:Ignorable="d"
-        Title="ToolWindow" x:Name="window" Height="350" Width="300" Background="#374b4f" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Window.DataContext >
+        Title="ToolWindow" x:Name="window" Height="400" Width="380"  Background="{DynamicResource Background1}" WindowStyle="None"  ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <events:FocusRoutedEvents.DataContext >
         <local:ToolWindowViewModel x:Name="whatever"/>
-    </Window.DataContext>
+    </events:FocusRoutedEvents.DataContext>
 
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="10"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="10"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="10"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="10"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="10"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Foreground="White" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center">Add new element</TextBlock>
-        <RadioButton Content="New Project" Grid.Row="2" Foreground="White"  Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding ProjChecked}"  ></RadioButton>
-        <RadioButton x:Name="RadioStep" Grid.Row="2" Foreground="White"  Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center"  Content="New Step" IsChecked="{Binding StepChecked}" ></RadioButton>
+    <events:FocusRoutedEvents.Effect>
+        <BlurEffect x:Name="effect" Radius="0"></BlurEffect>
+    </events:FocusRoutedEvents.Effect>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded" >
+            <EventTrigger.Actions>
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation From="20" To="0" Duration="00:00:0.3" Storyboard.TargetName="effect"  Storyboard.TargetProperty="Radius"></DoubleAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger.Actions>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Window.RoutedDeactivated" >
+            <EventTrigger.Actions>
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation From="0" To="10" Duration="00:00:0.2" Storyboard.TargetName="effect"  Storyboard.TargetProperty="Radius"></DoubleAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger.Actions>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Window.RoutedActivated" >
+            <EventTrigger.Actions>
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation From="10" To="0" Duration="00:00:0.1" Storyboard.TargetName="effect"  Storyboard.TargetProperty="Radius"></DoubleAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger.Actions>
+        </EventTrigger>
+    </Window.Triggers>
 
-        <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Foreground="White"  HorizontalAlignment="Center" VerticalAlignment="Center">Or</TextBlock>
 
-        <ComboBox ItemsSource="{Binding PrjList}" SelectedIndex="0" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedProject}" IsEnabled="{Binding ElementName=RadioStep,Path=IsChecked, Mode=TwoWay}">
-            <ComboBox.Resources>
-                <Style TargetType="ComboBoxItem">
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Title}"></TextBlock>
-                            </DataTemplate>
+    <Border  BorderThickness="2" BorderBrush="{DynamicResource Background2}" >
+        <Grid  >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"></RowDefinition>
+                <RowDefinition Height="20"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="20"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="20"></RowDefinition>
+                <RowDefinition Height="80"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="60"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Row="0" Grid.ColumnSpan="4" Height="60" Margin="0,0,0,20" Background="{DynamicResource Background2}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                        <ei:CallMethodAction TargetObject="{Binding ElementName=window}" MethodName="DragMove"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <TextBlock  Foreground="White" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center">Add new element</TextBlock>
+            </Border>
 
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ComboBox.Resources>
-        </ComboBox>
-        <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Tag="Enter title here" Grid.Row="6" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></TextBox>
-        <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Tag="Enter description here" Grid.Row="8" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></TextBox>
 
-        <Button Content="Cancel" Grid.Row="10" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+
+            <RadioButton Content="New Project" Grid.Row="2" Foreground="White" Margin="10,0"  Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding ProjChecked}"  ></RadioButton>
+            <RadioButton x:Name="RadioStep" Grid.Row="2" Foreground="White" Margin="10,0"  Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center"  Content="New Step" IsChecked="{Binding StepChecked}" ></RadioButton>
+
+            <TextBlock Grid.Row="2" Grid.ColumnSpan="5" Foreground="White"  HorizontalAlignment="Center" VerticalAlignment="Center">Or</TextBlock>
+
+            <ComboBox ItemsSource="{Binding PrjList}" SelectedIndex="0" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedProject}" IsEnabled="{Binding ElementName=RadioStep,Path=IsChecked, Mode=TwoWay}">
+                <ComboBox.Resources>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Title}"></TextBlock>
+                                </DataTemplate>
+
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ComboBox.Resources>
+            </ComboBox>
+            <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Tag="Enter title here" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></TextBox>
+            <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Tag="Enter description here" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></TextBox>
+
+            <Button Content="Cancel" Grid.Row="10" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0,20">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <ei:CallMethodAction TargetObject="{Binding ElementName=window}" MethodName="Close"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-        <Button Content="Add" Grid.Row="10" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Command="{Binding CmdAdd}" CommandParameter="{Binding ElementName=window}">
+            <Button Content="Add" Grid.Row="10" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0,20" Command="{Binding CmdAdd}" CommandParameter="{Binding ElementName=window}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <ei:CallMethodAction TargetObject="{Binding ElementName=window}" MethodName="Close"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-  
 
 
 
-    </Grid>
-</Window>
+
+        </Grid>
+    </Border>
+</events:FocusRoutedEvents>

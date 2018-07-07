@@ -1,24 +1,59 @@
-﻿<Window x:Class="TargetsClient.AppWindow.AppWindow"
+﻿<events:FocusRoutedEvents x:Class="TargetsClient.AppWindow.AppWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TargetsClient.AppWindow"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        
-        xmlns:loc="clr-namespace:TargetsClient" WindowStyle="ToolWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        xmlns:events="clr-namespace:TargetsClient"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:loc="clr-namespace:TargetsClient" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="AppWindow" x:Name="window" Height="500" Width="490"  Background="{DynamicResource Background1}">
-    <Window.DataContext >
+        Title="AppWindow" x:Name="window" Height="640" Width="490"  Background="{DynamicResource Background1}">
+    <events:FocusRoutedEvents.DataContext >
         <local:AppWindowViewModel x:Name="context2"/>
-    </Window.DataContext>
+    </events:FocusRoutedEvents.DataContext>
 
-    <Grid VerticalAlignment="Stretch" Margin="10">
+
+    <events:FocusRoutedEvents.Effect>
+        <BlurEffect x:Name="effect" Radius="0"></BlurEffect>
+    </events:FocusRoutedEvents.Effect>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded" >
+            <EventTrigger.Actions>
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation From="20" To="0" Duration="00:00:0.3" Storyboard.TargetName="effect"  Storyboard.TargetProperty="Radius"></DoubleAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger.Actions>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Window.RoutedDeactivated" >
+            <EventTrigger.Actions>
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation From="0" To="10" Duration="00:00:0.2" Storyboard.TargetName="effect"  Storyboard.TargetProperty="Radius"></DoubleAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger.Actions>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Window.RoutedActivated" >
+            <EventTrigger.Actions>
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation From="10" To="0" Duration="00:00:0.1" Storyboard.TargetName="effect"  Storyboard.TargetProperty="Radius"></DoubleAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger.Actions>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <Grid VerticalAlignment="Stretch" >
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="120"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -26,8 +61,25 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="{Binding User.Email, UpdateSourceTrigger=PropertyChanged}" Foreground="White" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-        <TextBlock Text="Your projects list:" FontSize="20" Foreground="White" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        <Border Grid.ColumnSpan="3" Height="100"  Background="{DynamicResource Background2}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                    <ei:CallMethodAction TargetObject="{Binding ElementName=window}" MethodName="DragMove"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="Hello " FontSize="35" Foreground="White"  HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text="{Binding User.Email, UpdateSourceTrigger=PropertyChanged}" FontSize="35" Foreground="White"  HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text=" :) " FontSize="35" Foreground="White"  HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            </StackPanel>
+        </Border>
+
+
+        <Button Grid.Row="1" Grid.Column="0" Content="Logout" VerticalAlignment="Top" Margin="0,10"  Command="{Binding LogoutCmd}" CommandParameter="{Binding ElementName=window}"></Button>
+        <Button Grid.Row="1" Grid.Column="2" Content="Remove account" HorizontalAlignment="Right" Margin="0,10"  Style="{DynamicResource RemoveButton}"  VerticalAlignment="Top" Command="{Binding RemoveUserCmd}" CommandParameter="{Binding ElementName=window}"></Button>
+
+
+        <TextBlock Text="Those are your projects..." FontSize="22" Foreground="White" Grid.Row="1" Grid.ColumnSpan="3" Margin="0,10" HorizontalAlignment="Center" VerticalAlignment="Bottom"></TextBlock>
 
         <TreeView x:Name="tree" Grid.Row="2" Margin="0,10"  Grid.ColumnSpan="3" HorizontalAlignment="Stretch"  ItemsSource="{Binding Proj, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch"  Background="{DynamicResource Background1}">
             <TreeView.Resources>
@@ -82,8 +134,5 @@
         <Button Grid.Row="3" Grid.Column="1" Content="Delete" Command="{Binding DeleteCmd}" CommandParameter="{Binding ElementName=tree, Path=SelectedItem}"></Button>
         <Button Grid.Row="3" Grid.Column="2" Content="Edit" Command="{Binding EditCmd}" CommandParameter="{Binding ElementName=tree, Path=SelectedItem}"></Button>
 
-        <Button Grid.Row="0" Grid.Column="0" Content="Logout" Command="{Binding LogoutCmd}" CommandParameter="{Binding ElementName=window}"></Button>
-        <Button Grid.Row="0" Grid.Column="2" Content="Remove account" HorizontalAlignment="Right" Command="{Binding RemoveUserCmd}" CommandParameter="{Binding ElementName=window}"></Button>
-
     </Grid>
-</Window>
+</events:FocusRoutedEvents>

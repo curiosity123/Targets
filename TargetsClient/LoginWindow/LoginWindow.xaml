@@ -8,7 +8,7 @@
          xmlns:events="clr-namespace:TargetsClient"
         xmlns:local="clr-namespace:TargetsClient"
         mc:Ignorable="d"
-        Title="Targets" Height="450" Width="525" x:Name="window"    WindowStyle="None"  Background="{DynamicResource Background1}"  ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Targets" Height="450" Width="525" x:Name="window"    WindowStyle="None" Background="{DynamicResource Background1}"  ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <events:FocusRoutedEvents.DataContext >
         <local:LoginWindowViewModel x:Name="context2"/>
     </events:FocusRoutedEvents.DataContext>
@@ -45,7 +45,7 @@
             <EventTrigger.Actions>
                 <BeginStoryboard>
                     <Storyboard>
-                        <DoubleAnimation From="10" To="0" Duration="00:00:0.2" Storyboard.TargetName="effect"  Storyboard.TargetProperty="Radius"></DoubleAnimation>
+                        <DoubleAnimation From="10" To="0" Duration="00:00:0.1" Storyboard.TargetName="effect"  Storyboard.TargetProperty="Radius"></DoubleAnimation>
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger.Actions>
@@ -69,7 +69,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Border Grid.ColumnSpan="4" Background="{DynamicResource Foreground3}">
+        <Border Grid.ColumnSpan="4" Background="{DynamicResource Background2}" >
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                     <ei:CallMethodAction TargetObject="{Binding ElementName=window}" MethodName="DragMove"/>

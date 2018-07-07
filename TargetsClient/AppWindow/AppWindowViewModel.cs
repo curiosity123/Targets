@@ -77,29 +77,38 @@ namespace TargetsClient.AppWindow
             ToolWindow.ToolWindow t = new ToolWindow.ToolWindow();
             t.DataContext = new ToolWindow.ToolWindowViewModel(User);
             t.ShowDialog();
-            Thread.Sleep(1000);
+            t.Focus();
+            //Thread.Sleep(1000);
             ReloadProjects();
         }
 
         public ICommand DeleteCmd { get { return new RelayCommand(x => projects.Count>0 && x!=null, x => DeleteElement(x)); } }
         private async void DeleteElement(object x)
         {
-            if (x is Project)
-            {
-                var p = x as Project;
-                await Communication.Instance.RemoveProject(new RemProjectDTO { ProjectId = p.Id });
+            ConfirmWindow.ConfirmWindow t = new ConfirmWindow.ConfirmWindow();
+            t.DataContext = new ConfirmWindow.ConfirmWindowViewModel();
+            t.ShowDialog();
+            t.Focus();
 
-            }
-            else
+            if ((t.DataContext as ConfirmWindow.ConfirmWindowViewModel).Confirm)
             {
-                Step stepToRem = x as Step;
-                var pid = (from a in projects where a.Steps.Contains(stepToRem) select a).FirstOrDefault();
-                if (pid != null)
-                    await Communication.Instance.RemoveStep(new RemStepDTO { ProjectId = pid.Id, StepId = stepToRem.Id });
+                if (x is Project)
+                {
+                    var p = x as Project;
+                    await Communication.Instance.RemoveProject(new RemProjectDTO { ProjectId = p.Id });
 
+                }
+                else
+                {
+                    Step stepToRem = x as Step;
+                    var pid = (from a in projects where a.Steps.Contains(stepToRem) select a).FirstOrDefault();
+                    if (pid != null)
+                        await Communication.Instance.RemoveStep(new RemStepDTO { ProjectId = pid.Id, StepId = stepToRem.Id });
+
+                }
+                Thread.Sleep(500);
+                ReloadProjects();
             }
-            Thread.Sleep(500);
-            ReloadProjects();
         }
 
         public ICommand EditCmd { get { return new RelayCommand(x => projects.Count> 0 && x != null, x => EditElement(x)); } }
@@ -141,15 +150,21 @@ namespace TargetsClient.AppWindow
                         await Communication.Instance.EditStep(new EditStepDTO() { ProjectId = pId.Id, StepId = p.Id, UpdatedStepTitle = p.Title, UpdatedStepDescription = p.Description });
                 }
             }
-            Thread.Sleep(1000);
+            e.Focus();
+            //Thread.Sleep(1000);
             ReloadProjects();
-
+         
         }
 
         public ICommand RemoveUserCmd { get { return new RelayCommand(x => true, x => RemoveUserAccount(x)); } }
         private void RemoveUserAccount(object x)
         {
-            if (MessageBox.Show("Do you realy want to remove this account permanently?", "Attention!", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            ConfirmWindow.ConfirmWindow t = new ConfirmWindow.ConfirmWindow();
+            t.DataContext = new ConfirmWindow.ConfirmWindowViewModel();
+            t.ShowDialog();
+            t.Focus();
+
+            if ((t.DataContext as ConfirmWindow.ConfirmWindowViewModel).Confirm)
             {
                 var e = Communication.Instance.RemoveUserAsync();
                 LoginWindow w = new LoginWindow();

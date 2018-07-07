@@ -4,15 +4,20 @@
              xmlns:local="clr-namespace:TargetsClient"
                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-             StartupUri="LoginWindow/LoginWindow.xaml">
+             StartupUri="LoginWindow/LoginWindow.xaml" >
     <Application.Resources>
 
 
         <SolidColorBrush x:Key="Background1">#2B2B2C</SolidColorBrush>
         <SolidColorBrush x:Key="Background2">#1499E3</SolidColorBrush>
+        <SolidColorBrush x:Key="Background3">#14E399</SolidColorBrush>
+        <SolidColorBrush x:Key="Background4">#E31499</SolidColorBrush>
+        <SolidColorBrush x:Key="Background5">#E39914</SolidColorBrush>
         <SolidColorBrush x:Key="Foreground1">#525253</SolidColorBrush>
         <SolidColorBrush x:Key="Foreground2">#ACACAB</SolidColorBrush>
         <SolidColorBrush x:Key="Foreground3">#4EB4E8</SolidColorBrush>
+        <SolidColorBrush x:Key="Foreground4">#E8B44E</SolidColorBrush>
+        <SolidColorBrush x:Key="Foreground5">#B4E84E</SolidColorBrush>
         <SolidColorBrush x:Key="TextBoxBackground">#EBEAE8</SolidColorBrush>
 
         <Style TargetType="TextBlock">
@@ -49,6 +54,65 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="RemoveButton" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{DynamicResource Background5}" BorderThickness="0" MinWidth="80" Height="40" CornerRadius="20" Margin="10,0">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="7" Direction="330" Color="Black" ShadowDepth="4" Opacity="0.3"></DropShadowEffect>
+                            </Border.Effect>
+                            <ContentPresenter x:Name="cp" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="{DynamicResource TextBoxBackground}" Margin="20,0"></ContentPresenter>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource Foreground2}"></Setter>
+                                <Setter TargetName="cp" Property="TextBlock.Foreground" Value="{DynamicResource Foreground1}"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource Foreground4}"></Setter>
+                                <Setter TargetName="cp" Property="TextBlock.Foreground" Value="{DynamicResource TextBoxBackground}"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource Foreground4}"></Setter>
+                                <Setter TargetName="cp" Property="TextBlock.Foreground" Value="{DynamicResource TextBoxBackground}"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="LogoutButton" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{DynamicResource Background3}" BorderThickness="0" MinWidth="80" Height="40" CornerRadius="20" Margin="10,0">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="7" Direction="330" Color="Black" ShadowDepth="4" Opacity="0.3"></DropShadowEffect>
+                            </Border.Effect>
+                            <ContentPresenter x:Name="cp" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="{DynamicResource TextBoxBackground}" Margin="20,0"></ContentPresenter>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource Foreground2}"></Setter>
+                                <Setter TargetName="cp" Property="TextBlock.Foreground" Value="{DynamicResource Foreground1}"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource Foreground5}"></Setter>
+                                <Setter TargetName="cp" Property="TextBlock.Foreground" Value="{DynamicResource TextBoxBackground}"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource Foreground5}"></Setter>
+                                <Setter TargetName="cp" Property="TextBlock.Foreground" Value="{DynamicResource TextBoxBackground}"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style TargetType="TextBox">
             <Setter Property="Template">
                 <Setter.Value>
@@ -348,16 +412,27 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type CheckBox}">
                         <Grid>
-                            <Border  Height="40" Width="90" x:Name="outerEllipse" BorderThickness="2" BorderBrush="{DynamicResource Background2}" CornerRadius="20"></Border>
-                            <Border Height="40" Width="90" x:Name="highlightCircle" Background="Green" CornerRadius="20"></Border>
+                            <Border  Height="30" Width="30" x:Name="outerEllipse" BorderThickness="2" BorderBrush="{DynamicResource Background3}" CornerRadius="15"></Border>
+                            <Border Height="30" Width="30" x:Name="highlightCircle" Background="Green" CornerRadius="15"></Border>
+                            <Path x:Name="mark"  Data="M9.07743946676476E-09,4.31805768640244L4.68740335877841,8.86361158398516C4.68740335877841,8.86361158398516,16.3281249985376,-2.42451336648723,16.3281249985376,-2.42451336648723L14.0622100581796,-4.77304938341948 4.68740335877846,4.31805791992662 2.22656251699567,1.93164208562579z"
+                                  Width="20"     
+                                  Height="15"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center" Stretch="Fill"
+                                           Stroke="{DynamicResource Foreground1}"
+                                          StrokeEndLineCap="Round"
+                                          StrokeStartLineCap="Round"
+                                          StrokeThickness="3"></Path>
                             <ContentPresenter x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="highlightCircle" Property="Background" Value="{DynamicResource Background2}"></Setter>
+                                <Setter TargetName="highlightCircle" Property="Background" Value="{DynamicResource Background3}"></Setter>
+                                <Setter TargetName="mark" Property="Stroke" Value="{DynamicResource TextBoxBackground}"></Setter>
                             </Trigger>
                             <Trigger Property="IsChecked" Value="False">
                                 <Setter TargetName="highlightCircle" Property="Background" Value="{DynamicResource Foreground2}"></Setter>
+                                <Setter TargetName="mark" Property="Stroke" Value="{DynamicResource Foreground1}"></Setter>
                                 <Setter TargetName="content" Property="TextBlock.Foreground" Value="{DynamicResource Foreground1}"></Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -374,13 +449,13 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RadioButton}">
                         <Grid>
-                            <Border  Height="40" Width="90" x:Name="outerEllipse" BorderThickness="0" BorderBrush="{DynamicResource Background2}" CornerRadius="20"></Border>
+                            <Border  Height="40" Width="90" x:Name="outerEllipse" BorderThickness="0" BorderBrush="{DynamicResource Background3}" CornerRadius="20"></Border>
                             <Border Height="40" Width="90" x:Name="highlightCircle" Background="Green" CornerRadius="20"></Border>
                             <ContentPresenter x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="highlightCircle" Property="Background" Value="{DynamicResource Background2}"></Setter>
+                                <Setter TargetName="highlightCircle" Property="Background" Value="{DynamicResource Background3}"></Setter>
                             </Trigger>
                             <Trigger Property="IsChecked" Value="False">
                                 <Setter TargetName="highlightCircle" Property="Background" Value="{DynamicResource Foreground2}"></Setter>

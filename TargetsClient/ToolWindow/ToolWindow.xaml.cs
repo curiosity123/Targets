@@ -17,7 +17,7 @@ namespace TargetsClient.ToolWindow
     /// <summary>
     /// Interaction logic for ToolWindow.xaml
     /// </summary>
-    public partial class ToolWindow : Window
+    public partial class ToolWindow : FocusRoutedEvents
     {
         public ToolWindow()
         {
