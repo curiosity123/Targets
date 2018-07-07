@@ -19,13 +19,13 @@ namespace TargetsClient
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class LoginWindow : Window
+    public partial class LoginWindow : FocusRoutedEvents
     {
         public LoginWindow()
         {
             InitializeComponent();
-
         }
+
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
@@ -38,5 +38,9 @@ namespace TargetsClient
             }
 
         }
+
+
+
+
     }
 }

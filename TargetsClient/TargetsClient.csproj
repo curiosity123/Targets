@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="EditWindow\EditWindowViewModel.cs" />
     <Compile Include="Communication.cs" />
+    <Compile Include="FocusRoutedEvents.cs" />
     <Compile Include="Models\Credentials.cs" />
     <Compile Include="Models\EditProjectDTO.cs" />
     <Compile Include="Models\EditStepDTO.cs" />
