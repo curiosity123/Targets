@@ -80,8 +80,8 @@
 
 
 
-            <RadioButton Content="New Project" Grid.Row="2" Foreground="White" Margin="10,0"  Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding ProjChecked}"  ></RadioButton>
-            <RadioButton x:Name="RadioStep" Grid.Row="2" Foreground="White" Margin="10,0"  Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center"  Content="New Step" IsChecked="{Binding StepChecked}" ></RadioButton>
+            <RadioButton Content="Project" Grid.Row="2" Foreground="White" Margin="10,0"  Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding ProjChecked}"  ></RadioButton>
+            <RadioButton x:Name="RadioStep" Grid.Row="2" Foreground="White" Margin="10,0"  Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center"  Content="Step" IsChecked="{Binding StepChecked}" ></RadioButton>
 
             <TextBlock Grid.Row="2" Grid.ColumnSpan="5" Foreground="White"  HorizontalAlignment="Center" VerticalAlignment="Center">Or</TextBlock>
 
