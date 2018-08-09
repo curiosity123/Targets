@@ -24,6 +24,6 @@ namespace Targets.Infrastructure.Repositories
         Task EditStep(Guid userId, Guid projectId, Guid stepId, string updatedStepTitle, string updatedStepDescription);
         Task<User> LoginAsync(Credentials credentials);
         Task RemoveStep(Guid userId, Guid projectId, Guid stepId);
-        Task SetStepStatus(Guid userId, Guid projectId, Guid stepId, bool isDone);
+        Task SetStepStatus(Guid userId, Guid stepId, bool isDone);
     }
 }

@@ -38,9 +38,9 @@ namespace Targets.Infrastructure.Services
         }
 
 
-        public Task SetStateStep(Guid UserId, Guid projectId, Guid stepId, bool isDone)
+        public  Task SetStateStep(Guid UserId, Guid stepId, bool isDone)
         {
-            return repo.SetStepStatus(UserId, projectId, stepId, isDone);
+            return repo.SetStepStatus(UserId, stepId, isDone);
         }
 
         public Task AddStep(Guid UserId, Guid projectId, string stepTitle, string stepDescription)

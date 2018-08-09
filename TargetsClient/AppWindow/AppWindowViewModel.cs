@@ -31,6 +31,8 @@ namespace TargetsClient.AppWindow
             get { return projects; }
             set
             {
+                if (Proj == null)
+                    Proj = new List<Project>() { new Project() { Title = "chuj dupa i kamieni kupa" } };
                 projects = value;
                 RaisePropertyChangedEvent("Proj");
             }
@@ -43,10 +45,7 @@ namespace TargetsClient.AppWindow
         {
 
             User = await Communication.Instance.GetUser();
-
-            if (user == null)
-                return;
-            Proj = await Communication.Instance.GetProjects();
+            Proj = User.Projects;
         }
 
         private bool stepState;
@@ -78,11 +77,19 @@ namespace TargetsClient.AppWindow
             t.DataContext = new ToolWindow.ToolWindowViewModel(User);
             t.ShowDialog();
             t.Focus();
-            //Thread.Sleep(1000);
             ReloadProjects();
         }
 
-        public ICommand DeleteCmd { get { return new RelayCommand(x => projects.Count>0 && x!=null, x => DeleteElement(x)); } }
+        public ICommand DeleteCmd { get { return new RelayCommand(CanModifyElement, x => DeleteElement(x)); } }
+
+        private bool CanModifyElement(object obj)
+        {
+            if (projects == null)
+                return false;
+            else
+                return projects.Count > 0 && obj != null;
+        }
+
         private async void DeleteElement(object x)
         {
             ConfirmWindow.ConfirmWindow t = new ConfirmWindow.ConfirmWindow();
@@ -106,12 +113,11 @@ namespace TargetsClient.AppWindow
                         await Communication.Instance.RemoveStep(new RemStepDTO { ProjectId = pid.Id, StepId = stepToRem.Id });
 
                 }
-                Thread.Sleep(500);
                 ReloadProjects();
             }
         }
 
-        public ICommand EditCmd { get { return new RelayCommand(x => projects.Count> 0 && x != null, x => EditElement(x)); } }
+        public ICommand EditCmd { get { return new RelayCommand(CanModifyElement, x => EditElement(x)); } }
         private async void EditElement(object x)
         {
             EditWindow.EditWindow e = new EditWindow.EditWindow();
@@ -153,7 +159,7 @@ namespace TargetsClient.AppWindow
             e.Focus();
             //Thread.Sleep(1000);
             ReloadProjects();
-         
+
         }
 
         public ICommand RemoveUserCmd { get { return new RelayCommand(x => true, x => RemoveUserAccount(x)); } }
@@ -178,17 +184,23 @@ namespace TargetsClient.AppWindow
 
         private async void ChangeState(object o)
         {
+
             if (o is Step)
             {
                 var step = o as Step;
                 var pId = (from a in projects where a.Steps.Contains(step) select a).FirstOrDefault();
                 if (pId != null)
                 {
-                    await Communication.Instance.SetStep(new SetStateStepDTO() { ProjectId = pId.Id, StepId = step.Id, IsDone = step.Completed });
-                    Thread.Sleep(1000);
-                    ReloadProjects();
+                    await Communication.Instance.SetStep(new SetStateStepDTO() {  StepId = step.Id, IsDone = step.Completed });
+                    var s =pId.Steps.Where(x => x.Id == step.Id).FirstOrDefault();
+                    s.Completed = step.Completed;
                 }
+
             }
+
+
         }
+
+
     }
 }

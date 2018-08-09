@@ -37,7 +37,7 @@ namespace Targets.Controllers
         [Authorize]
         public async Task AddProject([FromBody] NewProjectDTO prj)
         {
-             await service.AddNewProject(UserId, prj.Title, prj.Description);
+            await service.AddNewProject(UserId, prj.Title, prj.Description);
         }
 
         [HttpPost("EditProject")]
@@ -50,17 +50,17 @@ namespace Targets.Controllers
 
         [HttpDelete("DeleteProject/{pid}")]
         [Authorize]
-        public async Task DeleteProject(Guid  pid)
+        public async Task DeleteProject(Guid pid)
         {
             await service.DeleteProject(UserId, pid);
         }
 
-
+        bool isBusy = false;
         [HttpPost("SetStateStep")]
         [Authorize]
         public async Task SetStateStep([FromBody] SetStateStepDTO prj)
         {
-             await service.SetStateStep(UserId, prj.ProjectId, prj.StepId, prj.IsDone);
+            await service.SetStateStep(UserId,prj.StepId, prj.IsDone);
         }
 
 
@@ -75,7 +75,7 @@ namespace Targets.Controllers
         [Authorize]
         public async Task EditStep([FromBody] EditStepDTO prj)
         {
-             await service.EditStep(UserId, prj.ProjectId, prj.StepId, prj.UpdatedStepTitle, prj.UpdatedStepDescription);
+            await service.EditStep(UserId, prj.ProjectId, prj.StepId, prj.UpdatedStepTitle, prj.UpdatedStepDescription);
         }
 
 
@@ -83,7 +83,7 @@ namespace Targets.Controllers
         [Authorize]
         public async Task DeleteStep([FromBody] RemStepDTO prj)
         {
-             await service.DeleteStep(UserId, prj.ProjectId, prj.StepId);
+            await service.DeleteStep(UserId, prj.ProjectId, prj.StepId);
         }
 
 

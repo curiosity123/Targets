@@ -61,9 +61,9 @@ namespace Targets.Infrastructure.Repositories
 
         public Task<User> GetAccountAsync(Guid UserId)
         {
-            var u = (from x in dbContext.Users where x.Id == UserId select x).Include("Projects.Steps").ToList();
+            var u = (from x in dbContext.Users where x.Id == UserId select x).Include("Projects.Steps").FirstOrDefault();
 
-            return Task.FromResult<User>(u.FirstOrDefault());
+            return Task.FromResult<User>(u);
         }
 
         #endregion
@@ -179,23 +179,14 @@ namespace Targets.Infrastructure.Repositories
             return Task.CompletedTask;
         }
 
-        public Task SetStepStatus(Guid userId, Guid projectId, Guid stepId, bool isDone)
+        public Task SetStepStatus(Guid userId,Guid stepId, bool isDone)
         {
-            var user = dbContext.Users.Where(x => x.Id == userId).Include("Projects.Steps").FirstOrDefault();
-            if (user != null)
+            var step = dbContext.Steps.Where(x => x.Id == stepId).FirstOrDefault();
+            if (step != null && step.Completed != isDone)
             {
-                var prj = user.Projects.Where(x => x.Id == projectId).FirstOrDefault();
-                if (prj != null)
-                {
-                    var step = prj.Steps.Where(x => x.Id == stepId).FirstOrDefault();
-                    if (step != null)
-                    {
-                        step.Completed = isDone;
-                        dbContext.SaveChanges();
-                    }
-                }
+                step.Completed = isDone;
+                dbContext.SaveChanges();
             }
-
             return Task.CompletedTask;
         }
 

@@ -12,7 +12,7 @@ namespace Targets.Controllers
         Task<List<Project>> GetProjects(Guid UserId);
         Task AddNewProject(Guid UserId, string title, string description);
         Task EditProject(Guid UserId, Guid projectId, string updatedTitle, string updatedDescription);
-        Task SetStateStep(Guid UserId, Guid projectId, Guid stepId, bool isDone);
+        Task SetStateStep(Guid UserId, Guid stepId, bool isDone);
         Task AddStep(Guid UserId, Guid projectId, string stepTitle, string stepDescription);
         Task EditStep(Guid UserId, Guid projectId, Guid stepId, string updatedStepTitle, string updatedStepDescription);
         Task DeleteProject(Guid UserId, Guid projectId);

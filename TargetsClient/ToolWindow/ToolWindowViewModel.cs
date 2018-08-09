@@ -67,6 +67,7 @@ namespace TargetsClient.ToolWindow
             {
                 stepChecked = value;
                 RaisePropertyChangedEvent("StepChecked");
+                SelectedProject = PrjList.FirstOrDefault();
             }
         }
 

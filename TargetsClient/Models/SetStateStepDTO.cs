@@ -8,7 +8,6 @@ namespace TargetsClient
 {
     public class SetStateStepDTO
     {
-            public Guid ProjectId { get; set; }
             public Guid StepId { get; set; }
             public bool IsDone { get; set; }
     }

@@ -6,10 +6,13 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TargetsClient
 {
+
+
     public sealed class Communication
     {
 
@@ -27,7 +30,7 @@ namespace TargetsClient
 
         private static readonly object locker = new object();
         private static Communication instance = null;
-        private string ConnectionPath = "http://targets.lukaszadach.pl/"; //"http://localhost:55500/";
+        private string ConnectionPath = "http://localhost:55500/";// "http://targets.lukaszadach.pl/"; //"http://localhost:55500/";
         private HttpClient Client;
         public TokenDTO Token;
 
@@ -58,23 +61,27 @@ namespace TargetsClient
             return new StringContent(json, Encoding.UTF8, "application/json");
         }
 
+        object Sync = new object();
 
         #region API commands
 
         public async Task<HttpStatusCode> LoginAsync(string Login, string Password)
         {
-            Credentials usr = new Credentials()
-            {
-                Email = Login,
-                Password = Password
-            };
+                Credentials usr = new Credentials()
+                {
+                    Email = Login,
+                    Password = Password
+                };
 
-            var payload = Payload(usr);
-            var response = await Client.PostAsync(ConnectionPath + "Account/Login", payload);
-            var responseString = await response.Content.ReadAsStringAsync();
+                var payload = Payload(usr);
+                var response = await Client.PostAsync(ConnectionPath + "Account/Login", payload);
+                var responseString = await response.Content.ReadAsStringAsync();
 
-            Token = JsonConvert.DeserializeObject<TokenDTO>(responseString);
-            return await Task.FromResult(response.StatusCode);
+                Token = JsonConvert.DeserializeObject<TokenDTO>(responseString);
+
+                return await Task.FromResult(response.StatusCode);
+            
+
         }
 
         public async Task<HttpStatusCode> RegisterAsync(string Login, string Password)
@@ -113,6 +120,8 @@ namespace TargetsClient
             var Error = res.StatusCode.ToString();
             if (res.StatusCode == HttpStatusCode.OK)
                 u = JsonConvert.DeserializeObject<User>(respon);
+            if (u == null)
+                u = new User();
             return await Task.FromResult(u);
         }
 
@@ -128,6 +137,8 @@ namespace TargetsClient
             var Error = res.StatusCode.ToString();
             if (res.StatusCode == HttpStatusCode.OK)
                 u = JsonConvert.DeserializeObject<List<Project>>(respon);
+            if (u == null)
+                u = new List<Project>();
             return await Task.FromResult(u);
         }
 
@@ -156,14 +167,8 @@ namespace TargetsClient
             RemProjectDTO edit = new RemProjectDTO() { ProjectId = prj.ProjectId };
             StringContent payload = Payload(edit);
 
-
             var response = await Client.DeleteAsync(ConnectionPath + "Projects/DeleteProject/" + prj.ProjectId.ToString());
             return await Task.FromResult(response.StatusCode);
-
-            //var request = new HttpRequestMessage(HttpMethod.Delete, ConnectionPath + "Projects/DeleteProject");
-            //request.Content = payload;
-            //var deleteResponse = await Client.SendAsync(request);
-            //return await Task.FromResult(deleteResponse.StatusCode);
         }
 
         public async Task<HttpStatusCode> RemoveStep(RemStepDTO prj)
@@ -198,7 +203,7 @@ namespace TargetsClient
         public async Task<HttpStatusCode> SetStep(SetStateStepDTO prj)
         {
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token.Token);
-            SetStateStepDTO edit = new SetStateStepDTO() { ProjectId = prj.ProjectId, StepId = prj.StepId, IsDone = prj.IsDone };
+            SetStateStepDTO edit = new SetStateStepDTO() { StepId = prj.StepId, IsDone = prj.IsDone };
             StringContent payload = Payload(edit);
             var response = await Client.PostAsync(ConnectionPath + "Projects/SetStateStep", payload);
             return await Task.FromResult(response.StatusCode);

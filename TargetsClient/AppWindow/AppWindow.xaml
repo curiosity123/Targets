@@ -9,7 +9,7 @@
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         xmlns:loc="clr-namespace:TargetsClient" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="AppWindow" x:Name="window" Height="640" Width="490"  Background="{DynamicResource Background1}">
+        Title="AppWindow" x:Name="window" Height="680" Width="490"  Background="{DynamicResource Background1}">
     <events:FocusRoutedEvents.DataContext >
         <local:AppWindowViewModel x:Name="context2"/>
     </events:FocusRoutedEvents.DataContext>
@@ -51,7 +51,7 @@
     <Grid VerticalAlignment="Stretch" >
         <Grid.RowDefinitions>
             <RowDefinition Height="100"></RowDefinition>
-            <RowDefinition Height="120"></RowDefinition>
+            <RowDefinition Height="160"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="60"></RowDefinition>
         </Grid.RowDefinitions>
@@ -74,57 +74,118 @@
             </StackPanel>
         </Border>
 
+        <StackPanel Grid.Row="1" Grid.Column="2" >
+            <Button  Content="Logout" Width="160"  Margin="0,10,0,0" HorizontalAlignment="Right"  Command="{Binding LogoutCmd}" CommandParameter="{Binding ElementName=window}"></Button>
+            <Button  Content="Remove account" Width="160" HorizontalAlignment="Right" Margin="0,10,0,0"  Style="{DynamicResource RemoveButton}"  Command="{Binding RemoveUserCmd}" CommandParameter="{Binding ElementName=window}"></Button>
+        </StackPanel>
+        <Border Visibility="Collapsed" Grid.Row="0" Grid.Column="0" Width="80" Height="80" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="4" BorderBrush="{DynamicResource TextBoxBackground}" CornerRadius="40" Margin="20,10,0,0" Background="{DynamicResource Background2}">
+            <TextBlock Foreground="{DynamicResource TextBoxBackground}" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">Your image</TextBlock>
+        </Border>
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,10,0,0" >
+            <TextBlock FontSize="20" FontWeight="Bold" Foreground="{DynamicResource TextBoxBackground}">Summary:</TextBlock>
+            <TextBlock FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextBoxBackground}">Sorry, not implemented yet...</TextBlock>
+        </StackPanel>
 
-        <Button Grid.Row="1" Grid.Column="0" Content="Logout" VerticalAlignment="Top" Margin="0,10"  Command="{Binding LogoutCmd}" CommandParameter="{Binding ElementName=window}"></Button>
-        <Button Grid.Row="1" Grid.Column="2" Content="Remove account" HorizontalAlignment="Right" Margin="0,10"  Style="{DynamicResource RemoveButton}"  VerticalAlignment="Top" Command="{Binding RemoveUserCmd}" CommandParameter="{Binding ElementName=window}"></Button>
 
 
-        <TextBlock Text="Those are your projects..." FontSize="22" Foreground="White" Grid.Row="1" Grid.ColumnSpan="3" Margin="0,10" HorizontalAlignment="Center" VerticalAlignment="Bottom"></TextBlock>
+        <TextBlock Text="Those are your projects..." FontSize="22" Foreground="{DynamicResource TextBoxBackground}" Grid.Row="1" Grid.ColumnSpan="3" Margin="20,10,20,0" HorizontalAlignment="Left" VerticalAlignment="Bottom"></TextBlock>
 
-        <TreeView x:Name="tree" Grid.Row="2" Margin="0,10"  Grid.ColumnSpan="3" HorizontalAlignment="Stretch"  ItemsSource="{Binding Proj, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch"  Background="{DynamicResource Background1}">
+        <TreeView x:Name="tree" Grid.Row="2" Margin="0,0,10,10" ScrollViewer.HorizontalScrollBarVisibility="Hidden"  Grid.ColumnSpan="3" HorizontalAlignment="Stretch"  ItemsSource="{Binding Proj, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch"  Background="{DynamicResource Background1}">
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type loc:Project}" ItemsSource="{Binding Steps}" >
-                    <Border x:Name="border"  Height="40" Background="Blue" CornerRadius="20" >
-                        <StackPanel Orientation="Vertical" Width="370">
-                            <TextBlock Text="{Binding Title}" FontSize="18" VerticalAlignment="Center"  HorizontalAlignment="Left"  Foreground="White" Margin="10,0"  />
-                            <TextBlock Text="{Binding Description}" FontSize="12" VerticalAlignment="Center"  HorizontalAlignment="Left" Foreground="White" Margin="10,0" ></TextBlock>
+                    <Border x:Name="border"  Height="40" Background="Blue" CornerRadius="20" Margin="0,20,0,0" >
+                        <StackPanel Orientation="Horizontal" Width="430"  HorizontalAlignment="Stretch" Margin="0,0">
+                            <StackPanel Orientation="Vertical" Width="400">
+                                <TextBlock Text="{Binding Title}" FontSize="16" VerticalAlignment="Center"  HorizontalAlignment="Left"  Foreground="White" Margin="20,0"  />
+                                <TextBlock Text="{Binding Description}" FontSize="10"   VerticalAlignment="Center"  HorizontalAlignment="Left" Foreground="White" Margin="20,0" ></TextBlock>
+                            </StackPanel>
+                            <Border Width="20" Height="20" CornerRadius="10" Background="{DynamicResource Foreground2}">
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource Foreground1}" Text="{Binding Steps.Count}"></TextBlock>
+                            </Border>
                         </StackPanel>
                     </Border>
                     <HierarchicalDataTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True" >
-                            <Setter TargetName="border" Property="Background" Value="#62777b"></Setter>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Foreground1}"></Setter>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="false" >
-                            <Setter TargetName="border" Property="Background" Value="#102327"></Setter>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Foreground1}"></Setter>
                         </Trigger>
+                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}}" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Background2}"></Setter>
+                        </DataTrigger>
                     </HierarchicalDataTemplate.Triggers>
                 </HierarchicalDataTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type loc:Step}" x:Name="step">
-                    <Border  Height="40"  Background="Red" CornerRadius="20">
-                    <StackPanel x:Name="border" Orientation="Horizontal" Width="300" HorizontalAlignment="Stretch" >
-                        <StackPanel Orientation="Vertical"  >
-                            <TextBlock Text="{Binding Title}" FontSize="18" VerticalAlignment="Center"  HorizontalAlignment="Left"  Foreground="White" Margin="10,0"  />
-                            <TextBlock Text="{Binding Description}" FontSize="12" VerticalAlignment="Center"  HorizontalAlignment="Left" Foreground="White" Margin="10,0" ></TextBlock>
+                    <Border x:Name="border" Height="40"  Background="{DynamicResource Background3}" CornerRadius="20" Margin="0,5,0,0" >
+                        <StackPanel  Orientation="Horizontal" Width="370"  HorizontalAlignment="Stretch" Margin="20,0" >
+                            <StackPanel Orientation="Vertical" Width="335">
+                                <TextBlock x:Name="title" Text="{Binding Title}" FontSize="16" VerticalAlignment="Center"  HorizontalAlignment="Left"  Foreground="White"  />
+                                <TextBlock x:Name="desc" Text="{Binding Description}" FontSize="10" VerticalAlignment="Center"  HorizontalAlignment="Left" Foreground="White"  ></TextBlock>
+                            </StackPanel>
+                            <CheckBox x:Name="check" IsChecked="{Binding Completed ,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Right" >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Checked">
+                                        <i:InvokeCommandAction Command="{Binding ElementName=tree, Path=DataContext.ChangeStateCmd}" CommandParameter="{Binding}"/>
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="Unchecked">
+                                        <i:InvokeCommandAction Command="{Binding ElementName=tree, Path=DataContext.ChangeStateCmd}" CommandParameter="{Binding}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </CheckBox>
                         </StackPanel>
-                        <CheckBox x:Name="check" IsChecked="{Binding Completed ,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="10,0">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Checked">
-                                    <i:InvokeCommandAction Command="{Binding ElementName=tree, Path=DataContext.ChangeStateCmd}" CommandParameter="{Binding}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="Unchecked">
-                                    <i:InvokeCommandAction Command="{Binding ElementName=tree, Path=DataContext.ChangeStateCmd}" CommandParameter="{Binding}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </CheckBox>
-                    </StackPanel>
                     </Border>
                     <HierarchicalDataTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True" >
-                            <Setter TargetName="border" Property="Background" Value="#62777b"></Setter>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Foreground3}"></Setter>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="false" >
-                            <Setter TargetName="border" Property="Background" Value="#102327"></Setter>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Background2}"></Setter>
                         </Trigger>
+
+
+                        <MultiTrigger >
+                            <MultiTrigger.Conditions>
+                                <Condition SourceName="check" Property="IsChecked" Value="true"></Condition>
+                                <Condition Property="IsMouseOver" Value="false"></Condition>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Background3}"></Setter>
+                        </MultiTrigger>
+                        <MultiTrigger >
+                            <MultiTrigger.Conditions>
+                                <Condition SourceName="check" Property="IsChecked" Value="true"></Condition>
+                                <Condition Property="IsMouseOver" Value="True"></Condition>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Background3}"></Setter>
+                        </MultiTrigger>
+
+                        <MultiTrigger >
+                            <MultiTrigger.Conditions>
+                                <Condition SourceName="check" Property="IsChecked" Value="false"></Condition>
+                                <Condition Property="IsMouseOver" Value="false"></Condition>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Foreground2}"></Setter>
+                            <Setter  TargetName="title"   Property="Foreground" Value="{DynamicResource TextBoxBackground}"></Setter>
+                            <Setter  TargetName="desc"   Property="Foreground" Value="{DynamicResource TextBoxBackground}"></Setter>
+                        </MultiTrigger>
+                        <MultiTrigger >
+                            <MultiTrigger.Conditions>
+                                <Condition SourceName="check" Property="IsChecked" Value="false"></Condition>
+                                <Condition Property="IsMouseOver" Value="True"></Condition>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Foreground2}"></Setter>
+                            <Setter  TargetName="title"   Property="Foreground" Value="{DynamicResource TextBoxBackground}"></Setter>
+                            <Setter  TargetName="desc"   Property="Foreground" Value="{DynamicResource TextBoxBackground}"></Setter>
+                        </MultiTrigger>
+
+                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}}" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Background2}"></Setter>
+                            <Setter TargetName="title" Property="Foreground" Value="{DynamicResource TextBoxBackground}"></Setter>
+                            <Setter TargetName="desc" Property="Foreground" Value="{DynamicResource TextBoxBackground}"></Setter>
+                        </DataTrigger>
+
+
+
                     </HierarchicalDataTemplate.Triggers>
                 </HierarchicalDataTemplate>
             </TreeView.Resources>
