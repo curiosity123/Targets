@@ -55,7 +55,7 @@ namespace Targets.Controllers
             await service.DeleteProject(UserId, pid);
         }
 
-        bool isBusy = false;
+
         [HttpPost("SetStateStep")]
         [Authorize]
         public async Task SetStateStep([FromBody] SetStateStepDTO prj)

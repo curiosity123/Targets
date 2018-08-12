@@ -26,17 +26,19 @@ namespace Targets.Infrastructure.Services
         public JwtDTO CreateToken(Guid userId, string role)
         {
 
-            var nowUtc = DateTime.UtcNow;
+            var nowUtc = DateTime.UtcNow.ToUniversalTime();
             var expires = nowUtc.AddMinutes(_jwtSettings.ExpiryMinutes);
             var centuryBegin = new DateTime(1970, 1, 1).ToUniversalTime();
             var exp = (long)(new TimeSpan(expires.Ticks - centuryBegin.Ticks).TotalSeconds);
             var iat = (long)(new TimeSpan(nowUtc.Ticks - centuryBegin.Ticks).TotalSeconds);
+            
             var payload = new JwtPayload
             {
                 {"sub", userId},
                 {"iss", _jwtSettings.Issuer},
                 {"iat", iat},
                 {"exp", exp},
+                { "nbf", iat},
                 {"unique_name", userId},
             };
             var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key)),
